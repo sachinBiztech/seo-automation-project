@@ -1,0 +1,439 @@
+================================================================================
+  LEARNING REFERENCE — Claude Code + OpenClaw
+  Environment: Node v22.22.0 | OpenClaw 2026.4.14
+  Project: SEO Automation Engine (BiztechCS)
+================================================================================
+
+────────────────────────────────────────────────────────────────────────────────
+1. OPENCLAW CORE COMMANDS
+────────────────────────────────────────────────────────────────────────────────
+
+GATEWAY (the heart — must be running for everything to work)
+  openclaw gateway                        Start the gateway
+  openclaw gateway --force                Kill existing listener, then start
+  openclaw health                         Check gateway status + active sessions
+  openclaw logs                           Tail live gateway logs
+  openclaw status                         Channel health + recent recipients
+
+SENDING MESSAGES
+  openclaw message send \
+    --channel telegram \
+    --target <group_id_or_username> \
+    --message "Your text here"
+
+  With inline buttons (approval flow):
+  openclaw message send \
+    --channel telegram \
+    --target -1003829892114 \
+    --message "Choose:" \
+    --buttons '[[
+      {"text":"✅ Approve","callback_data":"approve|entity_id"},
+      {"text":"🔄 Revise","callback_data":"revise|entity_id"},
+      {"text":"❌ Reject","callback_data":"reject|entity_id"}
+    ]]'
+
+  With a file/document attachment:
+  openclaw message send \
+    --channel telegram \
+    --target <group_id> \
+    --media "/absolute/path/to/file.pdf" \
+    --message "Caption text here"
+
+  NOTE: --media not --file. Use absolute paths only.
+
+RUNNING AGENTS
+  openclaw agent --message "Run seo-strategist using /path/to/orchestrator.md"
+  openclaw agent --to <session_key> --message "Continue this task"
+
+CHANNEL MANAGEMENT
+  openclaw channels list                  List configured channels
+  openclaw channels status --probe        Run health probes
+  openclaw channels capabilities --channel telegram   Show what telegram can do
+
+EXEC APPROVALS (allowlist for agent exec calls)
+  openclaw approvals allowlist list       See current allowlist
+  openclaw approvals allowlist add --agent main --pattern "/usr/bin/node"
+  openclaw exec-policy show               Show effective exec policy
+
+SESSIONS
+  openclaw sessions                       List stored sessions
+  openclaw health                         Shows active session keys + last used
+
+CONFIG
+  openclaw config get <key>               Read a config value
+  openclaw config get channels.telegram   Read telegram channel config
+  openclaw configure                      Interactive setup wizard
+
+SKILLS
+  openclaw skills list                    List all skills + status
+
+CRON JOBS
+  openclaw cron list                      List scheduled jobs
+  openclaw cron add ...                   Add a cron job
+
+HOOKS
+  openclaw hooks list                     List all hooks
+  openclaw hooks enable <name>            Enable a hook
+  openclaw hooks disable <name>           Disable a hook
+
+SYSTEM EVENTS
+  openclaw system event --text "message" --mode now   Fire an event to agent
+
+
+────────────────────────────────────────────────────────────────────────────────
+2. OPENCLAW CONFIG FILES (know where things live)
+────────────────────────────────────────────────────────────────────────────────
+
+~/.openclaw/openclaw.json             Main config (channels, agents, models)
+~/.openclaw/exec-approvals.json       Exec allowlist per agent
+~/.openclaw/workspace/SOUL.md         Main agent personality + routing rules
+~/.openclaw/workspace/BOOT.md         Runs on gateway startup (optional)
+~/.openclaw/agents/main/sessions/     Session JSONL files (conversation history)
+~/.openclaw/agents/main/sessions/sessions.json   Maps session keys → file paths
+
+SESSION KEY FORMAT:
+  agent:main:telegram:group:-1003829892114    (Telegram group)
+  agent:main:telegram:direct:8699649022       (Telegram DM)
+  agent:main:main                             (direct/webchat)
+
+WORKSPACE PATH:
+  Agents read/write files relative to: ~/.openclaw/workspace/
+  Your repo files are at:              /home/sachin.p/Documents/seo-automation/
+  In agent .md files, use prefix:      seo-automation/outputs/filename.json
+
+
+────────────────────────────────────────────────────────────────────────────────
+3. OPENCLAW TELEGRAM SPECIFICS
+────────────────────────────────────────────────────────────────────────────────
+
+GROUP CONFIG (in openclaw.json → channels.telegram.groups):
+  requireMention: true    Bot only responds when @mentioned in the group
+  groupPolicy: "open"     Bot accepts messages from all group members
+
+INLINE BUTTON CALLBACKS:
+  - When a user clicks an inline button, Telegram sends a callback_query
+  - The callback_data string goes to the bot (format: "action|entity_id")
+  - OpenClaw passes this as a TEXT message to the main agent LLM
+  - The LLM may hallucinate the action without actually executing it
+  - SOLUTION: Use session-bridge.js to detect and handle callbacks directly
+
+IMPORTANT LIMITATION:
+  - Telegram only allows ONE active getUpdates poller per bot
+  - If you start a second poller, you get: "Conflict: terminated by other getUpdates request"
+  - You CANNOT run a parallel Telegram listener alongside OpenClaw gateway
+  - SOLUTION: Watch the session JSONL file instead (see section 6)
+
+CALLBACK QUERY TIMEOUT:
+  - Telegram callback_query expires in ~30-60 seconds
+  - If the LLM takes longer to respond, answerCallbackQuery fails
+  - Error: "query is too old and response timeout expired"
+  - This does NOT mean the message was lost — it was received, just answered late
+
+
+────────────────────────────────────────────────────────────────────────────────
+4. SOUL.MD — WRITING RELIABLE AGENT INSTRUCTIONS
+────────────────────────────────────────────────────────────────────────────────
+
+PROBLEM: gpt-4o-mini reads SOUL.md but hallucinate actions
+  - It sees what the expected response should look like
+  - It generates that response WITHOUT actually doing the action
+  - Example: "✅ Approved. Status updated." — but never called exec
+
+ROOT CAUSE: Conflicting rules
+  "Avoid unnecessary exec calls" (general rule) overrides
+  "Execute: node approval-bridge.js" (specific instruction)
+  The LLM resolves the conflict by skipping the exec
+
+HOW TO WRITE STRONG SOUL.MD INSTRUCTIONS:
+  1. Put mandatory actions ABOVE conflicting general rules
+  2. Use "MANDATORY", "DO NOT SKIP", "OVERRIDES ALL OTHER RULES"
+  3. Explain WHY skipping breaks things (LLMs respond to consequences)
+  4. Add "WARNING: If you only reply with text and don't call exec, the file is NEVER updated"
+  5. Don't just say "Execute:" — say "Use your exec tool to run:"
+  6. Add EXCEPTION notes to general rules: "Avoid exec — EXCEPTION: callbacks always require exec"
+
+LESSON: Never rely on LLM to execute critical state changes.
+  Use deterministic scripts (Node.js) triggered by file watchers or webhooks instead.
+
+
+────────────────────────────────────────────────────────────────────────────────
+5. AGENT .MD FILE STRUCTURE (OpenClaw agents)
+────────────────────────────────────────────────────────────────────────────────
+
+Every agent is a Markdown file with this structure:
+
+  # Agent Name
+
+  ## Purpose
+  What this agent does (1-2 sentences)
+
+  ## Model
+  claude-opus-4-6          ← orchestrators, complex reasoning
+  claude-sonnet-4-6        ← analysis, report assembly
+  claude-haiku-4-5-20251001  ← data pulls, simple processing
+
+  ## Mode
+  MOCK        ← reads from mock-data/ (safe for development)
+  PRODUCTION  ← calls real APIs
+
+  ## Input
+  Read: seo-automation/outputs/some-file.json
+
+  ## Task
+  Step-by-step instructions for the agent
+
+  ## Output
+  Write: seo-automation/outputs/result.json
+  Schema: { "field": "value", ... }
+
+ORCHESTRATOR PATTERN (calling subskills):
+  ### Step 1 — Pull GSC Data
+  Run subskill: `pull-gsc-data`
+  Expected output: `seo-automation/outputs/gsc-findings.json`
+  Failure action: STOP. Send Telegram: "❌ BiztechCS FAILED at Step 1 (GSC pull failed)."
+
+FAILURE ACTIONS:
+  STOP     → critical failure, halt pipeline, send Telegram alert
+  WARNING  → non-critical, log gap, continue pipeline
+
+
+────────────────────────────────────────────────────────────────────────────────
+6. SESSION BRIDGE PATTERN (reliable callback handling)
+────────────────────────────────────────────────────────────────────────────────
+
+PROBLEM: LLM agents can't reliably execute code on button clicks
+SOLUTION: Watch the session JSONL file, detect callbacks, call scripts directly
+
+HOW IT WORKS:
+  1. OpenClaw writes every incoming message to a JSONL session file
+  2. session-bridge.js tails that file (polls every 500ms)
+  3. When it sees a user message matching "action|entity_id", calls bridge
+  4. The LLM still replies (you can't stop it), but the real action already happened
+
+KEY FILES:
+  /home/sachin.p/Documents/seo-automation/session-bridge.js   ← the watcher
+  /home/sachin.p/Documents/seo-automation/approval-bridge.js  ← writes JSON files
+
+SESSION FILE MAP:
+  Read: ~/.openclaw/agents/main/sessions/sessions.json
+  Find key: "agent:main:telegram:group:-1003829892114"
+  Value: { "sessionFile": "/path/to/uuid.jsonl" }
+
+START THE BRIDGE:
+  cd /home/sachin.p/Documents/seo-automation
+  node session-bridge.js &
+
+CHECK IT'S WORKING:
+  cat outputs/session-bridge.log
+
+APPROVAL STATES (sprint-approval.json):
+  pending           → buttons sent, waiting for click
+  approved          → TERMINAL — cannot be changed
+  rejected          → TERMINAL — cannot be changed
+  revise_requested  → NOT terminal — can still approve or reject
+  local_file_missing → PDF file not found before sending
+  telegram_failed   → could not reach Telegram
+
+
+────────────────────────────────────────────────────────────────────────────────
+7. TOKEN OPTIMIZATION (saving cost + avoiding context limits)
+────────────────────────────────────────────────────────────────────────────────
+
+IN CLAUDE CODE (claude.ai/code):
+
+  /compact          Summarize conversation and clear context (use when context
+                    is getting large — keeps recent work, drops old detail)
+
+  /clear            Wipe context entirely and start fresh
+
+WHEN TO COMPACT:
+  - After completing a major task (pipeline built, feature working)
+  - When you see "context approaching limit" warnings
+  - Before starting a completely new task in the same session
+  - Every ~50-100 exchanges for long sessions
+
+OPENCLAW AGENT TOKEN SETTINGS (openclaw.json):
+  contextTokens: 32000          Max tokens per agent context window
+  cacheRetention: "short"       How long prompt cache is kept (short/medium/long)
+  compaction.mode: "safeguard"  Auto-compact when approaching limit
+  compaction.reserveTokensFloor: 8000   Headroom kept for response generation
+
+CONTEXT PRUNING (openclaw.json):
+  mode: "cache-ttl"             Prune by time-to-live
+  ttl: "1h"                     Old tool results cleared after 1 hour
+  keepLastAssistants: 3         Always keep last 3 assistant messages
+  softTrimRatio: 0.3            Trim 30% when approaching limit
+  hardClearRatio: 0.5           Force-clear 50% at hard limit
+
+PROMPT CACHING:
+  - OpenClaw uses prompt caching automatically (saves cost on repeated SOUL.md reads)
+  - Prompt cache TTL: ~5 minutes (Anthropic), varies by provider
+  - cacheRead tokens cost ~10x less than regular input tokens
+  - For long SOUL.md / BOOT.md files, caching gives significant savings
+
+COST-SAVING TIPS:
+  - Use claude-haiku for simple data pulls (10x cheaper than opus)
+  - Use MOCK mode during development (no real API calls)
+  - Use sessions_spawn for subagents (isolated context = smaller windows)
+  - Avoid loading large files unnecessarily in agent instructions
+  - Use compaction hooks to auto-summarize session history
+
+MODEL COST TIERS (rough guide):
+  claude-haiku-4-5     → cheapest, fast, good for data tasks
+  claude-sonnet-4-6    → mid-tier, good for analysis + writing
+  claude-opus-4-6      → most capable, use for orchestration + strategy only
+  gpt-4o-mini          → OpenAI cheapest, used by OpenClaw main agent default
+
+
+────────────────────────────────────────────────────────────────────────────────
+8. DEBUGGING PATTERNS
+────────────────────────────────────────────────────────────────────────────────
+
+"Is my agent receiving the message?"
+  → openclaw logs | tail -50
+  → Look for: "✅ Sent via telegram. Message ID: ..."
+  → Look for: "answerCallbackQuery failed" (means callback WAS received but late)
+
+"Did the callback actually update the file?"
+  → cat outputs/sprint-approval.json
+  → Check "status" field — if still "pending", bridge was never called
+
+"Which session file handled the last message?"
+  → cat ~/.openclaw/agents/main/sessions/sessions.json
+  → Find the key for your chat (e.g. agent:main:telegram:group:-1003829892114)
+  → Read the sessionFile path
+  → tail -20 <sessionFile> | grep -o '"role":"[^"]*"'
+
+"What did the agent actually do (not what it said it did)?"
+  → Read the session JSONL file
+  → Look for "toolCall" entries with "name":"exec" — these are real actions
+  → "assistant" entries with only "text" = LLM generated response, no real action
+
+"Why isn't exec being called?"
+  → Check SOUL.md for conflicting rules ("Avoid exec" overrides "Execute:")
+  → Check exec-approvals.json for allowlist entries
+  → Check openclaw exec-policy show for effective policy
+
+"getUpdates conflict error"
+  → You have two things trying to poll Telegram simultaneously
+  → OpenClaw gateway owns the getUpdates poll
+  → You CANNOT run a second getUpdates poller
+  → Solution: watch session files instead, or use Telegram webhooks
+
+
+────────────────────────────────────────────────────────────────────────────────
+9. PIPELINE ARCHITECTURE (SEO Automation Engine)
+────────────────────────────────────────────────────────────────────────────────
+
+CURRENT STATE (all MOCK):
+  intelligence-report → seo-strategist → [human approval via Telegram] → DONE
+
+FULL TARGET PIPELINE:
+  1. Intelligence Report (data pull + analysis + PDF)
+     ↓ report-approval.json: approved
+  2. SEO Strategist (15-day sprint plan)
+     ↓ sprint-approval.json: approved
+  3. Product Owner Agent (strategy validation vs business config)
+  4. Business Validation Agent (quotas, goals, budget)
+  5. Human Telegram GO
+     ↓
+  6. Task Sheet Populator → Google Sheet
+  7. Sprint PM Agent (daily cron, task scheduling)
+  8. Execution Agents (content, technical, off-page)
+  9. Social Media Engine
+
+INTER-AGENT HANDOFF FILES:
+  outputs/report-summary.json     → Intelligence Report → SEO Strategist
+  outputs/sprint-plan.json        → SEO Strategist → Task Sheet Populator
+  outputs/sprint-approval.json    → Human approval gate
+  outputs/report-approval.json    → Human approval gate (intelligence report)
+
+KEY RULE: Human GO is ALWAYS required. No sprint auto-executes.
+KEY RULE: Every action traces to a research finding or prior sprint outcome.
+
+
+────────────────────────────────────────────────────────────────────────────────
+10. IMPORTANT PATHS
+────────────────────────────────────────────────────────────────────────────────
+
+PROJECT ROOT:
+  /home/sachin.p/Documents/seo-automation/
+
+OPENCLAW STATE:
+  ~/.openclaw/openclaw.json              Main config
+  ~/.openclaw/workspace/SOUL.md          Main agent rules
+  ~/.openclaw/workspace/                 Agent workspace root
+  ~/.openclaw/agents/main/sessions/      Session files (conversation history)
+  ~/.openclaw/exec-approvals.json        Exec allowlist
+
+KEY SCRIPTS (project):
+  approval-bridge.js     Handles approve/revise/reject → writes JSON files
+  session-bridge.js      Watches session file → calls approval-bridge on callbacks
+  callback-listener.js   (DO NOT USE — conflicts with gateway's getUpdates poller)
+
+KEY OUTPUTS:
+  outputs/sprint-approval.json          Sprint approval state
+  outputs/report-approval.json          Intelligence report approval state
+  outputs/sprint-plan.json              Sprint plan data
+  outputs/session-bridge.log            Session bridge activity log
+  outputs/BiztechCS-SEO-Sprint-Plan_*.pdf   Generated sprint plan PDF
+
+
+────────────────────────────────────────────────────────────────────────────────
+11. COMMON MISTAKES TO AVOID
+────────────────────────────────────────────────────────────────────────────────
+
+❌ Using --file instead of --media for document attachments
+   → openclaw message send --media "/path/file.pdf"
+
+❌ Using relative paths in agent .md files
+   → Always use: seo-automation/outputs/filename.json (workspace-relative)
+
+❌ Starting a second Telegram poller (getUpdates conflict)
+   → OpenClaw owns the poll. Use session file watching instead.
+
+❌ Trusting LLM replies as proof that an action happened
+   → "Status updated" in a reply means nothing. Check the actual file.
+
+❌ Using "Execute:" in SOUL.md without saying "use your exec tool"
+   → LLM interprets "Execute:" as informational, not as a tool call instruction
+
+❌ Running openclaw run (invalid command)
+   → Correct: openclaw agent --message "Run <agent> using /path/to/orchestrator.md"
+
+❌ Forgetting to start session-bridge.js before sending buttons
+   → The bridge must be running BEFORE the user clicks a button
+
+❌ Forgetting to reset sprint-approval.json before re-testing
+   → Approved/Rejected are terminal states — bridge will skip further clicks
+
+
+────────────────────────────────────────────────────────────────────────────────
+12. QUICK REFERENCE — SEND APPROVAL BUTTONS
+────────────────────────────────────────────────────────────────────────────────
+
+# Step 1: Start session bridge (if not already running)
+cd /home/sachin.p/Documents/seo-automation
+node session-bridge.js &
+
+# Step 2: Reset approval status for testing
+# Edit outputs/sprint-approval.json → set "status": "pending", "approved_at": null
+
+# Step 3: Send buttons
+openclaw message send \
+  --channel telegram \
+  --target -1003829892114 \
+  --message "Choose an action for Sprint biztechcs_sprint_2026-04-15:" \
+  --buttons '[[
+    {"text":"✅ Approve — populate task sheet","callback_data":"approve|biztechcs_sprint_2026-04-15"},
+    {"text":"🔄 Revise — send notes","callback_data":"revise|biztechcs_sprint_2026-04-15"},
+    {"text":"❌ Reject","callback_data":"reject|biztechcs_sprint_2026-04-15"}
+  ]]'
+
+# Step 4: Click a button in Telegram, then verify:
+cat outputs/sprint-approval.json
+cat outputs/session-bridge.log
+
+================================================================================
+  Last updated: 2026-04-15 | Session: SEO Automation Engine build
+================================================================================

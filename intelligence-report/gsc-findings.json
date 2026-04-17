@@ -1,0 +1,34 @@
+{
+  "ctr_opportunities": [
+    {
+      "query": "odoo implementation partner india",
+      "impressions": 4200,
+      "ctr": 0.006,
+      "position": 14.2,
+      "trend": "Climbing"
+    },
+    {
+      "query": "odoo manufacturing module",
+      "impressions": 3100,
+      "ctr": 0.010,
+      "position": 11.3,
+      "trend": "Declining"
+    }
+  ],
+  "quick_win_keywords": [
+    {
+      "query": "odoo implementation partner india",
+      "position": 14.2,
+      "impressions": 4200,
+      "ctr": 0.006,
+      "trend": "Climbing"
+    },
+    {
+      "query": "odoo manufacturing module",
+      "position": 11.3,
+      "impressions": 3100,
+      "ctr": 0.010,
+      "trend": "Declining"
+    }
+  ]
+}

@@ -1,0 +1,600 @@
+================================================================================
+  COMMANDS REFERENCE — Claude Code + OpenClaw
+  Project: SEO Automation Engine (BiztechCS)
+================================================================================
+
+
+════════════════════════════════════════════════════════════════════════════════
+  PART 1 — CLAUDE CODE SLASH COMMANDS
+  (These work inside the Claude Code CLI / IDE extension / claude.ai/code)
+════════════════════════════════════════════════════════════════════════════════
+
+────────────────────────────────────────────────────────────────────────────────
+/help
+────────────────────────────────────────────────────────────────────────────────
+WHAT:   Show all available Claude Code commands and shortcuts
+WHEN:   When you're lost or want to discover features
+WHY:    Quick reference without leaving the terminal
+
+────────────────────────────────────────────────────────────────────────────────
+/compact
+────────────────────────────────────────────────────────────────────────────────
+WHAT:   Summarizes the conversation into a short digest, then clears old turns
+        from context. You keep recent work; old detail is compressed.
+WHEN:   - Context is getting large (slow responses, approaching limit)
+        - After completing a major task before starting the next one
+        - Every ~50-100 exchanges in a long session
+        - Before switching to a completely different topic
+WHY:    - Reduces token cost (older messages cost the same to re-send each time)
+        - Keeps responses fast (smaller context = faster inference)
+        - Prevents hitting the hard context limit mid-task
+        - Keeps important decisions but drops verbose tool outputs
+NOTE:   Does NOT lose your work. Claude summarizes what matters before clearing.
+
+────────────────────────────────────────────────────────────────────────────────
+/clear
+────────────────────────────────────────────────────────────────────────────────
+WHAT:   Wipes the entire conversation context. Full fresh start.
+WHEN:   - Starting a completely unrelated new task
+        - Something went wrong and the context is confused
+        - You want to test a prompt from scratch with no prior history
+WHY:    Harder reset than /compact. No summary kept — true blank slate.
+NOTE:   Unlike /compact, nothing is preserved. Use carefully.
+
+────────────────────────────────────────────────────────────────────────────────
+/new
+────────────────────────────────────────────────────────────────────────────────
+WHAT:   Start a new conversation session (same as /clear but more explicit)
+WHEN:   Beginning a genuinely new task where prior context is irrelevant
+WHY:    Signals intent — "this is a new topic, not a continuation"
+
+────────────────────────────────────────────────────────────────────────────────
+/fast
+────────────────────────────────────────────────────────────────────────────────
+WHAT:   Toggle fast mode on/off. Fast mode uses the same Claude Opus 4.6 model
+        but with optimized output streaming for quicker responses.
+WHEN:   - When you need rapid back-and-forth (exploration, quick edits)
+        - When you're iterating fast and don't need fully considered responses
+        - Turn OFF for complex architecture decisions or nuanced tasks
+WHY:    Faster turnaround. Same model capability, different output pacing.
+NOTE:   Does NOT switch to a weaker model. Still Claude Opus 4.6.
+
+────────────────────────────────────────────────────────────────────────────────
+/model
+────────────────────────────────────────────────────────────────────────────────
+WHAT:   Switch the active Claude model mid-session
+WHEN:   - Task complexity changes (switch to opus for hard architecture decisions)
+        - Cost sensitivity (switch to haiku for simple file edits)
+        - Testing how different models handle the same prompt
+WHY:    Not every task needs the most expensive model.
+
+MODELS AVAILABLE (Claude family, 2026):
+  claude-opus-4-6          Most capable. Use for strategy, architecture, reasoning.
+  claude-sonnet-4-6        Balanced. Good for coding, analysis, report writing.
+  claude-haiku-4-5         Fastest and cheapest. Good for simple edits, data tasks.
+
+────────────────────────────────────────────────────────────────────────────────
+/memory
+────────────────────────────────────────────────────────────────────────────────
+WHAT:   Manage Claude's persistent memory files for this project.
+        Memories are stored in ~/.claude/projects/<project>/memory/
+WHEN:   - "Remember that we always use absolute paths in agent files"
+        - "Forget that old approach, we changed direction"
+        - Review what Claude has remembered about you/project
+WHY:    Claude's memory persists ACROSS conversations. Good for preferences,
+        project context, and rules that shouldn't be re-explained every session.
+
+MEMORY TYPES:
+  user      Your role, preferences, expertise level
+  feedback  What to do / not do (corrections + confirmed approaches)
+  project   Active work, decisions, goals, deadlines
+  reference Pointers to external resources, systems, channels
+
+────────────────────────────────────────────────────────────────────────────────
+/commit
+────────────────────────────────────────────────────────────────────────────────
+WHAT:   Auto-generate a git commit with a smart message based on staged changes
+WHEN:   After making code changes you want to commit
+WHY:    Saves time writing commit messages. Claude reads the diff and writes
+        a meaningful commit message following the repo's style.
+NOTE:   Always reviews what will be staged first. Never force-pushes.
+
+────────────────────────────────────────────────────────────────────────────────
+/review-pr
+────────────────────────────────────────────────────────────────────────────────
+WHAT:   Review a GitHub pull request (pass PR number or URL)
+WHEN:   You want a code review of an open PR
+WHY:    Gets a thorough analysis: bugs, security issues, style, test coverage
+USAGE:  /review-pr 123   or   /review-pr https://github.com/org/repo/pull/123
+
+────────────────────────────────────────────────────────────────────────────────
+/init
+────────────────────────────────────────────────────────────────────────────────
+WHAT:   Initialize Claude Code in a new project. Creates CLAUDE.md with
+        detected project structure, tech stack, and build commands.
+WHEN:   First time using Claude Code in a new repo
+WHY:    CLAUDE.md tells Claude how to work with YOUR project specifically.
+        Without it, Claude gives generic answers.
+
+────────────────────────────────────────────────────────────────────────────────
+/status
+────────────────────────────────────────────────────────────────────────────────
+WHAT:   Show current session info — model, context usage, cost so far
+WHEN:   When you want to know how much context is used or what model is active
+WHY:    Helps decide when to /compact (before hitting the limit)
+
+────────────────────────────────────────────────────────────────────────────────
+/config
+────────────────────────────────────────────────────────────────────────────────
+WHAT:   View or change Claude Code settings
+WHEN:   Adjusting permission modes, API settings, default model
+WHY:    Persistent configuration that survives session resets
+
+────────────────────────────────────────────────────────────────────────────────
+/permissions
+────────────────────────────────────────────────────────────────────────────────
+WHAT:   Show current permission mode (what Claude can do without asking)
+WHEN:   When Claude keeps asking for permission for routine operations
+WHY:    Permission modes control how autonomous Claude is:
+          default          — ask before most file edits and commands
+          acceptEdits      — auto-accept file edits, ask for commands
+          bypassPermissions — fully autonomous (use carefully)
+
+────────────────────────────────────────────────────────────────────────────────
+/cost
+────────────────────────────────────────────────────────────────────────────────
+WHAT:   Show token usage and cost for the current session
+WHEN:   After a long session to understand spending
+WHY:    Visibility into API cost before it shows up on the bill
+
+────────────────────────────────────────────────────────────────────────────────
+/think  (or just ask Claude to "think step by step")
+────────────────────────────────────────────────────────────────────────────────
+WHAT:   Enable extended thinking mode for harder problems
+WHEN:   - Complex architectural decisions
+        - Debugging a tricky issue with multiple possible causes
+        - Planning something with many dependencies
+WHY:    Claude reasons through the problem before answering.
+        More tokens used, but significantly better on hard problems.
+
+────────────────────────────────────────────────────────────────────────────────
+/quit  or  /exit
+────────────────────────────────────────────────────────────────────────────────
+WHAT:   Exit the Claude Code CLI session
+WHEN:   Done working
+WHY:    Clean exit (vs just closing the terminal)
+
+
+════════════════════════════════════════════════════════════════════════════════
+  PART 2 — OPENCLAW COMMANDS
+  (Run from terminal: openclaw <command>)
+════════════════════════════════════════════════════════════════════════════════
+
+────────────────────────────────────────────────────────────────────────────────
+GATEWAY — The core service. Everything else depends on it being running.
+────────────────────────────────────────────────────────────────────────────────
+
+  openclaw gateway
+  WHAT:   Start the OpenClaw gateway (WebSocket server + AI agent runner)
+  WHEN:   At the start of every session. If it's not running, nothing works.
+  WHY:    Receives Telegram messages, runs agents, manages sessions.
+
+  openclaw gateway --force
+  WHAT:   Kill anything on the gateway port, then start fresh
+  WHEN:   "Address already in use" error, or gateway crashed and left a ghost
+  WHY:    Fastest fix for a stuck/crashed gateway
+
+  openclaw health
+  WHAT:   Check gateway status — Telegram connection, active sessions, heartbeat
+  WHEN:   After starting the gateway, or when something seems broken
+  WHY:    Shows: Telegram OK/FAIL, agents loaded, session keys + last used
+  OUTPUT EXAMPLE:
+    telegram: ok (@Bizz_User_bot) (416ms)
+    Agents: main, study-assistant, intelligence-report, seo-strategist
+    - agent:main:telegram:group:-1003829892114 (3m ago)
+
+  openclaw logs
+  WHAT:   Tail live gateway logs (errors, sent messages, callback failures)
+  WHEN:   Debugging — "did the message send?", "did the callback arrive?"
+  WHY:    Shows real-time: ✅ Sent via telegram. Message ID: 231
+          AND errors: answerCallbackQuery failed: query is too old
+
+  openclaw status
+  WHAT:   Channel health summary + recent message recipients
+  WHEN:   Quick check that Telegram bot is alive and connected
+
+
+────────────────────────────────────────────────────────────────────────────────
+MESSAGE — Sending messages and files to Telegram (or other channels)
+────────────────────────────────────────────────────────────────────────────────
+
+  openclaw message send --channel telegram --target <id> --message "text"
+  WHAT:   Send a text message to a Telegram group or user
+  WHEN:   Any time you need to notify, alert, or deliver content via Telegram
+  WHY:    All agent alerts, sprint notifications, and reports use this
+
+  --target options:
+    -1003829892114     Telegram group ID (negative number = group)
+    @username          Telegram username
+    123456789          Telegram user ID (positive number = direct message)
+
+  With inline buttons:
+  openclaw message send \
+    --channel telegram \
+    --target -1003829892114 \
+    --message "Choose:" \
+    --buttons '[[{"text":"✅ Yes","callback_data":"approve|id"},{"text":"❌ No","callback_data":"reject|id"}]]'
+  WHEN:   Sending approval gates — sprint plan, content review, report review
+  WHY:    Inline buttons create clickable actions in Telegram
+  NOTE:   --buttons takes a JSON array of arrays (rows of buttons)
+          Each button needs "text" (label) and "callback_data" (what's sent back)
+
+  With a file/document:
+  openclaw message send \
+    --channel telegram \
+    --target -1003829892114 \
+    --media "/absolute/path/to/file.pdf" \
+    --message "Caption text"
+  WHEN:   Delivering PDFs, HTML files, reports to Telegram
+  WHY:    Users can open/download the file directly from Telegram
+  NOTE:   Use --media (NOT --file). Always use absolute file path.
+
+  openclaw message send --json
+  WHAT:   Print JSON result of the send operation
+  WHEN:   Scripting — need to capture the Message ID for later editing/tracking
+
+
+────────────────────────────────────────────────────────────────────────────────
+AGENT — Running AI agents via the gateway
+────────────────────────────────────────────────────────────────────────────────
+
+  openclaw agent --message "Run seo-strategist using /path/to/orchestrator.md"
+  WHAT:   Send a message to the default agent (main) via the gateway
+  WHEN:   Triggering a pipeline run manually
+  WHY:    "openclaw run" does NOT exist — this is the correct command
+
+  openclaw agent --to agent:main:main --message "Do X"
+  WHAT:   Send to a specific agent session (use the session key)
+  WHEN:   You want to target a specific session, not create a new one
+  WHY:    Re-uses existing session context instead of starting fresh
+
+  --deliver flag:
+  openclaw agent --message "Run summary" --deliver
+  WHAT:   Also send the agent's reply back to the originating channel
+  WHEN:   When you want the response delivered to the user, not just logged
+
+
+────────────────────────────────────────────────────────────────────────────────
+CHANNELS — Managing connected chat channels
+────────────────────────────────────────────────────────────────────────────────
+
+  openclaw channels list
+  WHAT:   List all configured channels (Telegram, Discord, etc.) + auth status
+  WHEN:   Checking what channels are connected
+
+  openclaw channels status --probe
+  WHAT:   Run live health probes on all channels
+  WHEN:   Something stopped working — is it Telegram or the gateway?
+
+  openclaw channels capabilities --channel telegram
+  WHAT:   Show what Telegram can do (send, media, buttons, threads, etc.)
+  WHEN:   Before building a feature — can Telegram handle this?
+  KEY OUTPUT:
+    Support: media, polls, reactions, nativeCommands, blockStreaming
+    Webhook: none   ← means using getUpdates polling (not webhook)
+
+  openclaw channels add --channel telegram --token <bot_token>
+  WHAT:   Add or update a Telegram bot token
+  WHEN:   First setup, or rotating the bot token
+
+
+────────────────────────────────────────────────────────────────────────────────
+EXEC APPROVALS — Controlling what scripts agents can run
+────────────────────────────────────────────────────────────────────────────────
+
+  openclaw approvals allowlist list
+  WHAT:   Show all whitelisted exec commands per agent
+  WHEN:   Agent says "exec not allowed" or exec calls are being blocked
+
+  openclaw approvals allowlist add --agent main --pattern "/usr/bin/node"
+  WHAT:   Allow the main agent to exec the node binary
+  WHEN:   After seeing "exec blocked" for a node script you want to allow
+  WHY:    Security gate — agents can't run arbitrary commands unless allowed
+
+  openclaw exec-policy show
+  WHAT:   Show the full effective exec policy (requested + host + effective)
+  WHEN:   Debugging exec permission issues
+
+  SECURITY LEVELS:
+    security=full     All exec calls go through approval check
+    ask=off           Auto-approve allowlisted commands (no prompt)
+    ask=full          Ask human approval for every exec call
+
+
+────────────────────────────────────────────────────────────────────────────────
+CONFIG — Reading and writing configuration
+────────────────────────────────────────────────────────────────────────────────
+
+  openclaw config get <key>
+  WHAT:   Read a config value from openclaw.json
+  WHEN:   Checking current settings
+  EXAMPLES:
+    openclaw config get channels.telegram       ← full telegram config
+    openclaw config get agents.defaults.model   ← default agent model
+
+  openclaw configure
+  WHAT:   Interactive wizard for credentials, channels, gateway, agent defaults
+  WHEN:   First-time setup, or making multiple config changes at once
+  WHY:    Safer than editing openclaw.json manually (validates inputs)
+
+
+────────────────────────────────────────────────────────────────────────────────
+AGENTS — Managing isolated agent workspaces
+────────────────────────────────────────────────────────────────────────────────
+
+  openclaw agents list
+  WHAT:   List all configured agents and their models/workspaces
+  WHEN:   Checking which agents exist and what models they use
+
+  openclaw agents add --id <name> --workspace /path --model openai/gpt-4o-mini
+  WHAT:   Create a new isolated agent with its own workspace and session history
+  WHEN:   Adding a new pipeline agent (intelligence-report, seo-strategist, etc.)
+  WHY:    Isolated agents have separate contexts — they don't pollute each other
+
+  openclaw agents bindings
+  WHAT:   Show which agents are bound to which channels/triggers
+  WHEN:   Debugging routing — "why did message go to wrong agent?"
+
+  openclaw agents bind --agent <name> --channel telegram --group <id>
+  WHAT:   Route messages from a specific Telegram group to a specific agent
+  WHEN:   You want a dedicated agent per group/channel
+
+
+────────────────────────────────────────────────────────────────────────────────
+SESSIONS — Conversation history management
+────────────────────────────────────────────────────────────────────────────────
+
+  openclaw sessions
+  WHAT:   List stored conversation sessions
+  WHEN:   Finding a previous conversation, or understanding session structure
+
+  SESSION KEY FORMAT:
+    agent:main:telegram:group:-1003829892114    Messages from Telegram group
+    agent:main:telegram:direct:123456789        Direct messages from a user
+    agent:main:main                             Webchat / direct CLI session
+
+  SESSION FILES LOCATION:
+    ~/.openclaw/agents/main/sessions/sessions.json       ← key → file mapping
+    ~/.openclaw/agents/main/sessions/<uuid>.jsonl        ← actual history
+  WHEN TO READ SESSION FILES:
+    - Verifying the agent actually called exec (look for "toolCall"+"name":"exec")
+    - Seeing exactly what message the agent received
+    - Debugging hallucinated responses ("did it call the bridge?")
+
+
+────────────────────────────────────────────────────────────────────────────────
+CRON — Scheduled jobs
+────────────────────────────────────────────────────────────────────────────────
+
+  openclaw cron list
+  WHAT:   List all scheduled cron jobs + their schedules and last run
+  WHEN:   Checking what's scheduled, or why a job didn't run
+
+  openclaw cron add --schedule "0 6 1,16 * *" --message "Run intelligence report"
+  WHAT:   Add a cron job that sends a message to the agent on schedule
+  WHEN:   Scheduling the biweekly intelligence report (1st + 16th at 6AM)
+  WHY:    Agents run automatically without manual trigger
+
+  openclaw cron run <job-id>
+  WHAT:   Trigger a cron job immediately (debug/test run)
+  WHEN:   Testing that a cron job works before waiting for its schedule
+
+  openclaw cron runs <job-id>
+  WHAT:   Show run history for a specific cron job
+  WHEN:   "Did the overnight job actually run last night?"
+
+  openclaw cron disable <job-id> / enable <job-id>
+  WHAT:   Pause or resume a cron job without deleting it
+  WHEN:   Maintenance windows, or temporarily pausing a pipeline
+
+  openclaw cron rm <job-id>
+  WHAT:   Delete a cron job permanently
+  WHEN:   Pipeline no longer needed or schedule changed completely
+
+
+────────────────────────────────────────────────────────────────────────────────
+HOOKS — Agent lifecycle hooks
+────────────────────────────────────────────────────────────────────────────────
+
+  openclaw hooks list
+  WHAT:   List all hooks + their enabled/disabled status
+  WHEN:   Understanding what runs automatically in the agent lifecycle
+
+  KEY HOOKS (bundled):
+    boot-md                     Runs BOOT.md when gateway starts
+                                USE: Start background daemons (session-bridge.js)
+    bootstrap-extra-files       Inject extra files into agent workspace on boot
+                                USE: Loading config files automatically
+    command-logger              Log all agent commands to an audit file
+                                USE: Audit trail for production deployments
+    session-memory              Save session context to memory on /new or /reset
+                                USE: Preserving key decisions across sessions
+
+  openclaw hooks enable <name> / disable <name>
+  WHAT:   Toggle a hook on or off
+  WHEN:   Enabling boot-md to auto-start session-bridge.js on gateway restart
+
+  openclaw hooks info <name>
+  WHAT:   Show full details about a hook (what it does, config options)
+  WHEN:   Before enabling an unfamiliar hook
+
+
+────────────────────────────────────────────────────────────────────────────────
+MEMORY — Agent memory management
+────────────────────────────────────────────────────────────────────────────────
+
+  openclaw memory index
+  WHAT:   Reindex all memory files (rebuilds search index)
+  WHEN:   After manually editing memory files, or after memory seems stale
+
+  openclaw memory promote
+  WHAT:   Rank short-term recall candidates, optionally append top ones to MEMORY.md
+  WHEN:   Periodically — promotes important short-term observations into long-term memory
+  WHY:    Prevents memory bloat by curating what's worth keeping
+
+  MEMORY FILES LOCATION:
+    ~/.openclaw/workspace/MEMORY.md        ← index of all memories (loaded every session)
+    ~/.openclaw/workspace/memory/*.md      ← individual memory files
+
+  MEMORY TYPES:
+    user         Who the user is, their role, expertise
+    feedback     What to do / not do (corrections + confirmed approaches)
+    project      Active work, decisions, goals
+    reference    Links to external systems (Notion, Linear, Drive)
+
+
+────────────────────────────────────────────────────────────────────────────────
+SYSTEM — System events and presence
+────────────────────────────────────────────────────────────────────────────────
+
+  openclaw system event --text "SEO report approved: X. Start seo-strategist." --mode now
+  WHAT:   Fire a system event to the agent immediately
+  WHEN:   Triggering a pipeline stage from a script (e.g., after approval-bridge.js)
+  WHY:    How one agent/script kicks off the next agent in the pipeline
+
+  openclaw system heartbeat
+  WHAT:   Show/control the heartbeat (periodic agent self-check)
+  WHEN:   Diagnosing if the agent is "alive" and processing
+
+  openclaw system presence
+  WHAT:   List system presence entries (what's currently active)
+  WHEN:   Understanding what's running right now
+
+
+────────────────────────────────────────────────────────────────────────────────
+SKILLS — Agent skills management
+────────────────────────────────────────────────────────────────────────────────
+
+  openclaw skills list
+  WHAT:   List all skills + status (ready / needs setup / disabled)
+  WHEN:   Discovering available agent capabilities
+
+  SKILL STATUS:
+    ✓ ready        Skill is configured and usable
+    △ needs setup  Skill exists but requires configuration (API key, CLI install)
+    ⏸ disabled    Skill is turned off
+
+  CUSTOM SKILLS LOCATION:
+    ~/.openclaw/workspace/skills/<skill-name>/SKILL.md
+  WHEN TO CREATE A CUSTOM SKILL:
+    When you want the agent to reliably handle a specific trigger
+    (e.g., respond to /summary in Telegram with formatted report)
+
+  SKILL FILE FORMAT (SKILL.md):
+    ---
+    name: skill-name
+    description: When to use this skill (this is how agent decides to load it)
+    ---
+    ## Trigger
+    ## Behavior
+    ## Output
+
+
+────────────────────────────────────────────────────────────────────────────────
+DOCS — Search OpenClaw documentation
+────────────────────────────────────────────────────────────────────────────────
+
+  openclaw docs "search query"
+  WHAT:   Search the OpenClaw documentation inline
+  WHEN:   Looking up a feature, config option, or command you don't know
+  EXAMPLE:
+    openclaw docs "telegram callback query routing"
+    openclaw docs "callbackQueryExec"
+    openclaw docs "webhook telegram"
+
+
+────────────────────────────────────────────────────────────────────────────────
+MISC USEFUL COMMANDS
+────────────────────────────────────────────────────────────────────────────────
+
+  openclaw doctor
+  WHAT:   Run health checks + quick fixes for gateway and channels
+  WHEN:   Something is broken and you don't know why
+  WHY:    Detects common issues (wrong token, port conflict, auth expired)
+
+  openclaw update
+  WHAT:   Update OpenClaw to latest version
+  WHEN:   Before starting a new project, or when a new version fixes a bug
+  WARNING: Check changelog — updates can change config formats
+
+  openclaw reset
+  WHAT:   Reset local config and state (keeps CLI installed)
+  WHEN:   Complete fresh start — config is corrupted or broken
+  WARNING: Destructive. Wipes sessions, memory, credentials. Use carefully.
+
+  openclaw directory --channel telegram --name "GroupName"
+  WHAT:   Look up the Telegram group/user ID by name
+  WHEN:   You need the group ID but only know the name
+  WHY:    Telegram group IDs (negative numbers) are needed for --target
+
+
+════════════════════════════════════════════════════════════════════════════════
+  PART 3 — WHEN TO USE WHAT (DECISION GUIDE)
+════════════════════════════════════════════════════════════════════════════════
+
+SITUATION                              USE THIS
+─────────────────────────────────────────────────────────────────────────────
+Context is getting large/slow          /compact  (in Claude Code)
+Start totally fresh                    /clear  (in Claude Code)
+Need reasoning on hard problem         /think  (in Claude Code)
+Check if gateway is alive              openclaw health
+Gateway crashed / port stuck           openclaw gateway --force
+Send Telegram message                  openclaw message send --channel telegram
+Send PDF to Telegram                   openclaw message send --media /path/file.pdf
+Send approval buttons                  openclaw message send --buttons '[...]'
+Run an agent pipeline                  openclaw agent --message "Run X using /path/orchestrator.md"
+Agent can't run a script               openclaw approvals allowlist add --agent main --pattern "/usr/bin/node"
+Debug: did the callback arrive?        openclaw logs | tail -50
+Debug: did agent actually exec?        Read the session JSONL file, look for toolCall entries
+Debug: why is exec blocked?            openclaw exec-policy show
+Add a scheduled pipeline trigger       openclaw cron add --schedule "0 6 1,16 * *"
+Test a cron job immediately            openclaw cron run <id>
+Find Telegram group ID                 openclaw directory --channel telegram --name "GroupName"
+Something is broken, don't know why   openclaw doctor
+Search for a config/feature option     openclaw docs "search terms"
+
+
+════════════════════════════════════════════════════════════════════════════════
+  PART 4 — TOKEN OPTIMIZATION QUICK REFERENCE
+════════════════════════════════════════════════════════════════════════════════
+
+CLAUDE CODE:
+  /compact after every major task         Saves 30-50% context tokens
+  /compact before switching topics        Prevents stale context confusing Claude
+  Use /model to switch to haiku for       10x cost reduction for simple file edits
+    simple tasks
+  Use /think only when needed             Extended thinking is expensive
+
+OPENCLAW AGENTS:
+  cacheRetention: "short"     For subagents — don't cache large contexts
+  cacheRetention: "medium"    For orchestrators — reuse SOUL.md cache
+  contextTokens: 32000        Keep agent windows small (subagents especially)
+  Use haiku for data pulls    claude-haiku-4-5 is 10-15x cheaper than opus
+  Use opus only for strategy  claude-opus-4-6 for orchestrators + planning
+  MOCK mode during dev        Zero API cost for testing pipeline logic
+  sessions_spawn pattern      Each subagent gets isolated small context
+
+PROMPT CACHE (Anthropic):
+  Cache TTL: ~5 minutes
+  Cached tokens cost ~10x less than fresh tokens
+  SOUL.md + BOOT.md are cached automatically on repeat reads
+  Tip: if you restart gateway within 5 min, cache is still warm
+
+COST ORDER (cheapest → most expensive):
+  claude-haiku-4-5  →  claude-sonnet-4-6  →  claude-opus-4-6
+  gpt-4o-mini       →  gpt-4.1-mini       →  gpt-5.1
+
+
+================================================================================
+  Last updated: 2026-04-15 | Version: Claude Sonnet 4.6 | OpenClaw 2026.4.14
+================================================================================

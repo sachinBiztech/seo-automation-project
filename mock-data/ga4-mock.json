@@ -1,0 +1,14 @@
+{
+  "property": "BiztechCS",
+  "pulled_at": "2026-04-09",
+  "windows": {
+    "15_day": { "organic_sessions": 1420, "total_sessions": 3800, "conversions": 12 },
+    "90_day": { "organic_sessions": 9800, "total_sessions": 24000, "conversions": 74 },
+    "180_day": { "organic_sessions": 18500, "total_sessions": 46000, "conversions": 131 }
+  },
+  "top_landing_pages": [
+    { "url": "/odoo-implementation-services", "sessions_90d": 1200, "bounce_rate": 0.42 },
+    { "url": "/odoo-crm-module", "sessions_90d": 890, "bounce_rate": 0.51 },
+    { "url": "/odoo-manufacturing", "sessions_90d": 640, "bounce_rate": 0.38 }
+  ]
+}

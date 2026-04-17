@@ -1,0 +1,23 @@
+{
+  "pulled_at": "2026-04-09",
+  "competitors": [
+    {
+      "domain": "cybrosys.com",
+      "new_pages_this_cycle": ["/odoo-17-manufacturing-module", "/odoo-pos-india"],
+      "new_backlinks": 3,
+      "keyword_positions": {
+        "odoo implementation partner india": 4,
+        "odoo crm customization": 12
+      }
+    },
+    {
+      "domain": "ksolves.com",
+      "new_pages_this_cycle": [],
+      "new_backlinks": 1,
+      "keyword_positions": {
+        "odoo implementation partner india": 9,
+        "odoo manufacturing module": 5
+      }
+    }
+  ]
+}

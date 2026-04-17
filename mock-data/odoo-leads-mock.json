@@ -1,0 +1,11 @@
+{
+  "pulled_at": "2026-04-09",
+  "mtd": { "leads": 14, "mqls": 7, "sqls": 3 },
+  "qtd": { "leads": 52, "mqls": 24, "sqls": 9 },
+  "ytd": { "leads": 98, "mqls": 41, "sqls": 16 },
+  "organic_share_pct": 61,
+  "top_lead_pages": [
+    { "url": "/odoo-implementation-services", "leads_90d": 18, "mqls_90d": 8 },
+    { "url": "/odoo-crm-module", "leads_90d": 11, "mqls_90d": 4 }
+  ]
+}
