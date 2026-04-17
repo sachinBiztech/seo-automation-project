@@ -1,119 +1,189 @@
-# Sprint PM Agent
+# Sprint PM Orchestrator — BiztechCS
 
 ## Purpose
-Daily overnight agent. Reads the task sheet, calculates today's sprint day, triggers execution agents for today's tasks, handles missed-task rollover, and logs the daily run.
-
-## Model
-claude-sonnet-4-6
+Daily scheduling + execution orchestrator. Calculates today's sprint day, updates task statuses, then spawns execution agents (technical-seo, off-page-seo, content-pipeline) as subagents via sessions_spawn.
 
 ## Mode
 MOCK
 
 ---
 
-## OUTPUT DISCIPLINE — CRITICAL
-
-- Use the write tool to save all output files to disk.
-- Do NOT print file contents to the screen.
-- Do NOT summarize or explain after saving.
-- Reply ONLY with: `✅ sprint-pm-log-[date].json written — Day [N], [N] tasks triggered`
-
----
-
 ## HOW THIS ORCHESTRATOR WORKS
 
-This agent runs all steps sequentially in its own context (no sessions_spawn needed — all steps are lightweight reads and writes). It reads the task sheet, determines today's tasks, updates statuses, and triggers execution agents via `openclaw agent` calls.
+Each execution agent is spawned via `sessions_spawn` with `runtime="subagent"` and `agentId="sprint-pm"`.
+The subagent reads the target orchestrator .md file and executes it in an isolated context.
+This is the same pattern as post-approval.
+
+**DO NOT skip steps. DO NOT call openclaw CLI. Use sessions_spawn for all agent calls.**
 
 ---
 
-## Input
+## SOUL OVERRIDE — CRITICAL
 
-- `seo-automation/outputs/sprint-tasks-[sprint_id].json`
-- `seo-automation/outputs/sprint-approval.json`
+The "be minimal" rule does NOT apply here. All steps must complete.
 
 ---
 
-## Task
+## OUTPUT DISCIPLINE
 
-### Step 1 — Calculate sprint day
-Read `sprint_start` from `sprint-approval.json`.
+- Write all files using the write tool.
+- After each step: `✅ Step N done`
+- Final reply: `✅ Sprint PM complete — Day [N], [N] agents dispatched`
+
+---
+
+## PRECONDITIONS
+
+Before starting, verify:
+- `seo-automation/outputs/sprint-tasks-[sprint_id].json` exists
+- `seo-automation/outputs/sprint-approval.json` exists with `status: "approved"`
+
+Read `seo-automation/outputs/sprint-approval.json` to get `sprint_id` and `sprint_start`.
+
+---
+
+## Step 1 — Calculate sprint day
+
 Calculate: `sprint_day = (today - sprint_start) in days + 1`
-If `sprint_day > 10`: sprint is complete.
-- Send Telegram: "🏁 Sprint [sprint_id] complete. Day 10 passed. All remaining tasks carried to next sprint as P1."
-- Write log and stop.
 
-### Step 2 — Read today's tasks
-Filter `sprint-tasks-[sprint_id].json.tasks` where:
-- `scheduledDay == "Day [N]"` AND `status == "Not Started"`
+If `sprint_day > 10`:
+- Send Telegram: "🏁 Sprint [sprint_id] complete — Day 10 passed."
+- Stop.
 
-### Step 3 — Trigger execution agents
+---
 
-For each task in today's list, trigger the appropriate agent:
+## Step 2 — Find today's tasks
 
-**Task Type = Technical:**
-- Update task status to `"In Progress"`
-- In MOCK mode: call `openclaw agent --agent technical-seo --message "Run technical fix for task [sr]: [title]. Sprint: [sprint_id]."`
+Read `seo-automation/outputs/sprint-tasks-[sprint_id].json`.
 
-**Task Type = Content:**
-- Check dependency: if paired editing task exists for a writing task, ensure writing completes first
-- Update task status to `"In Progress"` in `sprint-tasks-[sprint_id].json`
-- Add this task title to your running `triggered_tasks` list
-- In MOCK mode: call `openclaw agent --agent content-pipeline --message "Run content pipeline. Task ID: [sr], Sprint ID: [sprint_id]. Follow all steps in the content pipeline agent."`
+Find tasks where `scheduledDay == "Day [sprint_day]"` AND `status == "Not Started"`.
 
-**Task Type = Off-Page:**
-- Update task status to `"In Progress"`
-- In MOCK mode: call `openclaw agent --agent off-page-seo --message "Run off-page tasks for sprint [sprint_id]."`
+**Before processing missed tasks:** Check which days have already run by reading any existing `seo-automation/outputs/sprint-pm-log-[date].json` files. If a previous log exists for Day N, treat ALL tasks from that day as already dispatched — do NOT re-trigger them even if their status shows "Not Started" (status may have been reset by regeneration).
 
-### Step 4 — Check for missed tasks
-Find tasks where `scheduledDay` is a day BEFORE today AND `status == "Not Started"`.
-For each missed task:
-- Change `scheduledDay` to tomorrow's day number
-- Send Telegram: "⚠️ [N] tasks from Day [X] not started — reassigned to Day [N+1]"
+Also find missed tasks: `scheduledDay` day number < sprint_day AND `status == "Not Started"` AND no prior sprint-pm-log covers that day → reschedule to `"Day [sprint_day+1]"`. Do NOT re-run tasks that were already dispatched in a prior log.
 
-### Step 5 — Dependency check
-Find editing tasks where the paired writing task `status != "Completed"`.
-For each held task:
-- Set `status = "Held — dependency"`
-- Send Telegram: "🔗 Task [sr] ([title]) held — waiting for [dependency task title] to complete."
+---
 
-### Step 6 — Write log
+## Step 3 — Update sprint-tasks JSON
 
-Throughout Steps 3–5 you MUST maintain three running lists in memory:
-- `triggered_tasks`: task titles of every task you updated to "In Progress" in Step 3
-- `reassigned_tasks`: task titles of every task you moved to a later day in Step 4
-- `held_tasks`: task titles of every task you set to "Held — dependency" in Step 5
+Read the full `seo-automation/outputs/sprint-tasks-[sprint_id].json`.
+For every task found in Step 2, change ONLY the `status` field to `"In Progress"`.
+For rescheduled tasks, change ONLY the `scheduledDay` field.
+Do NOT modify any other field (title, notes, slug, etc.) — copy them exactly as-is.
 
-Write `seo-automation/outputs/sprint-pm-log-[date].json` using the write tool:
+CRITICAL: Write valid JSON only. Do not add any control characters, unescaped quotes, or newlines inside string values. Write the complete updated file back using the write tool.
+
+If rescheduled tasks exist, send Telegram:
+```
+openclaw message send --channel telegram --target -1003829892114 --message "⚠️ [N] missed tasks reassigned to Day [sprint_day+1]"
+```
+
+---
+
+## Step 4 — Spawn Technical SEO (if any Technical tasks today)
+
+If today's tasks include Technical type tasks:
+
+Spawn sub-agent:
+```
+runtime: "subagent"
+agentId: "sprint-pm"
+lightContext: true
+cleanup: "delete"
+label: "Step 4 — Technical SEO"
+task: "Read the file seo-automation/technical-seo/orchestrator.md and follow ALL instructions exactly. Sprint ID: [sprint_id]. Technical tasks for today: [list each Sr + title]. Write all output files using the write tool. Reply ONLY with: ✅ technical-changes-[date].md written"
+```
+
+Expected output: `seo-automation/outputs/technical-changes-[today].md`
+Failure action: WARNING — log failure, continue to off-page step.
+
+---
+
+## Step 5 — Spawn Off-Page SEO (if any Off-Page tasks today)
+
+If today's tasks include Off-Page type tasks:
+
+Spawn sub-agent:
+```
+runtime: "subagent"
+agentId: "sprint-pm"
+lightContext: true
+cleanup: "delete"
+label: "Step 5 — Off-Page SEO"
+task: "Read the file seo-automation/off-page-seo/orchestrator.md and follow ALL instructions exactly. Sprint ID: [sprint_id]. Off-page tasks for today: [list each Sr + title]. Write all output files using the write tool. Reply ONLY with: ✅ outreach-package-[sprint_id].json written"
+```
+
+Expected output: `seo-automation/outputs/outreach-package-[sprint_id].json`
+Failure action: WARNING — log failure, continue.
+
+After off-page completes, spawn outreach-manager:
+
+```
+runtime: "subagent"
+agentId: "sprint-pm"
+lightContext: true
+cleanup: "delete"
+label: "Step 5b — Outreach Manager"
+task: "Read the file seo-automation/outreach-manager/orchestrator.md and follow ALL instructions exactly. Sprint ID: [sprint_id]. Read seo-automation/outputs/outreach-package-[sprint_id].json. Write all output files using the write tool. Reply ONLY with: ✅ outreach-log-[sprint_id].json written"
+```
+
+Expected output: `seo-automation/outputs/outreach-log-[sprint_id].json`
+Failure action: WARNING — log failure, continue.
+
+---
+
+## Step 6 — Spawn Content Pipeline (one per Content task today)
+
+For EACH Content task in today's list, spawn ONE subagent:
+
+```
+runtime: "subagent"
+agentId: "sprint-pm"
+lightContext: true
+cleanup: "delete"
+label: "Step 6 — Content Sr[sr]"
+task: "Read the file seo-automation/content-pipeline/orchestrator.md and follow ALL instructions exactly. Sprint ID: [sprint_id]. Task Sr[sr]: [title]. Primary keyword: [primary_keyword]. Author: [author]. Target word count: [target_word_count]. Write all output files using the write tool. Reply ONLY with: ✅ content-brief-[slug].json written"
+```
+
+Expected output: `seo-automation/outputs/content-brief-[slug].json`
+Failure action: WARNING — log and continue to next content task.
+
+---
+
+## Step 7 — Write sprint-pm log
+
+Write `seo-automation/outputs/sprint-pm-log-[today].json`:
 ```json
 {
-  "run_date": "<ISO8601 now>",
+  "run_date": "<ISO8601>",
   "run_date_local": "<YYYY-MM-DD>",
   "sprint_id": "<sprint_id>",
   "site": "BiztechCS",
-  "sprint_day": <sprint_day>,
+  "sprint_day": <N>,
   "sprint_complete": false,
-  "tasks_triggered": ["<title of each task triggered — never empty if any ran>"],
-  "tasks_reassigned": ["<title of each task reassigned>"],
-  "tasks_held": ["<title of each task held>"],
-  "telegram_sent": true,
-  "telegram_messages": ["<each Telegram message text sent>"]
+  "tasks_triggered": ["<title of every task set to In Progress>"],
+  "tasks_reassigned": ["<titles of rescheduled tasks>"],
+  "agents_dispatched": ["technical-seo", "off-page-seo", "outreach-manager"]
 }
 ```
 
-**CRITICAL:** `tasks_triggered` must list every task that was processed in Step 3, even if only one. Never write `[]` if tasks were triggered.
+Send Telegram using this exact command:
+```
+openclaw message send --channel telegram --target -1003829892114 --message "✅ Sprint PM Day [N] complete — Sprint: [sprint_id]
 
-Also update `sprint-tasks-[sprint_id].json` with all status changes made during this run.
+Technical SEO: ✅ technical-changes-[date].md written
+Off-Page SEO: ✅ outreach-package written — 8 emails queued (MOCK)
+Outreach: ✅ outreach-log written
+
+Next: Day 2 content pipeline starts tomorrow."
+```
 
 ---
 
-## Overnight schedule
+## Output files
 
-- Machine 1 BiztechCS: 9 PM Mon–Fri
-- Machine 1 AppJetty: 12:30 AM Tue–Sat
-- Machine 2 PrintXpand: 9 PM Mon–Fri
-- Machine 2 CRMJetty: 12:30 AM Tue–Sat
-
-## Output
-
-- Updates `seo-automation/outputs/sprint-tasks-[sprint_id].json`
-- `seo-automation/outputs/sprint-pm-log-[date].json`
+- `seo-automation/outputs/sprint-tasks-[sprint_id].json` — updated statuses
+- `seo-automation/outputs/sprint-pm-log-[today].json`
+- `seo-automation/outputs/technical-changes-[today].md` — written by technical-seo subagent
+- `seo-automation/outputs/outreach-package-[sprint_id].json` — written by off-page-seo subagent
+- `seo-automation/outputs/outreach-log-[sprint_id].json` — written by outreach-manager subagent

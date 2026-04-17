@@ -8,25 +8,24 @@
 
 Running in mock mode. All orchestrator and subskill files exist through Phase 8.
 
-**Tested end-to-end (mock mode):**
+**Tested end-to-end (mock mode) — BiztechCS sprint biztechcs_sprint_2026-04-17:**
 - `intelligence-report/` — full 11-step pipeline (all 14 subskills present)
 - `seo-strategist/` — full 6-step pipeline → PDF → Telegram delivery
-- `approval-bridge.js` + `callback-listener.js` — full approve/revise/reject flow via Telegram
+- `approval-bridge.js` + `session-bridge.js` + `callback-listener.js` — full approve/revise/reject/proceed/adjust flow via Telegram
 - `review-sprint-feedback/` — evaluate → reform or full_rerun path
-- `seo-strategist/subskills/reform-sprint-plan.md` — targeted section patching
-- `seo-strategist/subskills/evaluate-sprint-feedback.md` — reform vs full_rerun decision agent
 - `post-approval/` — Product Owner (Steps 1–6) + Business Layer (Steps 7–11) + Cost + Deliver (13 steps total)
 - `product-owner/biztechcs-product-owner-config.md` + `business-layer/biztechcs-business-config.md` — BiztechCS config seeded
+- `task-sheet-populator.js` — writes local CSV + JSON (not Google Sheets); auto-triggered by approval-bridge.js on Proceed click
+- `sprint-pm/` — Day 1 fully tested: technical-seo + off-page-seo + outreach-manager all ran via sessions_spawn
+- `technical-seo/` — ran Day 1, wrote `technical-changes-2026-04-17.md`
+- `off-page-seo/` — ran Day 1, wrote `outreach-package-biztechcs_sprint_2026-04-17.json`
+- `outreach-manager/` — ran Day 1, wrote `outreach-log-biztechcs_sprint_2026-04-17.json` (8 emails, MOCK)
+- `publishing-agent/` + `social-media/` — agents registered and wired, triggered by content-approval-bridge.js after human approval
 - `mock-data/` — GA4, GSC, Odoo, competitor, rankings JSON files
 
 **Built (files exist, not yet fully tested end-to-end):**
-- `sprint-pm.js` + `sprint-pm/orchestrator.md` — daily task scheduler
-- `task-sheet-populator.js` + `task-sheet-populator/orchestrator.md` — Google Sheet population
-- `run-content-pipeline.js` + `content-pipeline/orchestrator.md` — per-article pipeline runner
-- `run-publishing-agent.js` + `publishing-agent/orchestrator.md` — CMS publisher
+- `run-content-pipeline.js` + `content-pipeline/orchestrator.md` — per-article pipeline runner (Day 2+ content)
 - `content-strategist/`, `content-writer/`, `content-editor/`, `graphics-designer/`, `html-preview/` — all orchestrators exist
-- `technical-seo/`, `keyword-research/`, `off-page-seo/`, `outreach-manager/`, `page-diagnosis/` — all orchestrators exist
-- `social-media/orchestrator.md` — social media engine orchestrator
 - `algorithm-intelligence/`, `best-practices-monitor/`, `competitor-watch/` — Phase 8 watch agent orchestrators
 
 **Not yet built (real integrations — all pipelines still in mock mode):**
@@ -69,22 +68,34 @@ run-pipeline.js   (node)
               ├─ reform: re-sends updated PDF with buttons (loops)
               └─ full_rerun: deletes outputs → re-runs seo-strategist
         ▼ (after approve)
-[daily cron] sprint-pm.js   (pure Node — no agent)
-  └─ calculates today's sprint day
-  └─ for each Content task today →
-        │
-        ▼
-     run-content-pipeline.js   (node)
-       └─ openclaw agent --agent content-pipeline
-       └─ 5 subskills + editor loop → preview-[slug].html
+openclaw agent --agent sprint-pm   (daily cron or manual)
+  └─ calculates today's sprint day from sprint_start
+  └─ Day 1: sessions_spawn technical-seo subagent
+       └─ reads technical-seo/orchestrator.md
+       └─ writes technical-changes-[date].md
+  └─ Day 1: sessions_spawn off-page-seo subagent
+       └─ reads off-page-seo/orchestrator.md
+       └─ writes outreach-package-[sprint_id].json
+  └─ Day 1: sessions_spawn outreach-manager subagent
+       └─ reads outreach-manager/orchestrator.md
+       └─ writes outreach-log-[sprint_id].json
+  └─ Day 2+: sessions_spawn content-pipeline subagent (one per content task)
+       └─ reads content-pipeline/orchestrator.md
+       └─ 5 subskills → preview-[slug].html → Telegram approve/reject buttons
              │
+             ▼  (content-approval-bridge.js catches button click)
+       📱 Telegram: [✅ Approve] [🔄 Revise] [❌ Reject]
+             │ human clicks ✅
              ▼
-       📱 Telegram: "Approve Article?"
-             │ (human clicks ✅)
-             ▼
-     run-publishing-agent.js   (node)
-       └─ openclaw agent --agent publishing-agent
-       └─ publishes to CMS → task status = Done
+       run-publishing-agent.js  (spawned by content-approval-bridge.js)
+         └─ openclaw agent --agent publishing-agent
+         └─ publishes (MOCK) → archives HTML → updates task Done
+         └─ spawns social-media agent (background)
+               └─ openclaw agent --agent social-media
+               └─ idea bank → Telegram approval → social-posts-[sprint_id].json
+
+KEY: sessions_spawn agentId="sprint-pm" points task at target orchestrator .md
+     This is same pattern as post-approval using agentId="post-approval" for all subskills.
 ```
 
 **3 human approval gates (all via Telegram):** after Intelligence Report, after Sprint Plan, after each article.
@@ -153,20 +164,22 @@ run-pipeline.js   (node)
 ---
 
 ### Pipeline 3 — Sprint PM (Daily Orchestrator)
-**Runner:** `node sprint-pm.js` | **Trigger:** daily overnight cron
-**Pre-check:** `sprint-approval.json` must be `status: "approved"` | **No OpenClaw agent — pure Node**
+**How to run:** `openclaw agent --agent sprint-pm --message "Run Sprint PM for sprint [sprint_id]. Today is [YYYY-MM-DD] Day [N]. Read seo-automation/sprint-pm/orchestrator.md and execute all steps."`
+**Pre-check:** `sprint-approval.json` must be `status: "approved"`
+
+**IMPORTANT — sessions_spawn pattern:**
+sprint-pm uses `sessions_spawn(agentId: "sprint-pm")` to call execution agents. Each subagent points its `task:` at the target orchestrator .md file (technical-seo, off-page-seo, content-pipeline). This is the same pattern as post-approval. Do NOT use `openclaw agent` CLI calls inside an agent — they do not work.
 
 | Step | What it does |
 |------|-------------|
-| 1 | Verify `sprint-approval.json` is approved |
-| 2 | Calculate today's sprint day (1–15) from `sprint_start` |
-| 3 | Find today's tasks from `sprint-tasks-[sprint_id].json` |
-| 4 | Find missed/overdue tasks from past days |
-| 5 | Reassign missed tasks to next available day + Telegram alert |
-| 6 | Check dependencies — content-editor waits for paired content-writer to be `Completed` |
-| 7 | Mark today's tasks `In Progress`; call `run-content-pipeline.js` for each Content task |
-| 8 | Send daily Telegram summary (Triggered / Held / Reassigned) |
-| 9 | Write updated `sprint-tasks-[sprint_id].json` + CSV |
+| 1 | Calculate today's sprint day from `sprint_start` in `sprint-approval.json` |
+| 2 | Find today's tasks from `sprint-tasks-[sprint_id].json` (scheduledDay == "Day N", status == "Not Started") |
+| 3 | Update task statuses to "In Progress" — change ONLY the status field, preserve all other fields to avoid JSON corruption |
+| 4 | sessions_spawn technical-seo subagent (batch all Technical tasks) |
+| 5 | sessions_spawn off-page-seo subagent (batch all Off-Page tasks) |
+| 5b | sessions_spawn outreach-manager subagent |
+| 6 | sessions_spawn content-pipeline subagent per Content task (Day 2+) |
+| 7 | Write sprint-pm-log-[date].json + Send Telegram via `openclaw message send --channel telegram --target -1003829892114` |
 | 10 | Write `sprint-pm-log-[date].json` |
 
 ---
@@ -465,47 +478,43 @@ Pick tasks, adjust priorities if needed, then reply GO.
 ---
 
 ### Phase 4 — Sprint PM & Task Sheet
-*Goal: Approved task list distributed into a 10-day daily schedule and tracked in Google Sheets.*
+*Goal: Approved task list distributed into a 10-day daily schedule tracked locally as CSV/JSON.*
 
 #### 4.1 — Task Sheet Populator
-`task-sheet-populator/orchestrator.md`
+`task-sheet-populator.js` (Node.js — deterministic, no LLM needed)
 
-On POC GO:
-1. Reads POC's confirmed task selections
-2. Creates new Google Sheet: `Sprint [YYYY-MM-DD] to [YYYY-MM-DD]`
-3. Populates all rows with columns: Sr, Task Type, Title/Target, Assigned Agent, Status, Started, Completed, Drive Link, Notes
-4. Status starts as `Not Started`
-5. Shares sheet with team
+**Auto-triggered:** `approval-bridge.js` spawns `node task-sheet-populator.js` when POC clicks [🚀 Proceed] in Telegram.
+**Output:** `outputs/sprint-tasks-[sprint_id].csv` + `outputs/sprint-tasks-[sprint_id].json`
 
-GSC Insights downtrending pages: created as first rows, flagged `Priority: HIGH`.
+Columns: Sr, Task Type, Title/Target, Priority, Assigned Agent, Scheduled Day, Status, Author/Owner, Started, Completed, Drive Link, Notes
+
+**Scheduling logic (implemented in task-sheet-populator.js):**
+- Technical + Off-Page → Day 1 (all batched)
+- Content P1 → Day 2, 4, 6... (every 2 days — allows Telegram review gap before next starts)
+- Content P2 → Day 8, 10, 12...
+- Status starts as `Not Started`
+
+Note: Google Sheets not yet wired — writes locally only. Production upgrade: add Google Sheets API.
 
 #### 4.2 — Sprint PM Agent
-`sprint-pm/orchestrator.md`
+`sprint-pm/orchestrator.md` | Run: `openclaw agent --agent sprint-pm`
 
-**Scheduling logic:**
-- Total tasks per type ÷ available days = tasks per day
-- P1 → Days 1–4 | P2 → Days 4–7 | Optional → Days 8–10
-- Dependencies: scheduled minimum 1 day after upstream completes
-- Independent tasks share a day and run in parallel
+**CRITICAL architecture — sessions_spawn pattern:**
+sprint-pm uses `sessions_spawn(agentId: "sprint-pm")` pointing `task:` at execution orchestrators.
+This is identical to how post-approval calls its subskills. Do NOT use openclaw CLI inside agents.
 
 **Default daily schedule:**
 | Day | Batch |
 |-----|-------|
-| Day 1 | All technical SEO fixes + all off-page outreach dispatched |
-| Days 2–5 | Writing batch (articles ÷ 4 days, Quora/Reddit distributed evenly) |
-| Days 3–6 | Editing batch (each piece edited day after written) |
-| Days 5–7 | Graphics + HTML preview |
-| Days 6–8 | Telegram approval requests |
-| Days 8–9 | Publishing (day after approval received) |
-| Days 9–10 | Social scheduling + LinkedIn newsletter |
+| Day 1 | All Technical SEO + all Off-Page outreach + Outreach Manager |
+| Day 2 | Content P1 Article 1 → full pipeline → Telegram approve |
+| Day 4 | Content P1 Article 2 → full pipeline → Telegram approve |
+| Day 8+ | Content P2 Articles |
 
-**Overnight trigger (launchd cron):**
-- Machine 1 BiztechCS: 9PM Mon–Fri | AppJetty: 12:30AM Tue–Sat
-- Machine 2 PrintXpand: 9PM Mon–Fri | CRMJetty: 12:30AM Tue–Sat
+**Cron trigger (production):**
+- Machine 1 BiztechCS: 9PM Mon–Fri
 
-**Missed trigger detection:** If tasks remain Pending past 11:59PM → Telegram alert.
-
-**Rollover (blocked tasks only):** Independent blocked → auto-reassign to next day + Telegram. Dependent blocked → full dependency chain sent to POC. No task is ever dropped — carries to next sprint as Priority 1 if unresolved.
+**Known issue:** Agent writes sprint-tasks JSON status updates — must only change `status` field, never rewrite title/notes fields (causes JSON corruption with special chars like →, —). Instruction is in orchestrator Step 3.
 
 ---
 

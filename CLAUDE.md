@@ -230,7 +230,7 @@ Key fields the Strategist reads:
 - **Machine 1:** BiztechCS (9 PM cron) + AppJetty (12:30 AM cron)
 - **Machine 2:** PrintXpand (9 PM cron) + CRMJetty (12:30 AM cron)
 - Intelligence Report: biweekly (1st + 16th at 6 AM)
-- Sprint PM: daily overnight cron (`node sprint-pm.js`)
+- Sprint PM: daily overnight cron (`node run-sprint-pm.js`)
 
 ## Per-Website Configuration (in OpenClaw memory, not in repo)
 

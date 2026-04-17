@@ -29,6 +29,17 @@ function readJson(file) {
   return JSON.parse(fs.readFileSync(file, 'utf8'));
 }
 
+function sanitize(val) {
+  if (val === null || val === undefined) return '';
+  return String(val)
+    .replace(/\u2192/g, '->')   // → to ->
+    .replace(/\u2014/g, '-')    // — to -
+    .replace(/\u2013/g, '-')    // – to -
+    .replace(/\u2018|\u2019/g, "'")  // curly single quotes
+    .replace(/\u201c|\u201d/g, '"')  // curly double quotes
+    .replace(/[\u0000-\u001F]/g, ' '); // strip control chars
+}
+
 function csvEscape(val) {
   if (val === null || val === undefined) return '';
   const s = String(val);
@@ -87,16 +98,19 @@ function buildContentRows(plan, startSr) {
     rows.push({
       sr: sr++,
       taskType: 'Content',
-      title: item.title,
+      title: sanitize(item.title),
       priority,
+      slug: (item.title || '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, ''),
       assignedAgent: 'content-writer',
       scheduledDay: scheduledDay('Content', priority, contentIndex++),
       status: 'Not Started',
-      authorOwner: item.author || '',
+      authorOwner: sanitize(item.author || ''),
+      primaryKeyword: sanitize(item.primary_keyword || ''),
+      targetWordCount: item.target_word_count || '',
       started: '',
       completed: '',
       driveLink: '',
-      notes: `Keyword: ${item.primary_keyword} | Target: ${item.target_word_count} words | Vector ${item.vector}`,
+      notes: sanitize(`Keyword: ${item.primary_keyword} | Target: ${item.target_word_count} words | Vector ${item.vector}`),
     });
   }
   return rows;
@@ -116,17 +130,17 @@ function buildTechnicalRows(plan, startSr) {
     const priority = item.priority === 1 ? 'P1' : item.priority === 2 ? 'P2' : 'P1';
     let title;
     if (item.subtype === 'CWV Fix') {
-      title = `CWV Fix: ${item.metric} on ${plan.technical_plan.items.page_fixes?.[0]?.url || 'target page'} (${item.current_value} → ${item.target_value})`;
+      title = `CWV Fix: ${item.metric} on ${plan.technical_plan.items.page_fixes?.[0]?.url || 'target page'} (${item.current_value} -> ${item.target_value})`;
     } else if (item.subtype === 'Structural Fix') {
       const pages = (item.pages_involved || []).join(', ');
-      title = `Structural Fix: ${item.type} — ${pages}`;
+      title = `Structural Fix: ${item.type} - ${pages}`;
     } else {
-      title = `Page Fix: ${item.url} — ${item.issue_type}`;
+      title = `Page Fix: ${item.url} - ${item.issue_type}`;
     }
     rows.push({
       sr: sr++,
       taskType: 'Technical',
-      title,
+      title: sanitize(title),
       priority,
       assignedAgent: 'technical-seo',
       scheduledDay: 'Day 1',
@@ -135,7 +149,7 @@ function buildTechnicalRows(plan, startSr) {
       started: '',
       completed: '',
       driveLink: '',
-      notes: item.fix || item.diagnosis || item.description || '',
+      notes: sanitize(item.fix || item.diagnosis || item.description || ''),
     });
   }
   return rows;
@@ -151,7 +165,7 @@ function buildOffPageRows(plan, startSr) {
     rows.push({
       sr: sr++,
       taskType: 'Off-Page',
-      title: `Backlink Outreach: ${bl.domain} → ${bl.link_to_our_page}`,
+      title: sanitize(`Backlink Outreach: ${bl.domain} -> ${bl.link_to_our_page}`),
       priority: 'P1',
       assignedAgent: 'offpage-outreach',
       scheduledDay: 'Day 1',
@@ -169,7 +183,7 @@ function buildOffPageRows(plan, startSr) {
     rows.push({
       sr: sr++,
       taskType: 'Off-Page',
-      title: `Guest Post: ${gp.target_website} — "${gp.proposed_topic}"`,
+      title: sanitize(`Guest Post: ${gp.target_website} - "${gp.proposed_topic}"`),
       priority: 'P1',
       assignedAgent: 'offpage-outreach',
       scheduledDay: 'Day 1',
