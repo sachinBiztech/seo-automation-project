@@ -25,7 +25,7 @@ const BRIDGE_SCRIPT = path.join(__dirname, 'approval-bridge.js');
 const LOG_FILE = path.join(__dirname, 'outputs', 'session-bridge.log');
 const STATE_FILE = path.join(__dirname, 'outputs', 'session-bridge-state.json');
 
-const CALLBACK_PATTERN = /^(approve|revise|reject)\|(\S+)$/;
+const CALLBACK_PATTERN = /^(approve|revise|reject|proceed|adjust)\|(\S+)$/;
 const POLL_INTERVAL_MS = 500; // check every 500ms
 
 // ── Logging ───────────────────────────────────────────────────────────────────

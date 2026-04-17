@@ -104,6 +104,28 @@ function main() {
   } else {
     console.warn('\n⚠️  publish-log not found — check agent output above');
   }
+
+  // Trigger social media agent (non-blocking background process)
+  const triggerFile = path.join(OUTPUTS, `social-media-trigger-${SPRINT_ID}.json`);
+  if (fs.existsSync(triggerFile)) {
+    console.log('\n🤖 Triggering social-media agent (background)...');
+    const { spawn } = require('child_process');
+    const sm = spawn(
+      'openclaw',
+      [
+        'agent', '--agent', 'social-media',
+        '--message',
+        `Generate social media posts for published article. Sprint ID: ${SPRINT_ID}. Slug: ${SLUG}. ` +
+        `Read seo-automation/outputs/social-media-trigger-${SPRINT_ID}.json for article details. ` +
+        'Follow the social-media agent instructions exactly.',
+      ],
+      { detached: true, stdio: 'ignore' }
+    );
+    sm.unref();
+    console.log('  ✅ Social media agent started in background.');
+  } else {
+    console.warn('  ⚠️  social-media-trigger not found — social media agent not started');
+  }
 }
 
 main();

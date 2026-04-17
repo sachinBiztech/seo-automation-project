@@ -213,16 +213,44 @@ function triggerAgent(task, sprintId) {
   }
 
   if (task.taskType === 'Technical') {
-    // TODO: build run-technical-pipeline.js
-    console.log(`    [NOT BUILT] run-technical-pipeline.js — logging only`);
-    sendTelegram(`⚙️ Technical task ready (agent not built yet):\n${task.title}\nSprint: ${sprintId}`);
+    if (DRY_RUN) {
+      console.log(`    [DRY] Would run: node run-technical-pipeline.js --sprint-id ${sprintId} --task-id ${task.sr}`);
+      return 'technical-pipeline';
+    }
+    const result = spawnSync(
+      'node',
+      [
+        path.join(SEO_DIR, 'run-technical-pipeline.js'),
+        '--sprint-id', sprintId,
+        '--task-id',   String(task.sr),
+      ],
+      { encoding: 'utf8', timeout: 300000, stdio: 'inherit' }
+    );
+    if (result.status !== 0) {
+      console.error(`    ❌ Technical pipeline failed for task ${task.sr}`);
+      sendTelegram(`❌ Technical pipeline failed\nSprint: ${sprintId}\nTask: ${task.title}`);
+    }
     return 'technical-pipeline';
   }
 
   if (task.taskType === 'Off-Page') {
-    // TODO: build run-offpage-pipeline.js
-    console.log(`    [NOT BUILT] run-offpage-pipeline.js — logging only`);
-    sendTelegram(`🔗 Off-Page task ready (agent not built yet):\n${task.title}\nSprint: ${sprintId}`);
+    if (DRY_RUN) {
+      console.log(`    [DRY] Would run: node run-offpage-pipeline.js --sprint-id ${sprintId} --task-id ${task.sr}`);
+      return 'offpage-pipeline';
+    }
+    const result = spawnSync(
+      'node',
+      [
+        path.join(SEO_DIR, 'run-offpage-pipeline.js'),
+        '--sprint-id', sprintId,
+        '--task-id',   String(task.sr),
+      ],
+      { encoding: 'utf8', timeout: 300000, stdio: 'inherit' }
+    );
+    if (result.status !== 0) {
+      console.error(`    ❌ Off-Page pipeline failed for task ${task.sr}`);
+      sendTelegram(`❌ Off-Page pipeline failed\nSprint: ${sprintId}\nTask: ${task.title}`);
+    }
     return 'offpage-pipeline';
   }
 

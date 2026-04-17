@@ -2,7 +2,7 @@
 const fs   = require('fs');
 const path = require('path');
 const os   = require('os');
-const { execFileSync } = require('child_process');
+const { execFileSync, spawn } = require('child_process');
 
 const repoRoot              = __dirname;
 const outputsDir            = path.join(repoRoot, 'outputs');
@@ -286,17 +286,20 @@ if (action === 'proceed' && entityId.startsWith('biztechcs_sprint_')) {
   status.proceed_by       = actor;
   writeJson(postApprovalStatusPath, status);
 
-  const taskSheetOrchestratorPath = path.join(repoRoot, 'task-sheet-populator', 'orchestrator.md');
   const triggerRecord = {
     source: 'telegram_proceed', sprint_id: entityId,
-    triggered_at: nowIso(), trigger: 'task-sheet-populator',
-    orchestrator: taskSheetOrchestratorPath, status: 'proceed_confirmed'
+    triggered_at: nowIso(), trigger: 'task-sheet-populator', status: 'proceed_confirmed'
   };
   writeJson(path.join(outputsDir, 'task-sheet-trigger.json'), triggerRecord);
-  fireEvent(
-    `Sprint proceed confirmed: ${entityId}. Start task-sheet-populator using ${taskSheetOrchestratorPath}`,
-    path.join(outputsDir, 'task-sheet-trigger.json'), triggerRecord
+
+  // Spawn task-sheet-populator.js directly — no openclaw event needed
+  const tsp = spawn(
+    'node',
+    [path.join(repoRoot, 'task-sheet-populator.js'), '--sprint-id', entityId],
+    { detached: true, stdio: 'ignore' }
   );
+  tsp.unref();
+  console.log(`[proceed] task-sheet-populator spawned for ${entityId}`);
 
   console.log(JSON.stringify({ ok: true, kind: 'proceed', action, sprint_id: entityId }, null, 2));
   process.exit(0);

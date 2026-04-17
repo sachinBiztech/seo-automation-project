@@ -54,13 +54,15 @@ function scheduledDay(taskType, priority, index) {
     case 'Off-Page':
       return 'Day 1';
     case 'Content':
-      // P1 → Days 1–4, P2 → Days 4–7, Optional → Days 8–10
+      // P1 → Day 2, 4, 6... (every 2 days so each gets review time before next starts)
+      // P2 → Day 8, 10, 12...
+      // Optional → Day 12+
       if (priority === 'HIGH' || priority === 'P1') {
-        const base = 2;
-        return `Day ${base + (index % 4)}`;
+        return `Day ${2 + index * 2}`;
+      } else if (priority === 'P2') {
+        return `Day ${8 + index * 2}`;
       } else {
-        const base = 5;
-        return `Day ${base + (index % 3)}`;
+        return `Day ${12 + index * 2}`;
       }
     default:
       return 'Day 1';
@@ -111,10 +113,16 @@ function buildTechnicalRows(plan, startSr) {
   ].sort((a, b) => a.priority - b.priority);
 
   for (const item of allTech) {
-    const priority = item.priority === 1 ? 'P1' : item.priority === 2 ? 'P2' : 'Optional';
-    const title = item.metric
-      ? `CWV Fix: ${item.metric} on ${plan.technical_plan.items.page_fixes?.[0]?.url || 'target page'} (${item.current_value} → ${item.target_value})`
-      : `Page Fix: ${item.url} — ${item.issue_type}`;
+    const priority = item.priority === 1 ? 'P1' : item.priority === 2 ? 'P2' : 'P1';
+    let title;
+    if (item.subtype === 'CWV Fix') {
+      title = `CWV Fix: ${item.metric} on ${plan.technical_plan.items.page_fixes?.[0]?.url || 'target page'} (${item.current_value} → ${item.target_value})`;
+    } else if (item.subtype === 'Structural Fix') {
+      const pages = (item.pages_involved || []).join(', ');
+      title = `Structural Fix: ${item.type} — ${pages}`;
+    } else {
+      title = `Page Fix: ${item.url} — ${item.issue_type}`;
+    }
     rows.push({
       sr: sr++,
       taskType: 'Technical',
@@ -127,7 +135,7 @@ function buildTechnicalRows(plan, startSr) {
       started: '',
       completed: '',
       driveLink: '',
-      notes: item.fix || item.diagnosis || '',
+      notes: item.fix || item.diagnosis || item.description || '',
     });
   }
   return rows;
