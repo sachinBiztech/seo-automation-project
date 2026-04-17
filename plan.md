@@ -6,13 +6,34 @@
 
 ## Current State
 
-The project has a partial mock prototype:
-- `intelligence-report/` — orchestrator + 3 subskills (gsc pull, analyze, generate-insights)
-- `seo-strategist/` — orchestrator + 1 subskill (read-intelligence-brief)
-- `mock-data/` — GA4, GSC, Odoo, competitor, rankings JSON files
-- `outputs/` — report artifacts from a demo run
+Running in mock mode. All orchestrator and subskill files exist through Phase 8.
 
-Everything else is not yet built.
+**Tested end-to-end (mock mode):**
+- `intelligence-report/` — full 11-step pipeline (all 14 subskills present)
+- `seo-strategist/` — full 6-step pipeline → PDF → Telegram delivery
+- `approval-bridge.js` + `callback-listener.js` — full approve/revise/reject flow via Telegram
+- `review-sprint-feedback/` — evaluate → reform or full_rerun path
+- `seo-strategist/subskills/reform-sprint-plan.md` — targeted section patching
+- `seo-strategist/subskills/evaluate-sprint-feedback.md` — reform vs full_rerun decision agent
+- `post-approval/` — Product Owner (Steps 1–6) + Business Layer (Steps 7–11) + Cost + Deliver (13 steps total)
+- `product-owner/biztechcs-product-owner-config.md` + `business-layer/biztechcs-business-config.md` — BiztechCS config seeded
+- `mock-data/` — GA4, GSC, Odoo, competitor, rankings JSON files
+
+**Built (files exist, not yet fully tested end-to-end):**
+- `sprint-pm.js` + `sprint-pm/orchestrator.md` — daily task scheduler
+- `task-sheet-populator.js` + `task-sheet-populator/orchestrator.md` — Google Sheet population
+- `run-content-pipeline.js` + `content-pipeline/orchestrator.md` — per-article pipeline runner
+- `run-publishing-agent.js` + `publishing-agent/orchestrator.md` — CMS publisher
+- `content-strategist/`, `content-writer/`, `content-editor/`, `graphics-designer/`, `html-preview/` — all orchestrators exist
+- `technical-seo/`, `keyword-research/`, `off-page-seo/`, `outreach-manager/`, `page-diagnosis/` — all orchestrators exist
+- `social-media/orchestrator.md` — social media engine orchestrator
+- `algorithm-intelligence/`, `best-practices-monitor/`, `competitor-watch/` — Phase 8 watch agent orchestrators
+
+**Not yet built (real integrations — all pipelines still in mock mode):**
+- Google Drive API integration (all agents write locally; Drive save not wired)
+- Google Sheets API integration (task-sheet-populator writes locally; Sheets not wired)
+- Real API calls: GA4/BigQuery, GSC/BigQuery, Odoo XML-RPC, Clarity, Ahrefs, SerpAPI, SocialPilot
+- CMS API for Publishing Agent (currently logs mock publish record)
 
 ---
 
@@ -37,9 +58,17 @@ run-pipeline.js   (node)
   └─ 6 subskills → sprint-plan.json + sprint-tasks-[id].json
         │
         ▼
-  📱 Telegram: "Approve Sprint Plan?"
-        │ (human clicks ✅)
-        ▼
+  📱 Telegram: Sprint Plan PDF + [✅ Approve] [🔄 Revise] [❌ Reject]
+        │ (callback-listener.js running in background)
+        ├─ ✅ Approve ──────────────────────────────────────────────▶ post-approval
+        └─ 🔄 Revise / ❌ Reject
+              │ bot force_reply: "What needs to change?"
+              │ human replies with feedback
+              ▼
+        review-sprint-feedback (evaluate → reform or full_rerun)
+              ├─ reform: re-sends updated PDF with buttons (loops)
+              └─ full_rerun: deletes outputs → re-runs seo-strategist
+        ▼ (after approve)
 [daily cron] sprint-pm.js   (pure Node — no agent)
   └─ calculates today's sprint day
   └─ for each Content task today →
@@ -102,7 +131,24 @@ run-pipeline.js   (node)
 | 5 | `generate-sprint-pdf` | `sprint-plan.html` | `generate-sprint-pdf-status.json` | WARNING (html fallback) |
 | 6 | `deliver-sprint-plan` | sprint-plan files | `sprint-approval.json` (status: `pending`) | STOP |
 
-**Gate:** Telegram with approval buttons → human clicks ✅ → `sprint-approval.json` status = `approved`
+**Gate:** Telegram PDF + [✅ Approve] [🔄 Revise] [❌ Reject] inline buttons →
+`callback-listener.js` (background process) captures button press → `approval-bridge.js` routes:
+
+| Button | Flow |
+|--------|------|
+| ✅ Approve | `sprint-approval.json` status=`approved` → openclaw event → `post-approval/orchestrator.md` |
+| 🔄 Revise | Bot sends `force_reply` prompt → human types feedback → `review-sprint-feedback` evaluates → reform or full_rerun |
+| ❌ Reject | Same as Revise — feedback collected first, then agent decides severity |
+
+**`review-sprint-feedback` pipeline (triggered on Revise/Reject):**
+
+| Step | Subskill | Reads | Writes | Decision |
+|------|----------|-------|--------|---------|
+| 1 | `evaluate-sprint-feedback` | `sprint-plan.json` + `sprint-feedback.json` | `sprint-feedback-decision.json` | reform or full_rerun |
+| 2 (reform) | `reform-sprint-plan` | `sprint-plan.json` + `sprint-feedback-decision.json` | `sprint-plan.json` (updated) | — |
+| 3 (reform) | `generate-sprint-pdf` | `sprint-plan.html` | `generate-sprint-pdf-status.json` | — |
+| 4 (reform) | `deliver-sprint-plan` | updated sprint-plan files | `sprint-approval.json` (status: `pending`) | loops back to gate |
+| 2 (full_rerun) | bash cleanup + openclaw event | — | deletes all sprint outputs | re-runs seo-strategist from Step 0 |
 
 ---
 

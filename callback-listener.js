@@ -36,6 +36,7 @@ const OFFSET_FILE = path.join(SCRIPT_DIR, 'outputs', 'callback-listener-offset.j
 const POLL_TIMEOUT = 30; // seconds — long polling
 
 const KNOWN_ACTIONS = ['approve', 'revise', 'reject'];
+const PENDING_TEXT_REPLY_PATH = path.join(SCRIPT_DIR, 'outputs', 'pending-text-reply.json');
 
 // ── Logging ───────────────────────────────────────────────────────────────────
 
@@ -97,7 +98,7 @@ async function getUpdates(offset) {
   return telegramRequest('getUpdates', {
     offset,
     timeout: POLL_TIMEOUT,
-    allowed_updates: ['callback_query'],
+    allowed_updates: ['callback_query', 'message'],
   });
 }
 
@@ -111,13 +112,16 @@ async function answerCallbackQuery(callbackQueryId, text) {
 
 // ── Bridge caller ─────────────────────────────────────────────────────────────
 
-function callBridge(callbackData, actor) {
-  const nodeExe = process.execPath; // use the same node that runs this script
-  log('info', `Calling bridge: ${callbackData} actor=${actor}`);
+function callBridge(callbackData, actor, notes) {
+  const nodeExe = process.execPath;
+  const args = notes !== undefined
+    ? [BRIDGE_SCRIPT, callbackData, actor, notes]
+    : [BRIDGE_SCRIPT, callbackData, actor];
+  log('info', `Calling bridge: ${callbackData} actor=${actor}${notes !== undefined ? ' (with notes)' : ''}`);
   try {
-    const output = execFileSync(nodeExe, [BRIDGE_SCRIPT, callbackData, actor], {
+    const output = execFileSync(nodeExe, args, {
       encoding: 'utf8',
-      timeout: 10000,
+      timeout: 15000,
     });
     log('info', 'Bridge output', JSON.parse(output.trim()));
     return { ok: true, output };
@@ -151,10 +155,10 @@ async function handleCallbackQuery(cq) {
   // Answer the callback query (dismiss the loading spinner on the button)
   const replyText = result.ok
     ? action === 'approve'
-      ? '✅ Sprint approved!'
+      ? '✅ Approved! Post-approval pipeline starting.'
       : action === 'revise'
-      ? '🔄 Revision requested.'
-      : '❌ Sprint rejected.'
+      ? '🔄 Please reply to the bot message with your notes.'
+      : '❌ Please reply to the bot message with what went wrong.'
     : '⚠️ Action received but update failed. Check logs.';
 
   try {
@@ -163,6 +167,35 @@ async function handleCallbackQuery(cq) {
   } catch (err) {
     log('warn', `answerCallbackQuery failed (query may have expired): ${err.message}`);
   }
+}
+
+// ── Text message handler (for revision notes / escalation replies) ────────────
+
+async function handleMessage(message) {
+  const text = (message.text || '').trim();
+  const from = message.from?.username || message.from?.first_name || String(message.from?.id);
+
+  if (!text) return;
+
+  // Only act if there's a pending text reply waiting
+  let pending;
+  try {
+    pending = JSON.parse(fs.readFileSync(PENDING_TEXT_REPLY_PATH, 'utf8'));
+  } catch (_) {
+    log('info', `Ignoring text message (no pending reply): "${text.substring(0, 50)}"`);
+    return;
+  }
+
+  // Validate this is actually a reply to the bot's force_reply message
+  const replyToId = message.reply_to_message?.message_id;
+  if (pending.force_reply_message_id && replyToId !== pending.force_reply_message_id) {
+    log('info', `Ignoring message — not a reply to force_reply message ${pending.force_reply_message_id} (got reply_to=${replyToId})`);
+    return;
+  }
+
+  const callbackData = `${pending.action}|${pending.sprint_id}`;
+  log('info', `Routing text to bridge: action=${pending.action} sprint=${pending.sprint_id} text="${text.substring(0, 60)}"`);
+  callBridge(callbackData, from, text);
 }
 
 // ── Poll loop ─────────────────────────────────────────────────────────────────
@@ -187,6 +220,8 @@ async function poll() {
 
         if (update.callback_query) {
           await handleCallbackQuery(update.callback_query);
+        } else if (update.message?.text) {
+          await handleMessage(update.message);
         }
       }
     } catch (err) {

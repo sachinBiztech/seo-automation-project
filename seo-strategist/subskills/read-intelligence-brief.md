@@ -14,7 +14,9 @@ MOCK
 
 ## Input
 
-File: `seo-automation/outputs/report-summary.json`
+File 1: `seo-automation/outputs/report-summary.json`
+File 2: `seo-automation/outputs/gsc-findings.json`
+File 3: `seo-automation/outputs/research-findings.json`
 
 ---
 
@@ -22,29 +24,30 @@ File: `seo-automation/outputs/report-summary.json`
 
 You are the intelligence brief parser for BiztechCS.
 
-Read `seo-automation/outputs/report-summary.json` completely.
-
-Then extract and structure the following:
+Read all three input files completely before extracting anything.
 
 **Step 1 — Priority 1 Locked Pages**
-Extract all entries from `priority_1_pages`.
+Read `gsc-findings.json` and extract the `priority_1_pages` array.
 These pages are locked as Priority 1 for the sprint — the strategist cannot deprioritize them.
+Each entry has: `url`, `signal` (why it is priority 1), and optionally `priority`.
+Map `signal` → `signal` and derive `action_required` from the signal text.
 
 **Step 2 — Top Opportunities**
-From `research_findings`, extract Q1, Q3, Q12, Q16.
+Read `research-findings.json`. It has a `findings` array where each entry has `question`, `finding`, `action`.
+Extract entries where `question` is Q1, Q3, Q12, Q16.
 These are the primary attack opportunities.
 
 **Step 3 — Technical Flags**
-From `research_findings`, extract Q9 and Q10.
-From `traffic_summary`, note `traffic_trend`.
+From `research-findings.json` `findings` array, extract entries where `question` is Q9 and Q10.
+From `report-summary.json` `traffic_summary`, note `traffic_trend`.
 
 **Step 4 — Competitor Threats**
-From `competitor_summary`, extract `highest_threat` and `top_content_gap`.
-From `research_findings`, extract Q5, Q6, Q17.
+From `report-summary.json` `competitor_summary`, extract `highest_threat` and `top_content_gap`.
+From `research-findings.json` `findings` array, extract entries where `question` is Q5, Q6, Q17.
 
 **Step 5 — MQL Context**
-From `lead_summary`, extract `performance_flag`.
-From `performance_context`, copy the full text.
+From `report-summary.json` `lead_summary`, extract `performance_flag`.
+From `report-summary.json` `performance_context`, copy the full text.
 This context must be passed to the Business Layer to prevent misreading.
 
 ---

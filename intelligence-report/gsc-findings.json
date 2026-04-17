@@ -10,7 +10,7 @@
     {
       "query": "odoo manufacturing module",
       "impressions": 3100,
-      "ctr": 0.010,
+      "ctr": 0.01,
       "position": 11.3,
       "trend": "Declining"
     }
@@ -27,8 +27,55 @@
       "query": "odoo manufacturing module",
       "position": 11.3,
       "impressions": 3100,
-      "ctr": 0.010,
+      "ctr": 0.01,
       "trend": "Declining"
     }
-  ]
+  ],
+  "priority_1_pages": [
+    {
+      "url": "/odoo-manufacturing",
+      "signal": "Impressions dropped 34% in last 30 days",
+      "priority": "HIGH"
+    }
+  ],
+  "raw_top_keywords": [
+    {
+      "query": "odoo implementation partner india",
+      "clicks": 25,
+      "impressions": 4200,
+      "ctr": 0.006,
+      "position": 14.2,
+      "trend": "Climbing"
+    },
+    {
+      "query": "odoo crm customization",
+      "clicks": 48,
+      "impressions": 2800,
+      "ctr": 0.017,
+      "position": 7.8,
+      "trend": "Holding"
+    },
+    {
+      "query": "odoo manufacturing module",
+      "clicks": 31,
+      "impressions": 3100,
+      "ctr": 0.01,
+      "position": 11.3,
+      "trend": "Declining"
+    },
+    {
+      "query": "odoo vs sap mid market",
+      "clicks": 8,
+      "impressions": 1900,
+      "ctr": 0.004,
+      "position": 22.1,
+      "trend": "Climbing"
+    }
+  ],
+  "core_web_vitals": {
+    "lcp": "2.8s",
+    "inp": "180ms",
+    "cls": "0.08",
+    "verdict": "Needs improvement"
+  }
 }

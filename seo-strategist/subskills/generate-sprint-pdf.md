@@ -47,14 +47,16 @@ cd /home/sachin.p/.openclaw/workspace/seo-automation && node -e "
 const puppeteer = require('puppeteer-core');
 const path = require('path');
 
+// Use absolute OUTPUTS_DIR — never relative paths — so the PDF always lands in the right place
+// regardless of which directory the shell was in before the cd above.
+const OUTPUTS_DIR = '/home/sachin.p/.openclaw/workspace/seo-automation/outputs';
+const htmlPath = path.join(OUTPUTS_DIR, 'sprint-plan.html');
+
+const today = new Date().toISOString().slice(0, 10).replace(/-/g, '_');
+const pdfFilename = 'BiztechCS-SEO-Sprint-Plan_' + today + '.pdf';
+const pdfPath = path.join(OUTPUTS_DIR, pdfFilename);
+
 (async () => {
-  const htmlPath = path.resolve('outputs/sprint-plan.html');
-
-  // Use TODAY's date for the filename so each run creates a new file
-  const today = new Date().toISOString().slice(0, 10).replace(/-/g, '_');
-  const pdfFilename = 'BiztechCS-SEO-Sprint-Plan_' + today + '.pdf';
-  const pdfPath = path.resolve('outputs/' + pdfFilename);
-
   const browser = await puppeteer.launch({
     executablePath: '/usr/bin/google-chrome',
     args: ['--no-sandbox', '--disable-setuid-sandbox', '--disable-gpu', '--disable-dev-shm-usage'],

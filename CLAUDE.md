@@ -128,7 +128,8 @@ Failure action: STOP. Send Telegram: "❌ [Site] FAILED at Step N ([reason])."
 The full build plan is in `GUIDE.md`. Current state:
 
 ```
-Intelligence Report (mock) → SEO Strategist (mock) → [not built]
+Intelligence Report (mock) → SEO Strategist (mock) → Approve/Revise/Reject gate
+  → review-sprint-feedback (reform or full_rerun) → post-approval → [task-sheet, sprint-pm not built]
 ```
 
 Target state:
@@ -148,10 +149,44 @@ Intelligence Report → SEO Strategist → Product Owner Review → Business Lay
 - **Human gate:** Telegram message → APPROVE / REVISE / REJECT
 
 ### SEO Strategist (`seo-strategist/`)
-- **Runner:** `node run-pipeline.js`
+- **Runner:** `node run-pipeline.js` (or run `seo-strategist/orchestrator.md` directly via openclaw)
 - Reads `outputs/report-summary.json`
 - Produces 15-day sprint plan across 3 attack vectors: Content, Technical, Off-Page
 - **Core principle:** Every plan answers *"What structural advantage can we create in 15 days?"*
+- **Human gate:** Telegram PDF + [✅ Approve] [🔄 Revise] [❌ Reject] inline buttons
+  - **Approve** → triggers `post-approval` orchestrator (Product Owner + Business Layer)
+  - **Revise / Reject** → bot sends `force_reply` prompt asking what needs to change →
+    user replies with feedback → `review-sprint-feedback` orchestrator evaluates feedback →
+    agent decides: **reform** (fix specific sections, re-deliver) or **full_rerun** (delete all
+    sprint outputs, re-run seo-strategist from scratch)
+
+### Approval Listener (`callback-listener.js`)
+- Must be running as a background process for Telegram buttons to work:
+  ```bash
+  node callback-listener.js &
+  ```
+- Long-polls Telegram for `callback_query` (button clicks) and `message` (text replies)
+- Routes button clicks to `approval-bridge.js`
+- Routes force_reply text replies to `approval-bridge.js` with feedback text
+- Validates force_reply responses using `message.reply_to_message.message_id`
+- Writes logs to `outputs/callback-listener.log`
+
+### Approval Bridge (`approval-bridge.js`)
+- Stateless Node.js script called by `callback-listener.js`
+- Handles: `approve`, `revise`, `reject`, `sprint-feedback`, `proceed`, `adjust`
+- On **revise/reject**: sends `force_reply` Telegram message via Telegram API (curl), writes
+  `outputs/pending-text-reply.json` to track which sprint is awaiting feedback
+- On **sprint-feedback**: writes `outputs/sprint-feedback.json`, fires openclaw event to trigger
+  `review-sprint-feedback/orchestrator.md`
+- On **approve**: writes `sprint-approval.json` status=`approved`, fires openclaw event to trigger
+  `post-approval/orchestrator.md`
+
+### Review Sprint Feedback (`review-sprint-feedback/`)
+- Triggered by `approval-bridge.js` after feedback text is received
+- Step 1: `evaluate-sprint-feedback` agent reads `sprint-plan.json` + `sprint-feedback.json`,
+  decides reform vs full_rerun, writes `sprint-feedback-decision.json`
+- **reform path**: `reform-sprint-plan` → `generate-sprint-pdf` → `deliver-sprint-plan`
+- **full_rerun path**: deletes all sprint outputs → fires openclaw event → seo-strategist re-runs fresh
 
 ### Product Owner Review, Business Layer, Task Sheet Populator, Sprint PM, Execution Agents
 Not yet built. See `GUIDE.md` for full specs.
@@ -181,6 +216,14 @@ Key fields the Strategist reads:
 | `outputs/report-summary.json` | `assemble-report` |
 | `outputs/intelligence-report.md` | `assemble-report` |
 | `outputs/report-approval.json` | `deliver-report` |
+| `outputs/sprint-plan.json` | `assemble-sprint-plan` |
+| `outputs/sprint-approval.json` | `deliver-sprint-plan` (status: `pending`) → updated by `approval-bridge.js` |
+| `outputs/sprint-feedback.json` | `approval-bridge.js` (written when REVISE/REJECT feedback received) |
+| `outputs/sprint-feedback-decision.json` | `evaluate-sprint-feedback` (reform or full_rerun decision) |
+| `outputs/pending-text-reply.json` | `approval-bridge.js` (temporary — deleted after reply received) |
+| `outputs/post-approval-trigger.json` | `approval-bridge.js` (written on approve) |
+| `outputs/review-sprint-trigger.json` | `approval-bridge.js` (written on feedback received) |
+| `outputs/callback-listener.log` | `callback-listener.js` |
 
 ## Deployment Topology
 
@@ -211,6 +254,14 @@ OpenClaw memory.
 - `.claude/settings.local.json` only permits `Bash(openclaw config *)`. This will block
   Claude Code from running `node run-pipeline.js` etc. Add appropriate permissions if using
   Claude Code to operate the pipeline.
+- `callback-listener.js` must be running as a background process for Telegram approval buttons
+  to work. It is not started automatically — run `node callback-listener.js &` manually or add
+  it to launchd/systemd alongside the cron pipelines.
+- Telegram 409 conflict: if another process (openclaw agent or a second listener instance) also
+  polls `getUpdates` on the same bot token, the listener gets 409 errors. Kill duplicate processes
+  before starting `callback-listener.js`.
+- `sendTelegramForceReply` in `approval-bridge.js` uses `curl` to call the Telegram API directly
+  (needed for `force_reply` markup which `openclaw message send` does not support).
 
 ## Key Reference Documents
 

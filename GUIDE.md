@@ -5,18 +5,27 @@
 
 ## Current State (What Already Exists)
 
-| Item | Status |
-|------|--------|
-| `intelligence-report/orchestrator.md` | Partial — mock mode only |
-| `intelligence-report/subskills/pull-gsc-data.md` | Partial — reads mock JSON, not real API |
-| `intelligence-report/subskills/analyze-data.md` | Partial |
-| `intelligence-report/subskills/generate-insights.md` | Partial |
-| `seo-strategist/orchestrator.md` | Partial |
-| `seo-strategist/subskills/read-intelligence-brief.md` | Partial |
-| `mock-data/*.json` | Done — used for testing only |
-| `outputs/` | Demo run artifacts |
+All orchestrator and subskill files exist through Phase 8. Core pipeline (Phases 1–3 + approval loop + post-approval) tested end-to-end in mock mode.
 
-**Everything else listed below does not exist yet.**
+| Layer | Status |
+|-------|--------|
+| `intelligence-report/` — all 14 subskills | Done — mock mode, all steps tested |
+| `seo-strategist/` — 6-step pipeline | Done — mock mode, PDF + Telegram delivery tested |
+| `approval-bridge.js` + `callback-listener.js` | Done — approve/revise/reject + force_reply flow tested |
+| `review-sprint-feedback/` | Done — reform and full_rerun paths tested |
+| `post-approval/` — 13-step PO + BL pipeline | Done — all subskills wired and tested |
+| `product-owner/biztechcs-product-owner-config.md` | Done — BiztechCS config seeded |
+| `business-layer/biztechcs-business-config.md` | Done — BiztechCS config seeded |
+| `sprint-pm.js` + `sprint-pm/orchestrator.md` | Built — not fully tested end-to-end |
+| `task-sheet-populator.js` + `task-sheet-populator/orchestrator.md` | Built — Google Sheets integration not wired |
+| `content-pipeline/` + all 5 agent orchestrators | Built — mock mode, not yet run end-to-end |
+| `run-content-pipeline.js` + `run-publishing-agent.js` | Built — real CMS API not wired |
+| `technical-seo/`, `keyword-research/`, `off-page-seo/`, `outreach-manager/`, `page-diagnosis/` | Built — orchestrators exist |
+| `social-media/orchestrator.md` | Built — SocialPilot API not wired |
+| `algorithm-intelligence/`, `best-practices-monitor/`, `competitor-watch/` | Built — orchestrators exist |
+| `mock-data/*.json` | Done — used for testing |
+
+**Real API integrations not yet built:** GA4/BigQuery, GSC/BigQuery, Odoo XML-RPC, Clarity, Ahrefs, SerpAPI, SocialPilot, Google Drive API, Google Sheets API, CMS publish API.
 
 ---
 
@@ -150,6 +159,43 @@ All under `seo-strategist/subskills/`:
 Sprint plan saved to: `/SEO Automation Engine/Sprint Strategies/[YYYY]/Sprint_[dates].md`
 
 **Sprint Interrupt Protocol:** Qualifying event = confirmed Google core update AND (MozCast > 75 for 3+ days OR top 20 lead page drops > 10 positions in 48h). Telegram alert → PAUSE / CONTINUE / ASSESS. Sprint holds until human replies — no timeout auto-action.
+
+---
+
+### 3A-Gate — Sprint Plan Approval & Feedback Loop
+**Built. Lives in:** `approval-bridge.js`, `callback-listener.js`, `review-sprint-feedback/`
+
+After `deliver-sprint-plan` sends the PDF to Telegram, the human sees three buttons:
+`[✅ Approve]` `[🔄 Revise]` `[❌ Reject]`
+
+**APPROVE** → `approval-bridge.js` fires openclaw event → `post-approval/orchestrator.md` starts
+
+**REVISE or REJECT** (same flow):
+1. `approval-bridge.js` sends a Telegram `force_reply` message: *"What needs to change?"*
+2. Human types feedback and replies directly to that bot message
+3. `callback-listener.js` captures the reply (validates `reply_to_message.message_id`)
+4. Calls `approval-bridge.js sprint-feedback|sprint_id` with feedback text
+5. Writes `outputs/sprint-feedback.json` + fires event → `review-sprint-feedback/orchestrator.md`
+
+**`review-sprint-feedback/` orchestrator (2-path):**
+
+| Step | What it does |
+|------|-------------|
+| 1 | `evaluate-sprint-feedback` reads sprint-plan.json + sprint-feedback.json, decides `reform` or `full_rerun`, writes `sprint-feedback-decision.json` |
+| reform path | `reform-sprint-plan` (patches specific sections) → `generate-sprint-pdf` → `deliver-sprint-plan` (re-sends to Telegram with buttons) |
+| full_rerun path | Deletes all sprint outputs → fires openclaw event → seo-strategist re-runs from Step 1 with sprint-feedback.json as additional context |
+
+**Decision logic in `evaluate-sprint-feedback`:**
+- **reform**: feedback targets specific tasks, priorities, counts, or one vector
+- **full_rerun**: feedback says wrong pages, wrong strategy, wrong direction entirely
+
+**Key files:**
+
+| File | Role |
+|------|------|
+| `outputs/sprint-feedback.json` | Human's raw feedback text + source action |
+| `outputs/sprint-feedback-decision.json` | Agent's decision (reform/full_rerun) + which sections |
+| `outputs/pending-text-reply.json` | Temporary link between force_reply message_id and sprint_id |
 
 ---
 
@@ -432,105 +478,131 @@ Can run in parallel with Phase 4+.
 ## Full File Build List
 
 ### STATUS KEY
-- `UPGRADE` — file exists, needs to be rewritten for production
+- `DONE` — file exists, wired, tested in mock mode
+- `BUILT` — file exists, not yet tested end-to-end
+- `WIRE` — file exists, real API integration needed before it can run
 - `BUILD` — does not exist yet
 
 ```
 intelligence-report/
-  orchestrator.md                    UPGRADE
-  subskills/pull-ga4-data.md         BUILD
-  subskills/pull-gsc-data.md         UPGRADE
-  subskills/pull-ranking-data.md     BUILD
-  subskills/pull-odoo-leads.md       BUILD
-  subskills/pull-clarity-data.md     BUILD
-  subskills/competitor-monitor.md    BUILD
-  subskills/algorithm-signals.md     BUILD
-  subskills/run-20-questions.md      BUILD
-  subskills/analyze-data.md          UPGRADE
-  subskills/generate-insights.md     UPGRADE
-  subskills/assemble-report.md       BUILD
-  subskills/generate-pdf.md          BUILD
-  subskills/deliver-report.md        BUILD
+  orchestrator.md                    DONE
+  subskills/pull-ga4-data.md         WIRE  ← mock only, needs BigQuery
+  subskills/pull-gsc-data.md         WIRE  ← mock only, needs BigQuery
+  subskills/pull-ranking-data.md     WIRE  ← mock only, needs ranking flow output
+  subskills/pull-odoo-leads.md       WIRE  ← mock only, needs Odoo XML-RPC
+  subskills/pull-clarity-data.md     WIRE  ← mock only, needs Clarity API key
+  subskills/competitor-monitor.md    WIRE  ← mock only, needs Ahrefs + sitemap access
+  subskills/algorithm-signals.md     WIRE  ← mock only, needs MozCast + Agent-Browser
+  subskills/run-20-questions.md      WIRE  ← mock only, needs Agent-Browser
+  subskills/analyze-data.md          DONE
+  subskills/generate-insights.md     DONE
+  subskills/assemble-report.md       DONE
+  subskills/generate-pdf.md          DONE
+  subskills/deliver-report.md        DONE
 
 seo-strategist/
-  orchestrator.md                    UPGRADE
-  subskills/read-intelligence-brief.md  UPGRADE
-  subskills/identify-attack-vectors.md  BUILD
-  subskills/build-content-offensive.md  BUILD
-  subskills/build-offpage-offensive.md  BUILD
-  subskills/build-technical-wins.md     BUILD
-  subskills/define-metrics.md           BUILD
-  subskills/build-expert-intelligence-map.md  BUILD
-  subskills/build-history-rationale.md  BUILD
-  subskills/write-sprint-plan.md        BUILD
+  orchestrator.md                    DONE
+  subskills/read-intelligence-brief.md  DONE
+  subskills/identify-attack-vectors.md  DONE
+  subskills/build-content-offensive.md  DONE
+  subskills/build-offpage-offensive.md  DONE
+  subskills/build-technical-offensive.md DONE  ← named build-technical-offensive.md
+  subskills/define-metrics.md           DONE
+  subskills/build-expert-intelligence-map.md  DONE
+  subskills/build-history-rationale.md  DONE
+  subskills/assemble-sprint-plan.md     DONE  ← named assemble-sprint-plan.md
+  subskills/generate-sprint-pdf.md      DONE
+  subskills/deliver-sprint-plan.md      DONE
+  subskills/evaluate-sprint-feedback.md DONE
+  subskills/reform-sprint-plan.md       DONE
 
 product-owner/
-  orchestrator.md                    BUILD
-  subskills/scan-website.md          BUILD
-  subskills/validate-business-alignment.md  BUILD
-  subskills/check-competitor-claims.md      BUILD
-  subskills/enrich-with-product-context.md  BUILD
-  subskills/apply-guardrails.md      BUILD
-  subskills/produce-review-output.md BUILD
+  orchestrator.md                    DONE
+  biztechcs-product-owner-config.md  DONE
+  subskills/scan-website.md          DONE
+  subskills/validate-business-alignment.md  DONE
+  subskills/check-competitor-claims.md      DONE
+  subskills/enrich-with-product-context.md  DONE
+  subskills/apply-guardrails.md      DONE
+  subskills/produce-review-output.md DONE
 
 business-layer/
-  orchestrator.md                    BUILD
-  subskills/check-quota-compliance.md   BUILD
-  subskills/check-goal-alignment.md     BUILD
-  subskills/check-mql-sql-performance.md BUILD
-  subskills/check-topic-territory.md    BUILD
-  subskills/build-tiered-options.md     BUILD
+  orchestrator.md                    DONE
+  biztechcs-business-config.md       DONE
+  subskills/check-quota-compliance.md   DONE
+  subskills/check-goal-alignment.md     DONE
+  subskills/check-mql-sql-performance.md DONE
+  subskills/check-topic-territory.md    DONE
+  subskills/build-tiered-options.md     DONE
+
+post-approval/
+  orchestrator.md                    DONE  ← 13-step PO + BL pipeline
+  subskills/calculate-project-cost.md   DONE
+  subskills/deliver-validated-plan.md   DONE
+
+review-sprint-feedback/
+  orchestrator.md                    DONE
+
+reform-sprint-plan/
+  orchestrator.md                    DONE
 
 task-sheet-populator/
-  orchestrator.md                    BUILD
+  orchestrator.md                    BUILT
+  task-sheet-populator.js            WIRE  ← needs Google Sheets API
 
 sprint-pm/
-  orchestrator.md                    BUILD
+  orchestrator.md                    BUILT
+  sprint-pm.js                       BUILT
 
 technical-seo/
-  orchestrator.md                    BUILD
+  orchestrator.md                    BUILT
 
 keyword-research/
-  orchestrator.md                    BUILD
+  orchestrator.md                    BUILT
 
 content-strategist/
-  orchestrator.md                    BUILD
+  orchestrator.md                    BUILT
 
 content-writer/
-  orchestrator.md                    BUILD
+  orchestrator.md                    BUILT
 
 content-editor/
-  orchestrator.md                    BUILD
+  orchestrator.md                    BUILT
 
 graphics-designer/
-  orchestrator.md                    BUILD
+  orchestrator.md                    BUILT
 
 html-preview/
-  orchestrator.md                    BUILD
+  orchestrator.md                    BUILT
+
+content-pipeline/
+  orchestrator.md                    BUILT
+  run-content-pipeline.js            BUILT
 
 publishing-agent/
-  orchestrator.md                    BUILD
+  orchestrator.md                    WIRE  ← needs CMS API
+  run-publishing-agent.js            WIRE
 
 off-page-seo/
-  orchestrator.md                    BUILD
+  orchestrator.md                    BUILT
 
 outreach-manager/
-  orchestrator.md                    BUILD
+  orchestrator.md                    WIRE  ← needs Odoo email module
 
 page-diagnosis/
-  orchestrator.md                    BUILD
+  orchestrator.md                    BUILT
 
 social-media/
-  orchestrator.md                    BUILD
+  orchestrator.md                    WIRE  ← needs SocialPilot API
 
 algorithm-intelligence/
-  orchestrator.md                    BUILD
+  orchestrator.md                    BUILT
 
 best-practices-monitor/
-  orchestrator.md                    BUILD
+  orchestrator.md                    BUILT
 
 competitor-watch/
-  orchestrator.md                    BUILD
+  orchestrator.md                    BUILT
 ```
 
 ---

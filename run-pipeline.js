@@ -67,8 +67,22 @@ function preCheck() {
 // may see them as already-done and skip those steps.
 function clearSprintOutputs() {
   const staleFiles = [
-    'sprint-approval.json',
+    // Step 1 output — must clear so stale brief doesn't contaminate new run
+    'intelligence-brief-parsed.json',
+    // Step 2 output
+    'attack-vectors.json',
+    // Step 3 outputs
+    'content-plan.json',
+    'technical-plan.json',
+    'offpage-plan.json',
+    // Step 4 outputs
+    'sprint-plan.json',
+    'sprint-plan.md',
+    'sprint-plan.html',
+    // Step 5 output — clearing ensures sprint_id is always from the current sprint-plan.json
     'generate-sprint-pdf-status.json',
+    // Step 6 output
+    'sprint-approval.json',
   ];
   for (const f of staleFiles) {
     const p = path.join(OUTPUTS, f);

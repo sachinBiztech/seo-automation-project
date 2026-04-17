@@ -23,11 +23,14 @@ Read: `seo-automation/outputs/generate-sprint-pdf-status.json`
 
 You are the sprint plan delivery agent for BiztechCS.
 
+**MOCK MODE NOTE:** MOCK mode means data comes from mock files — it does NOT suppress Telegram sends.
+All `openclaw message send` commands below MUST be executed as real bash commands. Do not skip them.
+
 **Step 1 — Read sprint-plan.json**
 
 Read `seo-automation/outputs/sprint-plan.json`.
 Extract these fields:
-- `sprint_id`
+- `sprint_id` — **CRITICAL: use this value for sprint-approval.json. NEVER use sprint_id from generate-sprint-pdf-status.json or any other file.**
 - `sprint_start`
 - `sprint_end`
 - `top_opportunity`
@@ -46,17 +49,25 @@ Try to read `seo-automation/outputs/generate-sprint-pdf-status.json`.
 
 If the file exists:
 - Extract `status`, `pdf_path`, `fallback_html_path`
-- If `status == "success"` and `pdf_path` is set: DOCUMENT = `pdf_path`, DOCUMENT_NOTE = ""
-- If `status == "html_fallback"`: DOCUMENT = `fallback_html_path`, DOCUMENT_NOTE = "⚠️ PDF generation failed — plan sent as HTML."
+- If `status == "success"` and `pdf_path` is set: candidate DOCUMENT = `pdf_path`
+- If `status == "html_fallback"`: candidate DOCUMENT = `fallback_html_path`, DOCUMENT_NOTE = "⚠️ PDF generation failed — plan sent as HTML."
 
-If the file does NOT exist (read returns error):
-- Look for any file matching `seo-automation/outputs/BiztechCS-SEO-Sprint-Plan_*.pdf` by checking these paths in order:
-  - `seo-automation/outputs/BiztechCS-SEO-Sprint-Plan_[TODAY_YYYY_MM_DD].pdf` (use current date)
-  - `seo-automation/outputs/sprint-plan.html` as fallback
-- If a PDF path is found: DOCUMENT = that absolute path, DOCUMENT_NOTE = "⚠️ PDF status file missing — attached latest found PDF."
-- If only HTML available: DOCUMENT = full path to `sprint-plan.html`, DOCUMENT_NOTE = "⚠️ PDF not found — plan sent as HTML."
+**After setting candidate DOCUMENT, verify the file actually exists on disk:**
+```bash
+test -f "<candidate DOCUMENT path>" && echo "EXISTS" || echo "MISSING"
+```
+- If "EXISTS": DOCUMENT = candidate path, proceed.
+- If "MISSING": run `ls /home/sachin.p/.openclaw/workspace/seo-automation/outputs/BiztechCS-SEO-Sprint-Plan_*.pdf 2>/dev/null` to find any sprint plan PDF.
+  - If a PDF is found: DOCUMENT = that path, DOCUMENT_NOTE = "⚠️ PDF found at alternate path."
+  - If no PDF found: DOCUMENT = `/home/sachin.p/.openclaw/workspace/seo-automation/outputs/sprint-plan.html`, DOCUMENT_NOTE = "⚠️ PDF not found — plan sent as HTML."
 
-**Do NOT write `local_file_missing` and stop** — always continue to Steps 3–7 with whatever document is available. The Telegram send step will surface any real file-not-found error.
+If `generate-sprint-pdf-status.json` does NOT exist (read returns error):
+- Run `ls /home/sachin.p/.openclaw/workspace/seo-automation/outputs/BiztechCS-SEO-Sprint-Plan_*.pdf 2>/dev/null`
+- If found: DOCUMENT = that path, DOCUMENT_NOTE = "⚠️ PDF status file missing — attached latest found PDF."
+- If not found: DOCUMENT = `/home/sachin.p/.openclaw/workspace/seo-automation/outputs/sprint-plan.html`, DOCUMENT_NOTE = "⚠️ PDF not found — plan sent as HTML."
+
+**Do NOT attempt `openclaw message send --media <path>` without first confirming the file exists.
+Do NOT write `local_file_missing` and stop** — always continue to Steps 3–7 with whatever document is available.
 
 **Step 3 — Send sprint plan document to Telegram**
 

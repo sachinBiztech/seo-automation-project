@@ -53,6 +53,14 @@ After each step completes:
 
 ---
 
+## MOCK MODE NOTE
+
+MOCK mode means: read data from `mock-data/` files instead of live APIs.
+It does NOT suppress Telegram sends or bash command execution.
+All `openclaw message send` commands in subskills MUST be executed as real bash calls.
+
+---
+
 ## SPAWN PATTERN
 
 For every step, use `sessions_spawn` like this:
@@ -68,10 +76,26 @@ sessions_spawn({
 })
 ```
 
-Wait for each spawn to complete before starting the next step.
-Check the result: if the sub-agent replies with ❌, treat as failure per the step's failure action.
+## SPAWN SEQUENCING — CRITICAL
 
-**CRITICAL: Do NOT generate any conversational text mid-pipeline. Do NOT stop to report progress. Do NOT say "I'll wait" or "running now". Run ALL steps to completion, THEN reply once.**
+**NEVER spawn two steps simultaneously. You have a maximum of 5 concurrent subagent slots. Running Steps 3a + 3b + 3c + 4 + 5 at the same time will hit the limit and FAIL.**
+
+The ONLY correct execution pattern is:
+1. Spawn ONE step
+2. Wait for its completion event (arrives as internal task completion message)
+3. Check if output file exists
+4. THEN spawn the next step
+
+Steps 3a, 3b, 3c MUST run sequentially — spawn 3a, wait for 3a to complete, then spawn 3b, wait for 3b to complete, then spawn 3c, wait for 3c to complete.
+
+Step 4 MUST NOT be spawned until all three of 3a, 3b, 3c have completed (even if some failed with WARNING).
+
+After each completion event:
+- If the expected output file exists on disk: treat as SUCCESS regardless of what the subagent said
+- If the subagent replied with ❌ AND the file is missing: treat as failure per that step's failure action
+- IMMEDIATELY spawn the next step — do NOT output any text, do NOT pause, do NOT wait for user input
+
+**CRITICAL: Do NOT output any text between steps. Do NOT stop mid-pipeline. Do NOT say "Step N done" until ALL steps are complete. Run every step from 0 through 6 in one continuous execution, then output a single final summary.**
 
 ---
 
@@ -86,6 +110,28 @@ If either check fails: STOP. Reply "❌ Cannot run strategist — report not app
 ---
 
 ## Run Sequence
+
+### Step 0 — Cleanup Stale Outputs
+
+Before spawning any subagent, run this bash command to delete stale files from previous runs:
+
+```bash
+rm -f \
+  /home/sachin.p/.openclaw/workspace/seo-automation/outputs/intelligence-brief-parsed.json \
+  /home/sachin.p/.openclaw/workspace/seo-automation/outputs/attack-vectors.json \
+  /home/sachin.p/.openclaw/workspace/seo-automation/outputs/content-plan.json \
+  /home/sachin.p/.openclaw/workspace/seo-automation/outputs/technical-plan.json \
+  /home/sachin.p/.openclaw/workspace/seo-automation/outputs/offpage-plan.json \
+  /home/sachin.p/.openclaw/workspace/seo-automation/outputs/sprint-plan.json \
+  /home/sachin.p/.openclaw/workspace/seo-automation/outputs/sprint-plan.md \
+  /home/sachin.p/.openclaw/workspace/seo-automation/outputs/sprint-plan.html \
+  /home/sachin.p/.openclaw/workspace/seo-automation/outputs/generate-sprint-pdf-status.json \
+  /home/sachin.p/.openclaw/workspace/seo-automation/outputs/sprint-approval.json
+```
+
+This ensures every run starts fresh. Do NOT skip this step.
+
+---
 
 ### Step 1 — Parse Intelligence Brief
 
@@ -123,6 +169,8 @@ Failure action: STOP. Send Telegram alert: "❌ BiztechCS Sprint Planning FAILED
 
 ### Step 3a — Build Content Offensive
 
+**Spawn, then WAIT for completion before spawning Step 3b.**
+
 Spawn sub-agent:
 ```
 runtime: "subagent"
@@ -140,6 +188,8 @@ Failure action: WARNING only — continue even if this step fails.
 
 ### Step 3b — Build Technical Offensive
 
+**Spawn only after Step 3a completion event received. Wait for Step 3b completion before spawning Step 3c.**
+
 Spawn sub-agent:
 ```
 runtime: "subagent"
@@ -156,6 +206,8 @@ Failure action: WARNING only — continue even if this step fails.
 ---
 
 ### Step 3c — Build Off-Page Offensive
+
+**Spawn only after Step 3b completion event received. Wait for Step 3c completion before spawning Step 4.**
 
 Spawn sub-agent:
 ```
@@ -175,6 +227,8 @@ If all three of 3a, 3b, 3c fail: STOP. Send Telegram alert: "❌ BiztechCS Sprin
 ---
 
 ### Step 4 — Assemble Sprint Plan
+
+**WAIT GATE: Do NOT spawn Step 4 until Step 3c completion event has been received. Verify at least one of content-plan.json, technical-plan.json, offpage-plan.json exists before spawning.**
 
 Spawn sub-agent:
 ```
