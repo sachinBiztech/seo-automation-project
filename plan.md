@@ -16,6 +16,168 @@ Everything else is not yet built.
 
 ---
 
+## Current Pipeline Workflow (Live Reference — April 2026)
+
+All 5 pipelines are built and running in mock mode. The end-to-end flow:
+
+```
+[1st/16th 6AM cron]
+        │
+        ▼
+run-intelligence-pipeline.js   (node)
+  └─ openclaw agent --agent intelligence-report
+  └─ 11 subskills → report-summary.json + intelligence-report.md
+        │
+        ▼
+  📱 Telegram: "Approve Intelligence Report?"
+        │ (human clicks ✅)
+        ▼
+run-pipeline.js   (node)
+  └─ openclaw agent --agent seo-strategist
+  └─ 6 subskills → sprint-plan.json + sprint-tasks-[id].json
+        │
+        ▼
+  📱 Telegram: "Approve Sprint Plan?"
+        │ (human clicks ✅)
+        ▼
+[daily cron] sprint-pm.js   (pure Node — no agent)
+  └─ calculates today's sprint day
+  └─ for each Content task today →
+        │
+        ▼
+     run-content-pipeline.js   (node)
+       └─ openclaw agent --agent content-pipeline
+       └─ 5 subskills + editor loop → preview-[slug].html
+             │
+             ▼
+       📱 Telegram: "Approve Article?"
+             │ (human clicks ✅)
+             ▼
+     run-publishing-agent.js   (node)
+       └─ openclaw agent --agent publishing-agent
+       └─ publishes to CMS → task status = Done
+```
+
+**3 human approval gates (all via Telegram):** after Intelligence Report, after Sprint Plan, after each article.
+
+---
+
+### Pipeline 1 — Intelligence Report
+**Runner:** `node run-intelligence-pipeline.js` | **Timeout:** 30 min
+**Orchestrator:** `intelligence-report/orchestrator.md` | **Model:** claude-sonnet-4-6
+
+| Step | Subskill | Reads | Writes | On Fail |
+|------|----------|-------|--------|---------|
+| 1 | `pull-gsc-data` | `mock-data/gsc-mock.json` | `gsc-findings.json` | STOP |
+| 2 | `pull-ga4-data` | `mock-data/ga4-mock.json` | `ga4-findings.json` | STOP |
+| 3 | `pull-ranking-data` | `mock-data/ranking-mock.json` | `ranking-findings.json` | STOP |
+| 4 | `pull-odoo-leads` | `mock-data/odoo-mock.json` | `odoo-findings.json` | STOP |
+| 4.5 | `pull-clarity-data` | `mock-data/clarity-mock.json` | `clarity-findings.json` | WARNING |
+| 5 | `competitor-monitor` | `mock-data/competitor-mock.json` | `competitor-findings.json` | WARNING |
+| 6 | `algorithm-signals` | `mock-data/algorithm-mock.json` | `algorithm-findings.json` | WARNING |
+| 7 | `analyze-data` | All 6 findings files | `analysis-findings.json` | STOP |
+| 8 | `run-20-questions` | `analysis-findings.json` + `gsc-findings.json` | `research-findings.json` | STOP |
+| 9a | `generate-insights` | `analysis-findings.json` + `gsc-findings.json` | `insights.json` | STOP |
+| 9b | `assemble-report` | All findings + `insights.json` | `report-summary.json`, `intelligence-report.md`, `.html` | STOP |
+| 10 | `generate-pdf` | `intelligence-report.html` | `generate-pdf-status.json` | WARNING (html fallback) |
+| 11 | `deliver-report` | `report-summary.json` + pdf/html | `report-approval.json` (status: `pending`) | STOP |
+
+**Gate:** Telegram message → human approves → `report-approval.json` status = `approved`
+
+---
+
+### Pipeline 2 — SEO Strategist (Sprint Plan)
+**Runner:** `node run-pipeline.js` | **Timeout:** 30 min
+**Pre-check:** `report-approval.json` must be `status: "approved"`
+**Orchestrator:** `seo-strategist/orchestrator.md` | **Model:** claude-opus-4-6
+
+| Step | Subskill | Reads | Writes | On Fail |
+|------|----------|-------|--------|---------|
+| 1 | `parse-intelligence-brief` | `report-summary.json` | `intelligence-brief-parsed.json` | STOP |
+| 2 | `identify-attack-vectors` | brief + competitor/ranking/analysis findings | `attack-vectors.json` | STOP |
+| 3a | `build-content-offensive` | `attack-vectors.json` + brief + research | `content-plan.json` | WARNING |
+| 3b | `build-technical-offensive` | `attack-vectors.json` + brief + research | `technical-plan.json` | WARNING |
+| 3c | `build-offpage-offensive` | `attack-vectors.json` + brief + research | `offpage-plan.json` | WARNING (all 3 fail = STOP) |
+| 4 | `assemble-sprint-plan` | All 3 plans + brief | `sprint-plan.json`, `sprint-plan.md`, `sprint-plan.html` | STOP |
+| 5 | `generate-sprint-pdf` | `sprint-plan.html` | `generate-sprint-pdf-status.json` | WARNING (html fallback) |
+| 6 | `deliver-sprint-plan` | sprint-plan files | `sprint-approval.json` (status: `pending`) | STOP |
+
+**Gate:** Telegram with approval buttons → human clicks ✅ → `sprint-approval.json` status = `approved`
+
+---
+
+### Pipeline 3 — Sprint PM (Daily Orchestrator)
+**Runner:** `node sprint-pm.js` | **Trigger:** daily overnight cron
+**Pre-check:** `sprint-approval.json` must be `status: "approved"` | **No OpenClaw agent — pure Node**
+
+| Step | What it does |
+|------|-------------|
+| 1 | Verify `sprint-approval.json` is approved |
+| 2 | Calculate today's sprint day (1–15) from `sprint_start` |
+| 3 | Find today's tasks from `sprint-tasks-[sprint_id].json` |
+| 4 | Find missed/overdue tasks from past days |
+| 5 | Reassign missed tasks to next available day + Telegram alert |
+| 6 | Check dependencies — content-editor waits for paired content-writer to be `Completed` |
+| 7 | Mark today's tasks `In Progress`; call `run-content-pipeline.js` for each Content task |
+| 8 | Send daily Telegram summary (Triggered / Held / Reassigned) |
+| 9 | Write updated `sprint-tasks-[sprint_id].json` + CSV |
+| 10 | Write `sprint-pm-log-[date].json` |
+
+---
+
+### Pipeline 4 — Content Pipeline (Per Article)
+**Runner:** `node run-content-pipeline.js` | **Timeout:** 15 min | **Called by:** sprint-pm.js
+**Orchestrator:** `content-pipeline/agent/agent.md` | **Model:** claude-opus-4-6
+
+| Step | Agent | Reads | Writes | On Fail |
+|------|-------|-------|--------|---------|
+| Setup | Node runner | `sprint-tasks-[sprint_id].json` | `pipeline-context-[task_id].json` | STOP |
+| 1 | `content-strategist` | `pipeline-context-[task_id].json` | `content-brief-[slug].json` | STOP |
+| 2 | `content-writer` | `content-brief-[slug].json` + keyword universe | `draft-[slug].md` | STOP |
+| 3a | `content-editor` Pass 1 | `draft-[slug].md` + brief | `edited-draft-[slug].md` (PASS) OR `revision-brief-[slug].md` (FAIL) | Conditional |
+| 3b | `content-writer` revision | `revision-brief-[slug].md` | updated `draft-[slug].md` | Continue |
+| 3c | `content-editor` Pass 2 | revised draft | `edited-draft-[slug].md` OR escalate Telegram | Escalate if 2× fail |
+| 4 | `graphics-designer` | `edited-draft-[slug].md` + brief | `image-prompts-[slug].json` | WARNING (placeholders) |
+| 5 | `html-preview-generator` | draft + image prompts | `preview-[slug].html` + `.pdf` | STOP |
+| Final | agent writes result | all above | `pipeline-result-[task_id].json` (status: `complete`) | STOP |
+| Cleanup | Node runner | `pipeline-result-[task_id].json` | `content-approval-[sprint_id].json` + Telegram buttons | — |
+
+**Gate:** Telegram article preview → human approves → `content-approval.json` status = `approved`
+
+---
+
+### Pipeline 5 — Publishing Agent
+**Runner:** `node run-publishing-agent.js` | **Timeout:** 5 min
+**Pre-check:** `content-approval-[sprint_id].json` must be `status: "approved"`
+**Orchestrator:** `publishing-agent/orchestrator.md` | **Model:** claude-haiku-4-5-20251001
+
+| Step | What it does |
+|------|-------------|
+| 1 | Verify content approval |
+| 2 | Publish `preview-[slug].html` to CMS (MOCK: logs record; PROD: calls CMS API) |
+| 3 | Verify publication success |
+| 4 | Archive HTML to `outputs/approved/` |
+| 5 | Update `sprint-tasks-[sprint_id].json` — task status → `Done` |
+| 6 | Trigger social media engine queue |
+| 7 | Send Telegram confirmation |
+
+---
+
+### Key Output Files (Inter-Agent Handoffs)
+
+| File | Written by | Read by |
+|------|-----------|---------|
+| `outputs/report-summary.json` | `assemble-report` | `run-pipeline.js` (pre-check), `parse-intelligence-brief` |
+| `outputs/report-approval.json` | `deliver-report` | `run-pipeline.js` (gate) |
+| `outputs/sprint-plan.json` | `assemble-sprint-plan` | `deliver-sprint-plan` |
+| `outputs/sprint-approval.json` | `deliver-sprint-plan` / Telegram bridge | `sprint-pm.js` (gate) |
+| `outputs/sprint-tasks-[id].json` | `sprint-pm.js` | `run-content-pipeline.js`, `run-publishing-agent.js` |
+| `outputs/pipeline-context-[id].json` | `run-content-pipeline.js` | `content-pipeline/agent/agent.md` |
+| `outputs/pipeline-result-[id].json` | content-pipeline agent | `run-content-pipeline.js` |
+| `outputs/content-approval-[id].json` | `run-content-pipeline.js` | `run-publishing-agent.js` (gate) |
+
+---
+
 ## Architecture Summary (Target State)
 
 ```

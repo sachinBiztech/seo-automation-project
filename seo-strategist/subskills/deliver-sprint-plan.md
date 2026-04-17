@@ -40,29 +40,25 @@ Extract these fields:
 - `offpage_plan.tasks` — array, each with `title` or `description`
 - `total_deliverables` — object with `content`, `technical`, `offpage`
 
-**Step 2 — Read generate-sprint-pdf-status.json**
+**Step 2 — Resolve document to send**
 
-Read `seo-automation/outputs/generate-sprint-pdf-status.json`.
-Extract:
-- `status` — "success" or "html_fallback"
-- `pdf_path` — full file path (if success)
-- `fallback_html_path` — HTML path (if html_fallback)
+Try to read `seo-automation/outputs/generate-sprint-pdf-status.json`.
 
-**Step 3 — Resolve document to send**
+If the file exists:
+- Extract `status`, `pdf_path`, `fallback_html_path`
+- If `status == "success"` and `pdf_path` is set: DOCUMENT = `pdf_path`, DOCUMENT_NOTE = ""
+- If `status == "html_fallback"`: DOCUMENT = `fallback_html_path`, DOCUMENT_NOTE = "⚠️ PDF generation failed — plan sent as HTML."
 
-If `status` is `success`:
-- DOCUMENT = `pdf_path`
-- DOCUMENT_NOTE = ""
+If the file does NOT exist (read returns error):
+- Look for any file matching `seo-automation/outputs/BiztechCS-SEO-Sprint-Plan_*.pdf` by checking these paths in order:
+  - `seo-automation/outputs/BiztechCS-SEO-Sprint-Plan_[TODAY_YYYY_MM_DD].pdf` (use current date)
+  - `seo-automation/outputs/sprint-plan.html` as fallback
+- If a PDF path is found: DOCUMENT = that absolute path, DOCUMENT_NOTE = "⚠️ PDF status file missing — attached latest found PDF."
+- If only HTML available: DOCUMENT = full path to `sprint-plan.html`, DOCUMENT_NOTE = "⚠️ PDF not found — plan sent as HTML."
 
-If `status` is `html_fallback`:
-- DOCUMENT = `fallback_html_path`
-- DOCUMENT_NOTE = "⚠️ PDF generation failed — plan sent as HTML."
+**Do NOT write `local_file_missing` and stop** — always continue to Steps 3–7 with whatever document is available. The Telegram send step will surface any real file-not-found error.
 
-Confirm the document file exists and is non-empty:
-```bash
-test -s "<DOCUMENT>" && echo "OK" || echo "MISSING"
-```
-If MISSING: write `sprint-approval.json` with `status: "local_file_missing"` and stop.
+**Step 3 — Send sprint plan document to Telegram**
 
 **Step 4 — Send sprint plan document to Telegram**
 
@@ -163,5 +159,4 @@ This subskill is complete when:
 4. Approval buttons message sent (Step 6)
 5. `sprint-approval.json` written with `status: "pending"` (Step 7)
 
-If Step 3 fails (file missing): write `sprint-approval.json` with `status: "local_file_missing"`.
 If Telegram sends fail: write `sprint-approval.json` with `status: "telegram_failed"`.
