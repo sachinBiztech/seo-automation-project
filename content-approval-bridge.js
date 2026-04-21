@@ -32,6 +32,7 @@ const STATE_FILE      = path.join(OUTPUTS_DIR, 'content-approval-bridge-state.js
 const TELEGRAM_ID     = '-1003829892114';
 const POLL_INTERVAL   = 3000; // ms
 const ONCE_MODE       = process.argv.includes('--once');
+const CALLBACK_ARG    = (() => { const i = process.argv.indexOf('--callback'); return i !== -1 ? process.argv[i + 1] : null; })();
 
 // ── Logging ───────────────────────────────────────────────────────────────────
 
@@ -163,13 +164,34 @@ function updateTaskStatus(sprintId, taskId, status) {
 
 // ── Handle callback ───────────────────────────────────────────────────────────
 
+function findApprovalByTaskId(taskId) {
+  const files = fs.readdirSync(OUTPUTS_DIR).filter(f => f.startsWith('content-approval-') && f.endsWith('.json'));
+  for (const f of files) {
+    try {
+      const data = JSON.parse(fs.readFileSync(path.join(OUTPUTS_DIR, f), 'utf8'));
+      const item = data.items.find(i => String(i.task_id) === String(taskId));
+      if (item) return { sprintId: data.sprint_id, slug: item.slug };
+    } catch (_) {}
+  }
+  return null;
+}
+
 function handleCallback(callbackData, state) {
   if (state.processed.includes(callbackData)) return; // already handled
 
   const parts = callbackData.split('|');
-  if (parts.length < 3) return;
+  if (parts.length < 2) return;
 
-  const [action, sprintId, slug] = parts;
+  let action, sprintId, slug;
+  if (parts.length === 2) {
+    action = parts[0];
+    const found = findApprovalByTaskId(parts[1]);
+    if (!found) { log('WARN', `No approval record found for task_id=${parts[1]}`); return; }
+    sprintId = found.sprintId;
+    slug = found.slug;
+  } else {
+    [action, sprintId, slug] = parts;
+  }
   log('INFO', `Callback: ${action} | sprint=${sprintId} | slug=${slug}`);
 
   state.processed.push(callbackData);
@@ -247,12 +269,18 @@ function poll() {
 
 // ── Entry ─────────────────────────────────────────────────────────────────────
 
-log('INFO', `Content Approval Bridge started (${ONCE_MODE ? 'once' : `polling every ${POLL_INTERVAL}ms`})`);
-
-if (ONCE_MODE) {
+if (CALLBACK_ARG) {
+  // Direct call mode: node content-approval-bridge.js --callback content_approve|4
+  log('INFO', `Direct callback: ${CALLBACK_ARG}`);
+  const state = loadState();
+  handleCallback(CALLBACK_ARG, state);
+  process.exit(0);
+} else if (ONCE_MODE) {
+  log('INFO', 'Content Approval Bridge started (once)');
   poll();
   process.exit(0);
 } else {
-  poll(); // immediate first run
+  log('INFO', `Content Approval Bridge started (polling every ${POLL_INTERVAL}ms)`);
+  poll();
   setInterval(poll, POLL_INTERVAL);
 }

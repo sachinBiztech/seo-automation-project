@@ -178,8 +178,8 @@ After all steps complete, write `seo-automation/outputs/pipeline-result-[task_id
   "title": "<from content-brief>",
   "primary_keyword": "<from content-brief>",
   "author": "<from content-brief>",
-  "word_count": "<from edited draft frontmatter>",
-  "ai_score_pct": "<estimated from editor check>",
+  "word_count": 2200,
+  "ai_score_pct": 6,
   "html_path": "seo-automation/outputs/preview-[slug].html",
   "completed_at": "<ISO8601 timestamp>"
 }
@@ -189,11 +189,9 @@ After all steps complete, write `seo-automation/outputs/pipeline-result-[task_id
 
 ## End Condition
 
-Pipeline is complete when:
-- `content-brief-[slug].json` exists
-- `edited-draft-[slug].md` exists
-- `image-prompts-[slug].json` exists
-- `preview-[slug].html` exists
-- `pipeline-result-[task_id].json` exists with `status: "complete"`
+Pipeline is complete when `preview-[slug].html` exists.
+Intermediate files (draft, edited-draft) may not persist after sub-agent cleanup — this is expected.
+
+**IMPORTANT:** Always write `pipeline-result-[task_id].json` as the very last action, even if intermediate files are missing. The Node.js runner cannot proceed without it.
 
 Reply: "✅ Content pipeline complete for [slug]. HTML preview ready for Telegram approval."

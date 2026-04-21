@@ -48,6 +48,18 @@ const SLUG_OVERRIDE = getArg('--slug');
 
 if (!SPRINT_ID) { console.error('ERROR: --sprint-id required'); process.exit(1); }
 
+// ── Session Clear ─────────────────────────────────────────────────────────────
+
+function clearSession(agentId) {
+  const base        = path.join(process.env.HOME, '.openclaw', 'agents', agentId);
+  const sessionsDir = path.join(base, 'sessions');
+  const sessionsJson = path.join(base, 'sessions.json');
+  if (fs.existsSync(sessionsDir)) {
+    for (const f of fs.readdirSync(sessionsDir)) fs.unlinkSync(path.join(sessionsDir, f));
+  }
+  if (fs.existsSync(sessionsJson)) fs.unlinkSync(sessionsJson);
+}
+
 // ── File Helpers ──────────────────────────────────────────────────────────────
 
 function readJson(filePath) {
@@ -174,13 +186,14 @@ function main() {
   console.log('\n── Running content-pipeline agent ──────────────────────');
 
   const fromMsg = FROM_STEP ? ` Resume from step: ${FROM_STEP}.` : '';
-  const agentMessage = `Run content pipeline. Task ID: ${TASK_ID}, Sprint ID: ${SPRINT_ID}, Slug: ${slug}.${fromMsg}`;
+  const agentMessage = `Read the file seo-automation/content-pipeline/orchestrator.md and follow ALL instructions in it exactly. Task ID: ${TASK_ID}, Sprint ID: ${SPRINT_ID}, Slug: ${slug}.${fromMsg} Do not ask questions — execute all steps sequentially.`;
 
   if (DRY_RUN) {
     console.log(`  [DRY] Would call: openclaw agent --agent content-pipeline --message "${agentMessage.slice(0, 60)}..."`);
     console.log('  [DRY] Agent would run: Strategist → Writer → Editor → Graphics → HTML Preview');
     console.log('  [DRY] Would write: pipeline-result.json');
   } else {
+    clearSession('content-pipeline');
     console.log(`  Calling agent: content-pipeline`);
     console.log(`  This runs all 5 steps internally (may take 5-15 min)...\n`);
 
@@ -236,7 +249,10 @@ function main() {
 
   // ── Step 4: Generate PDF from HTML ──────────────────────────────────────────
 
-  const htmlPath = result.html_path || path.join(OUTPUTS_DIR, `preview-${slug}.html`);
+  const rawHtmlPath = result.html_path || `seo-automation/outputs/preview-${slug}.html`;
+  const htmlPath = path.isAbsolute(rawHtmlPath)
+    ? rawHtmlPath
+    : path.join(WORKSPACE, rawHtmlPath);
   const pdfPath  = path.join(OUTPUTS_DIR, `preview-${slug}.pdf`);
   let pdfExists  = false;
 
@@ -273,9 +289,9 @@ function main() {
   );
 
   const buttons = JSON.stringify([[
-    { text: '✅ Approve', callback_data: `content_approve|${SPRINT_ID}|${slug}` },
-    { text: '🔄 Revise',  callback_data: `content_revise|${SPRINT_ID}|${slug}`  },
-    { text: '❌ Reject',  callback_data: `content_reject|${SPRINT_ID}|${slug}`  },
+    { text: '✅ Approve', callback_data: `content_approve|${TASK_ID}` },
+    { text: '🔄 Revise',  callback_data: `content_revise|${TASK_ID}`  },
+    { text: '❌ Reject',  callback_data: `content_reject|${TASK_ID}`  },
   ]]);
 
   telegramSend(`Choose action for: "${result.title}"`, ['--buttons', buttons]);

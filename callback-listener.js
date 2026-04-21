@@ -36,6 +36,8 @@ const OFFSET_FILE = path.join(SCRIPT_DIR, 'outputs', 'callback-listener-offset.j
 const POLL_TIMEOUT = 30; // seconds — long polling
 
 const KNOWN_ACTIONS = ['approve', 'revise', 'reject'];
+const CONTENT_ACTIONS = ['content_approve', 'content_revise', 'content_reject'];
+const CONTENT_BRIDGE_SCRIPT = path.join(SCRIPT_DIR, 'content-approval-bridge.js');
 const PENDING_TEXT_REPLY_PATH = path.join(SCRIPT_DIR, 'outputs', 'pending-text-reply.json');
 
 // ── Logging ───────────────────────────────────────────────────────────────────
@@ -110,6 +112,24 @@ async function answerCallbackQuery(callbackQueryId, text) {
   });
 }
 
+// ── Content Bridge caller ─────────────────────────────────────────────────────
+
+function callContentBridge(callbackData) {
+  const nodeExe = process.execPath;
+  log('info', `Calling content bridge: ${callbackData}`);
+  try {
+    const output = execFileSync(nodeExe, [CONTENT_BRIDGE_SCRIPT, '--callback', callbackData], {
+      encoding: 'utf8',
+      timeout: 120000,
+    });
+    log('info', 'Content bridge output: ' + output.trim());
+    return { ok: true };
+  } catch (err) {
+    log('error', 'Content bridge failed', { message: err.message, stderr: err.stderr });
+    return { ok: false, error: err.message };
+  }
+}
+
 // ── Bridge caller ─────────────────────────────────────────────────────────────
 
 function callBridge(callbackData, actor, notes) {
@@ -140,9 +160,21 @@ async function handleCallbackQuery(cq) {
 
   const [action, entityId] = data.split('|');
 
+  // Route content approval callbacks to content-approval-bridge
+  if (CONTENT_ACTIONS.includes(action)) {
+    log('info', `Content callback: action=${action} taskId=${entityId} from=${from}`);
+    const result = callContentBridge(data);
+    const replyText = result.ok
+      ? action === 'content_approve' ? '✅ Approved! Publishing now...'
+        : action === 'content_revise' ? '🔄 Revision queued.'
+        : '❌ Rejected.'
+      : '⚠️ Action failed. Check logs.';
+    await answerCallbackQuery(id, replyText).catch(() => {});
+    return;
+  }
+
   if (!KNOWN_ACTIONS.includes(action) || !entityId) {
     log('info', `Ignoring unknown callback: ${data}`);
-    // Still answer to dismiss the spinner
     await answerCallbackQuery(id, '').catch(() => {});
     return;
   }
