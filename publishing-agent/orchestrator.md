@@ -41,7 +41,19 @@ MOCK
      - Drive Link: published URL
 
 6. **Trigger Social Media Engine**
-   - Pass: published URL, article title, primary keyword, author, content type
+   - Write `seo-automation/outputs/social-media-trigger-[sprint_id].json`:
+   ```json
+   {
+     "sprint_id": "[sprint_id]",
+     "slug": "[slug]",
+     "title": "[title from content-brief]",
+     "primary_keyword": "[keyword from content-brief]",
+     "author": "[author from content-brief]",
+     "published_url": "[published URL]",
+     "content_type": "blog",
+     "published_at": "[ISO timestamp]"
+   }
+   ```
 
 7. **Telegram confirmation**
    - `✅ Published: "[Article Title]" → [URL]`

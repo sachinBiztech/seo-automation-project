@@ -116,8 +116,13 @@ function upsertContentApproval(slug, fields) {
   const approvalFile = path.join(OUTPUTS_DIR, `content-approval-${SPRINT_ID}.json`);
   let data = readJson(approvalFile) || { sprint_id: SPRINT_ID, items: [] };
   const existing = data.items.find(i => i.slug === slug);
-  if (existing) { Object.assign(existing, fields); }
-  else { data.items.push({ slug, ...fields }); }
+  if (existing) {
+    // Never downgrade an already-approved/rejected item back to pending_review
+    if (['approved', 'rejected', 'revision_requested'].includes(existing.status)) return;
+    Object.assign(existing, fields);
+  } else {
+    data.items.push({ slug, ...fields });
+  }
   writeJson(approvalFile, data);
 }
 

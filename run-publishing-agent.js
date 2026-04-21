@@ -85,9 +85,9 @@ function main() {
     [
       'agent', '--agent', 'publishing-agent',
       '--message',
-      `Publish content. Slug: ${SLUG}. Sprint ID: ${SPRINT_ID}. ` +
-      'Follow the publishing-agent orchestrator instructions exactly. ' +
-      'Complete all steps: verify → publish → archive → update sheet → trigger social media.',
+      `Read the file seo-automation/publishing-agent/orchestrator.md and follow ALL instructions exactly. ` +
+      `Slug: ${SLUG}. Sprint ID: ${SPRINT_ID}. ` +
+      'Do not ask questions — execute all steps sequentially.',
     ],
     { encoding: 'utf8', stdio: 'inherit', timeout: 300000 }
   );
@@ -105,20 +105,14 @@ function main() {
     console.warn('\n⚠️  publish-log not found — check agent output above');
   }
 
-  // Trigger social media agent (non-blocking background process)
+  // Trigger social media agent via run-social-media.js (non-blocking)
   const triggerFile = path.join(OUTPUTS, `social-media-trigger-${SPRINT_ID}.json`);
   if (fs.existsSync(triggerFile)) {
     console.log('\n🤖 Triggering social-media agent (background)...');
     const { spawn } = require('child_process');
     const sm = spawn(
-      'openclaw',
-      [
-        'agent', '--agent', 'social-media',
-        '--message',
-        `Generate social media posts for published article. Sprint ID: ${SPRINT_ID}. Slug: ${SLUG}. ` +
-        `Read seo-automation/outputs/social-media-trigger-${SPRINT_ID}.json for article details. ` +
-        'Follow the social-media agent instructions exactly.',
-      ],
+      process.execPath,
+      [path.join(__dirname, 'run-social-media.js'), '--sprint-id', SPRINT_ID, '--slug', SLUG],
       { detached: true, stdio: 'ignore' }
     );
     sm.unref();

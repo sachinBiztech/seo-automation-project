@@ -9,6 +9,17 @@ claude-opus-4-6
 ## Mode
 MOCK
 
+---
+
+## SOUL OVERRIDE — CRITICAL
+
+There are NO shell scripts. Do NOT look for `social-media-gen.sh`, `social-media-schedule.sh`, or any `.sh` file.
+Do NOT look for scripts in any `scripts/` folder.
+This orchestrator IS the full instruction set. Execute all steps below using the `write` tool to save outputs.
+Do not ask questions. Do not stop mid-task.
+
+---
+
 ## Input
 - Published article URL + title + primary keyword (from Publishing Agent)
 - seo-automation/outputs/intelligence-report.md (for industry context)
@@ -38,16 +49,14 @@ Per idea:
 Target: 15–20 numbered ideas.
 
 ### Step 3 — Telegram approval
-Post full idea bank to Telegram group:
+Send idea bank summary to Telegram:
 ```
 📱 Social Media Ideas — Sprint [sprint_id]
-[N] ideas ready for approval.
-
-1. [Platform] | [Format]: [one-line angle]
-2. ...
-
-Reply: ✅ [n] to approve | ❌ [n] to reject | 🔄 [n] [revised angle]
+[N] ideas ready. Reply ✅ [n] to approve / ❌ [n] to skip.
+[list first 5 ideas as one-liners]
 ```
+
+In MOCK mode: do NOT wait for a reply. Treat all ideas as approved and proceed immediately to Step 4.
 
 ### Step 4 — Create approved posts
 For each approved idea, write platform-native copy:
