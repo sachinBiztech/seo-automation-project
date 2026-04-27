@@ -15,8 +15,8 @@ MOCK
 
 ## Input
 
-Read: `seo-automation/outputs/sprint-plan.json` — the plan being evaluated
-Read: `seo-automation/outputs/sprint-feedback.json` — human's feedback
+Read: `seo-automation/outputs/seo-strategist/sprint-plan.json` — the plan being evaluated
+Read: `seo-automation/outputs/seo-strategist/sprint-feedback.json` — human's feedback
 
 ---
 
@@ -65,7 +65,7 @@ If decision = "reform", identify which sections need changing:
 
 **Step 5 — Write sprint-feedback-decision.json**
 
-Write `seo-automation/outputs/sprint-feedback-decision.json`:
+Write `seo-automation/outputs/seo-strategist/sprint-feedback-decision.json`:
 
 ```json
 {

@@ -1,7 +1,7 @@
 # Social Media Engine
 
 ## Purpose
-Triggered after Publishing Agent confirms publication. Aggregates industry news + our published content, generates a 14-day idea bank, gets Telegram approval, creates platform-native copy, schedules via SocialPilot API, and queues manual posts (Reddit/Quora).
+Triggered after Publishing Agent confirms publication. Aggregates industry news + our published content, generates a 14-day idea bank, gets Telegram idea approval, creates platform-native copy, gets individual post approval per piece, then schedules via SocialPilot API and queues manual posts (Reddit/Quora).
 
 ## Model
 claude-opus-4-6
@@ -22,7 +22,7 @@ Do not ask questions. Do not stop mid-task.
 
 ## Input
 - Published article URL + title + primary keyword (from Publishing Agent)
-- seo-automation/outputs/intelligence-report.md (for industry context)
+- seo-automation/outputs/intelligence-report/intelligence-report.md (for industry context)
 
 ## Task
 
@@ -66,7 +66,29 @@ For each approved idea, write platform-native copy:
 - Instagram: caption 100–150 words, 25–30 hashtags (in first comment)
 - Character limits are hard limits — cut content, never exceed
 
-### Step 5 — Post scheduling
+### Step 5 — Post Approval (Telegram)
+For each created post, send an individual approval request:
+```
+📱 Post Ready for Approval
+Platform: [LinkedIn|Twitter/X|Facebook|Instagram|Reddit|Quora]
+Format: [text post|carousel|thread|poll|etc]
+Proposed time: [Date] at [Time IST]
+
+Copy preview:
+[first 2 lines of post]...
+
+Reply: APPROVE / REJECT / REVISE [instructions]
+```
+
+**In MOCK mode:** Do NOT wait for replies. Treat all posts as APPROVED and proceed
+immediately to Step 6. Log each post with `"approval_status": "mock_approved"` in
+the output JSON.
+
+**In PRODUCTION mode:** Wait for each reply before scheduling. On REJECT: return to
+Step 4 for that post. On REVISE [instructions]: apply targeted edits, re-send for
+approval. On APPROVE: pass to Step 6 for scheduling.
+
+### Step 6 — Post scheduling
 - Approved posts for LinkedIn/Facebook/Instagram/Twitter: schedule via SocialPilot API
 - Reddit/Quora: save to manual queue, Telegram alert: `📋 [N] Reddit/Quora posts ready. Queue: [file path]`
 - Optimal times: LinkedIn (Tue–Thu 8–10 AM IST), Instagram (evenings 7–9 PM IST)
@@ -82,5 +104,5 @@ Max 12 posts/month per website. Count current month's scheduled posts before sch
 - Reply ONLY with: `✅ social-posts-[sprint_id].json + social-manual-queue-[sprint_id].md written`
 
 ## Output
-- `seo-automation/outputs/social-posts-[sprint_id].json`
-- `seo-automation/outputs/social-manual-queue-[sprint_id].md`
+- `seo-automation/outputs/social-media/social-posts-[sprint_id].json`
+- `seo-automation/outputs/social-media/social-manual-queue-[sprint_id].md`

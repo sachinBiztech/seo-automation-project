@@ -1,0 +1,76 @@
+{
+  "site": "BiztechCS",
+  "generated_at": "2026-04-17",
+  "quota_check": {
+    "blogs_planned": 2,
+    "blogs_max": 10,
+    "listicles_planned": 1,
+    "listicles_max": 3,
+    "page_rewrites_planned": 0,
+    "page_rewrite_triggers": []
+  },
+  "blog_posts": [
+    {
+      "priority": 1,
+      "title": "Odoo Implementation Partner India: Why BiztechCS Delivers Better Value in 2026",
+      "primary_keyword": "odoo implementation partner india",
+      "secondary_keywords": ["Odoo partner India", "Odoo ERP implementation", "Odoo certified partner"],
+      "target_word_count": 2200,
+      "competitor_to_displace": {
+        "domain": "cybrosys.com",
+        "their_ranking_page": "https://www.cybrosys.com/odoo/odoo-implementation-india/",
+        "their_position": 4
+      },
+      "differentiation_angle": "Incorporates actionable case studies, transparent implementation frameworks, and post-launch support comparisons. Highlights BiztechCS’s AI-powered methodologies and local manufacturing experience.",
+      "internal_links": {
+        "link_from": ["/odoo-implementation-services", "/about-biztechcs"],
+        "link_to": ["/odoo-pos-india", "/odoo-17-manufacturing-module"]
+      },
+      "author": "Uttam",
+      "vector": 1,
+      "attack_rationale": "This post targets the prime opportunity keyword with the most impression growth potential, focusing on filling the content gap left by the competitor's recent push and boosting CTR."
+    },
+    {
+      "priority": 2,
+      "title": "Odoo CRM Customization in 2026: A Step-by-Step Approach for Manufacturers",
+      "primary_keyword": "odoo crm customization",
+      "secondary_keywords": ["custom Odoo CRM", "manufacturing CRM features", "Odoo CRM module"],
+      "target_word_count": 1800,
+      "competitor_to_displace": {
+        "domain": "cybrosys.com",
+        "their_ranking_page": "https://www.cybrosys.com/odoo/crm/customization/",
+        "their_position": 12
+      },
+      "differentiation_angle": "Distills use cases for manufacturing, includes detailed screenshots, and covers integration with Odoo Manufacturing module. Adds troubleshooting tips for complex workflows.",
+      "internal_links": {
+        "link_from": ["/odoo-implementation-services", "/odoo-manufacturing"],
+        "link_to": ["/odoo-crm-module", "/odoo-17-manufacturing-module"]
+      },
+      "author": "Nandeep",
+      "vector": 2,
+      "attack_rationale": "This entry leverages the best position-to-effort ratio for quick improvement, aiming to push BiztechCS to page 1 for 'odoo crm customization'."
+    }
+  ],
+  "listicles": [
+    {
+      "priority": 1,
+      "title": "Top 7 New Features in Odoo 17 Manufacturing Module for Indian Enterprises",
+      "primary_keyword": "odoo manufacturing module",
+      "secondary_keywords": ["Odoo 17 new features", "Odoo for manufacturers", "odoo pos india"],
+      "target_word_count": 1800,
+      "competitor_to_displace": {
+        "domain": "ksolves.com",
+        "their_ranking_page": "https://www.ksolves.com/blog/odoo/odoo-17-manufacturing-module-features",
+        "their_position": 5
+      },
+      "differentiation_angle": "Explains Odoo 17 features with original visuals and performance benchmarks for Indian manufacturers; includes expert commentary and integrated POS workflows.",
+      "internal_links": {
+        "link_from": ["/odoo-manufacturing", "/odoo-crm-module"],
+        "link_to": ["/odoo-17-manufacturing-module", "/odoo-pos-india"]
+      },
+      "author": "Uttam",
+      "vector": 1
+    }
+  ],
+  "page_rewrites": []
+}

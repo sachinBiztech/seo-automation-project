@@ -10,8 +10,8 @@ claude-sonnet-4-6
 MOCK
 
 ## Input
-- seo-automation/outputs/enriched-sprint-plan.json
-- seo-automation/outputs/gsc-findings.json
+- seo-automation/outputs/post-approval/enriched-sprint-plan.json
+- seo-automation/outputs/intelligence-report/gsc-findings.json
 - seo-automation/product-owner/biztechcs-product-owner-config.md
 
 ## Task
@@ -41,7 +41,7 @@ For each content item in `enriched-sprint-plan.json.content_plan.items`:
    - 1 semantic LSI term (for natural variation)
 
 ## Output
-- `seo-automation/outputs/keyword-universe-[sprint_id].json`
+- `seo-automation/outputs/content-pipeline/keyword-universe-[sprint_id].json`
 
 Schema:
 ```json

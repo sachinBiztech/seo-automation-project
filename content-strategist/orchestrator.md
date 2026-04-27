@@ -10,9 +10,9 @@ claude-opus-4-6
 MOCK
 
 ## Input
-- seo-automation/outputs/enriched-sprint-plan.json
-- seo-automation/outputs/keyword-universe-[sprint_id].json
-- seo-automation/outputs/competitor-findings.json
+- seo-automation/outputs/post-approval/enriched-sprint-plan.json
+- seo-automation/outputs/content-pipeline/keyword-universe-[sprint_id].json
+- seo-automation/outputs/intelligence-report/competitor-findings.json
 
 ## Task
 
@@ -61,7 +61,7 @@ In MOCK mode: generate complete briefs using LLM knowledge of the topic.
 - Reply ONLY with: `✅ content-brief-[slug].json written`
 
 ## Output
-- `seo-automation/outputs/content-brief-[slug].json` (one per content item)
+- `seo-automation/outputs/content-pipeline/content-brief-[slug].json` (one per content item)
 
 Schema:
 ```json

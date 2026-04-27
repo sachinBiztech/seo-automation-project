@@ -16,9 +16,9 @@ MOCK
 
 Read all of these files:
 
-1. `seo-automation/outputs/attack-vectors.json`
-2. `seo-automation/outputs/intelligence-brief-parsed.json`
-3. `seo-automation/outputs/research-findings.json`
+1. `seo-automation/outputs/seo-strategist/attack-vectors.json`
+2. `seo-automation/outputs/intelligence-report/intelligence-brief-parsed.json`
+3. `seo-automation/outputs/intelligence-report/research-findings.json`
 
 ---
 
@@ -76,7 +76,7 @@ State the final count in the output.
 
 ## Output
 
-Create the file `seo-automation/outputs/content-plan.json` and write
+Create the file `seo-automation/outputs/seo-strategist/content-plan.json` and write
 the complete JSON below before finishing.
 
 ```json

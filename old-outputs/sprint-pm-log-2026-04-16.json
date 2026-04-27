@@ -1,0 +1,24 @@
+{
+  "run_date": "2026-04-16T12:51:04.407Z",
+  "run_date_local": "2026-04-16",
+  "sprint_id": "biztechcs_sprint_2026-04-14",
+  "site": "BiztechCS",
+  "sprint_day": 3,
+  "sprint_complete": false,
+  "tasks_triggered": [
+    "Top 7 Reasons to Choose Odoo Implementation Partner India for Mid-Market Manufacturers"
+  ],
+  "tasks_reassigned": [],
+  "tasks_held": [],
+  "telegram_sent": true,
+  "telegram_messages": [
+    {
+      "sent_at": "2026-04-16T12:50:55.402Z",
+      "message": "❌ Content pipeline failed\nSprint: biztechcs_sprint_2026-04-14\nTask: Top 7 Reasons to Choose Odoo Implementation Partner India for Mid-Market Manufacturers"
+    },
+    {
+      "sent_at": "2026-04-16T12:51:04.401Z",
+      "message": "📅 Sprint PM — Day 3 of 10\nSprint: biztechcs_sprint_2026-04-14\n\n🚀 Triggered today (1):\n  • Top 7 Reasons to Choose Odoo Implementation Partner India for Mid-Market Manufacturers\n\n📊 Total remaining: 22 / 23"
+    }
+  ]
+}

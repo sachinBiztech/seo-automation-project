@@ -1,0 +1,150 @@
+{
+  "site": "BiztechCS",
+  "pulled_at": "2026-04-21",
+  "previous_cycle_date": "2026-04-06",
+  "data_source": "mock",
+  "tracked_keywords": [
+    {
+      "keyword": "odoo implementation partner india",
+      "search_volume_est": 1200,
+      "our_position": 14,
+      "our_position_prev_cycle": 19,
+      "our_position_delta": 5,
+      "featured_snippet_owner": "cybrosys.com",
+      "ai_overview_status": "competitor_cited",
+      "ai_overview_cited_source": "cybrosys.com",
+      "competitors": [
+        { "domain": "cybrosys.com", "position": 4, "position_prev_cycle": 2, "position_delta": -2, "trend": "Declining" },
+        { "domain": "ksolves.com", "position": 9, "position_prev_cycle": 8, "position_delta": -1, "trend": "Declining" },
+        { "domain": "odoosolutions.co.in", "position": 6, "position_prev_cycle": 11, "position_delta": 5, "trend": "Climbing" },
+        { "domain": "openerpindia.com", "position": 18, "position_prev_cycle": 20, "position_delta": 2, "trend": "Climbing" }
+      ],
+      "attack_signal": "overtake_window",
+      "defense_signal": "none",
+      "note": "We are 5 positions from overtaking ksolves.com at position 9 — strong attack window."
+    },
+    {
+      "keyword": "odoo crm customization",
+      "search_volume_est": 480,
+      "our_position": 8,
+      "our_position_prev_cycle": 10,
+      "our_position_delta": 2,
+      "featured_snippet_owner": null,
+      "ai_overview_status": "none",
+      "ai_overview_cited_source": null,
+      "competitors": [
+        { "domain": "cybrosys.com", "position": 3, "position_prev_cycle": 3, "position_delta": 0, "trend": "Holding" },
+        { "domain": "ksolves.com", "position": 12, "position_prev_cycle": 7, "position_delta": -5, "trend": "Declining" },
+        { "domain": "odoosolutions.co.in", "position": 5, "position_prev_cycle": 5, "position_delta": 0, "trend": "Holding" }
+      ],
+      "attack_signal": "none",
+      "defense_signal": "none",
+      "note": "ksolves.com dropped 5 positions — their content may be losing quality signals. We are at 8, can push to top 5."
+    },
+    {
+      "keyword": "odoo manufacturing module",
+      "search_volume_est": 720,
+      "our_position": 11,
+      "our_position_prev_cycle": 7,
+      "our_position_delta": -4,
+      "featured_snippet_owner": "ksolves.com",
+      "ai_overview_status": "competitor_cited",
+      "ai_overview_cited_source": "ksolves.com",
+      "competitors": [
+        { "domain": "ksolves.com", "position": 3, "position_prev_cycle": 8, "position_delta": 5, "trend": "Climbing" },
+        { "domain": "cybrosys.com", "position": 2, "position_prev_cycle": 2, "position_delta": 0, "trend": "Holding" },
+        { "domain": "odoosolutions.co.in", "position": 9, "position_prev_cycle": 14, "position_delta": 5, "trend": "Climbing" }
+      ],
+      "attack_signal": "none",
+      "defense_signal": "competitor_gaining",
+      "note": "ksolves.com gained 5 positions, now at 3 — this is the highest threat. We dropped 4 positions to 11. Priority defense needed."
+    },
+    {
+      "keyword": "odoo vs sap",
+      "search_volume_est": 1800,
+      "our_position": 22,
+      "our_position_prev_cycle": 28,
+      "our_position_delta": 6,
+      "featured_snippet_owner": null,
+      "ai_overview_status": "none",
+      "ai_overview_cited_source": null,
+      "competitors": [
+        { "domain": "cybrosys.com", "position": 8, "position_prev_cycle": 8, "position_delta": 0, "trend": "Holding" },
+        { "domain": "erpnext.com", "position": 4, "position_prev_cycle": 4, "position_delta": 0, "trend": "Holding" },
+        { "domain": "selecthub.com", "position": 1, "position_prev_cycle": 1, "position_delta": 0, "trend": "Holding" }
+      ],
+      "attack_signal": "none",
+      "defense_signal": "none",
+      "note": "High volume query, page 3. Strong established competition. Page 2 is achievable goal (position 15–20)."
+    },
+    {
+      "keyword": "odoo erp implementation cost india",
+      "search_volume_est": 390,
+      "our_position": 18,
+      "our_position_prev_cycle": 24,
+      "our_position_delta": 6,
+      "featured_snippet_owner": null,
+      "ai_overview_status": "none",
+      "ai_overview_cited_source": null,
+      "competitors": [
+        { "domain": "ksolves.com", "position": 15, "position_prev_cycle": 14, "position_delta": -1, "trend": "Declining" },
+        { "domain": "cybrosys.com", "position": 12, "position_prev_cycle": 12, "position_delta": 0, "trend": "Holding" },
+        { "domain": "odoosolutions.co.in", "position": 22, "position_prev_cycle": 25, "position_delta": 3, "trend": "Climbing" }
+      ],
+      "attack_signal": "overtake_window",
+      "defense_signal": "none",
+      "note": "We are 3 positions from overtaking ksolves.com at 15 — strong attack window for this commercial intent query."
+    },
+    {
+      "keyword": "odoo 17 new features",
+      "search_volume_est": 950,
+      "our_position": 6,
+      "our_position_prev_cycle": 6,
+      "our_position_delta": 0,
+      "featured_snippet_owner": "odoo.com",
+      "ai_overview_status": "we_cited",
+      "ai_overview_cited_source": "biztechcs.com",
+      "competitors": [
+        { "domain": "cybrosys.com", "position": 4, "position_prev_cycle": 5, "position_delta": 1, "trend": "Climbing" },
+        { "domain": "ksolves.com", "position": 8, "position_prev_cycle": 8, "position_delta": 0, "trend": "Holding" }
+      ],
+      "attack_signal": "none",
+      "defense_signal": "none",
+      "note": "We are AI Overview cited — protect this. cybrosys.com is climbing toward our position."
+    },
+    {
+      "keyword": "odoo implementation partner uae",
+      "search_volume_est": 280,
+      "our_position": 12,
+      "our_position_prev_cycle": 16,
+      "our_position_delta": 4,
+      "featured_snippet_owner": null,
+      "ai_overview_status": "none",
+      "ai_overview_cited_source": null,
+      "competitors": [
+        { "domain": "cybrosys.com", "position": 5, "position_prev_cycle": 5, "position_delta": 0, "trend": "Holding" },
+        { "domain": "odoosolutions.co.in", "position": 9, "position_prev_cycle": 9, "position_delta": 0, "trend": "Holding" }
+      ],
+      "attack_signal": "overtake_window",
+      "defense_signal": "none",
+      "note": "3 positions from overtaking odoosolutions.co.in at 9. UAE is a target international market for BiztechCS."
+    },
+    {
+      "keyword": "odoo accounting module tutorial",
+      "search_volume_est": 1400,
+      "our_position": 31,
+      "our_position_prev_cycle": 38,
+      "our_position_delta": 7,
+      "featured_snippet_owner": "cybrosys.com",
+      "ai_overview_status": "competitor_cited",
+      "ai_overview_cited_source": "cybrosys.com",
+      "competitors": [
+        { "domain": "cybrosys.com", "position": 2, "position_prev_cycle": 2, "position_delta": 0, "trend": "Holding" },
+        { "domain": "ksolves.com", "position": 11, "position_prev_cycle": 6, "position_delta": -5, "trend": "Declining" }
+      ],
+      "attack_signal": "none",
+      "defense_signal": "none",
+      "note": "We are on page 4 but improving fast. ksolves.com dropped 5 positions — competitor weakness to exploit."
+    }
+  ]
+}

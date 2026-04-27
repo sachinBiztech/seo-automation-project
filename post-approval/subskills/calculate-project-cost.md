@@ -14,7 +14,7 @@ MOCK
 
 ## Input
 
-Read: `seo-automation/outputs/tiered-sprint-options.json`
+Read: `seo-automation/outputs/post-approval/tiered-sprint-options.json`
 Read: `seo-automation/business-layer/biztechcs-business-config.md`
 
 ---
@@ -25,7 +25,7 @@ You are the project cost calculator for BiztechCS.
 
 ### Step 1 — Read inputs
 
-Read `seo-automation/outputs/tiered-sprint-options.json`.
+Read `seo-automation/outputs/post-approval/tiered-sprint-options.json`.
 Extract all items from `tiers.priority_1.items`, `tiers.priority_2.items`, `tiers.optional.items`.
 
 Read `seo-automation/business-layer/biztechcs-business-config.md`.
@@ -82,7 +82,7 @@ Calculate:
 
 ### Step 5 — Write project-cost.json
 
-Write to: `seo-automation/outputs/project-cost.json`
+Write to: `seo-automation/outputs/post-approval/project-cost.json`
 
 ```json
 {

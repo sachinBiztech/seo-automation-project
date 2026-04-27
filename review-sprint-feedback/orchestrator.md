@@ -39,8 +39,8 @@ After each step: Report ONLY `✅ Step N done → filename`. Do NOT print file c
 ## PRE-CHECK
 
 Before spawning any subagent, verify:
-- `seo-automation/outputs/sprint-plan.json` exists and is non-empty
-- `seo-automation/outputs/sprint-feedback.json` exists and has a non-empty `feedback` field
+- `seo-automation/outputs/seo-strategist/sprint-plan.json` exists and is non-empty
+- `seo-automation/outputs/seo-strategist/sprint-feedback.json` exists and has a non-empty `feedback` field
 
 If either check fails: STOP. Reply "❌ Cannot review feedback — sprint-plan.json or sprint-feedback.json missing."
 
@@ -60,14 +60,14 @@ label: "Step 1 — Evaluate Sprint Feedback"
 task: "Read the file seo-automation/seo-strategist/subskills/evaluate-sprint-feedback.md and follow ALL instructions in it exactly. Do not ask questions. Reply ONLY with: ✅ sprint-feedback-decision.json written (decision: reform|full_rerun)"
 ```
 
-Expected output file: `seo-automation/outputs/sprint-feedback-decision.json`
+Expected output file: `seo-automation/outputs/seo-strategist/sprint-feedback-decision.json`
 Failure action: STOP. Send Telegram alert: "❌ BiztechCS Sprint Review FAILED at Step 1 (Evaluate Feedback)."
 
 ---
 
 ### Branch: Read the Decision
 
-After Step 1 completes, read `seo-automation/outputs/sprint-feedback-decision.json`.
+After Step 1 completes, read `seo-automation/outputs/seo-strategist/sprint-feedback-decision.json`.
 Extract the `decision` field.
 
 ---
@@ -86,7 +86,7 @@ label: "Step 2 — Reform Sprint Plan"
 task: "Read the file seo-automation/seo-strategist/subskills/reform-sprint-plan.md and follow ALL instructions in it exactly. Do not ask questions. Reply ONLY with: ✅ sprint-plan.json reformed"
 ```
 
-Expected output: `seo-automation/outputs/sprint-plan.json` modified
+Expected output: `seo-automation/outputs/seo-strategist/sprint-plan.json` modified
 Failure action: STOP. Send Telegram alert: "❌ BiztechCS Sprint Review FAILED at Step 2 (Reform)."
 
 ---
@@ -103,7 +103,7 @@ label: "Step 3 — Regenerate Sprint PDF"
 task: "Read the file seo-automation/seo-strategist/subskills/generate-sprint-pdf.md and follow ALL instructions in it exactly. Do not ask questions. Reply ONLY with: ✅ generate-sprint-pdf-status.json written"
 ```
 
-Expected output file: `seo-automation/outputs/generate-sprint-pdf-status.json`
+Expected output file: `seo-automation/outputs/seo-strategist/generate-sprint-pdf-status.json`
 Failure action: WARNING — continue with HTML fallback.
 
 ---
@@ -120,7 +120,7 @@ label: "Step 4 — Redeliver Sprint Plan"
 task: "Read the file seo-automation/seo-strategist/subskills/deliver-sprint-plan.md and follow ALL instructions in it exactly. Do not ask questions. Reply ONLY with: ✅ sprint plan delivered + sprint-approval.json written"
 ```
 
-Expected output file: `seo-automation/outputs/sprint-approval.json` (status: "pending")
+Expected output file: `seo-automation/outputs/seo-strategist/sprint-approval.json` (status: "pending")
 Failure action: STOP. Send Telegram alert: "❌ BiztechCS Sprint Review FAILED at Step 4 (Redeliver)."
 
 ---
@@ -133,16 +133,16 @@ Run this bash command to delete all previous sprint plan data:
 
 ```bash
 rm -f \
-  /home/sachin.p/.openclaw/workspace/seo-automation/outputs/intelligence-brief-parsed.json \
-  /home/sachin.p/.openclaw/workspace/seo-automation/outputs/attack-vectors.json \
-  /home/sachin.p/.openclaw/workspace/seo-automation/outputs/content-plan.json \
-  /home/sachin.p/.openclaw/workspace/seo-automation/outputs/technical-plan.json \
-  /home/sachin.p/.openclaw/workspace/seo-automation/outputs/offpage-plan.json \
-  /home/sachin.p/.openclaw/workspace/seo-automation/outputs/sprint-plan.json \
-  /home/sachin.p/.openclaw/workspace/seo-automation/outputs/sprint-plan.md \
-  /home/sachin.p/.openclaw/workspace/seo-automation/outputs/sprint-plan.html \
-  /home/sachin.p/.openclaw/workspace/seo-automation/outputs/generate-sprint-pdf-status.json \
-  /home/sachin.p/.openclaw/workspace/seo-automation/outputs/sprint-approval.json
+  /home/sachin.p/.openclaw/workspace/seo-automation/outputs/intelligence-report/intelligence-brief-parsed.json \
+  /home/sachin.p/.openclaw/workspace/seo-automation/outputs/seo-strategist/attack-vectors.json \
+  /home/sachin.p/.openclaw/workspace/seo-automation/outputs/seo-strategist/content-plan.json \
+  /home/sachin.p/.openclaw/workspace/seo-automation/outputs/seo-strategist/technical-plan.json \
+  /home/sachin.p/.openclaw/workspace/seo-automation/outputs/seo-strategist/offpage-plan.json \
+  /home/sachin.p/.openclaw/workspace/seo-automation/outputs/seo-strategist/sprint-plan.json \
+  /home/sachin.p/.openclaw/workspace/seo-automation/outputs/seo-strategist/sprint-plan.md \
+  /home/sachin.p/.openclaw/workspace/seo-automation/outputs/seo-strategist/sprint-plan.html \
+  /home/sachin.p/.openclaw/workspace/seo-automation/outputs/seo-strategist/generate-sprint-pdf-status.json \
+  /home/sachin.p/.openclaw/workspace/seo-automation/outputs/seo-strategist/sprint-approval.json
 ```
 
 Do NOT delete: `report-summary.json`, `report-approval.json`, `sprint-feedback.json`, `sprint-feedback-decision.json`

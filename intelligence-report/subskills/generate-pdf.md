@@ -15,8 +15,8 @@ MOCK
 
 ## Input
 
-Read: `seo-automation/outputs/intelligence-report.html`
-Read: `seo-automation/outputs/report-summary.json`
+Read: `seo-automation/outputs/intelligence-report/intelligence-report.html`
+Read: `seo-automation/outputs/intelligence-report/report-summary.json`
 
 ---
 
@@ -25,16 +25,26 @@ Read: `seo-automation/outputs/report-summary.json`
 You are the PDF generation agent for BiztechCS Intelligence Reports.
 
 **Step 1 — Read inputs**
-Read `seo-automation/outputs/report-summary.json`.
+Read `seo-automation/outputs/intelligence-report/report-summary.json`.
 Extract: `report_id`, `generated_at`, `site`.
 
 Confirm `intelligence-report.html` exists and is non-empty:
 ```bash
-test -s "/home/sachin.p/.openclaw/workspace/seo-automation/outputs/intelligence-report.html" && echo "OK" || echo "MISSING"
+test -s "/home/sachin.p/.openclaw/workspace/seo-automation/outputs/intelligence-report/intelligence-report.html" && echo "OK" || echo "MISSING"
 ```
 If MISSING: write `generate-pdf-status.json` with `status: "html_fallback"` and `error: "intelligence-report.html not found"`. Stop.
 
-**Step 2 — Generate PDF via puppeteer-core**
+**Step 2 — Remove any existing PDF with the same name before generating**
+
+Delete any stale PDF that would conflict with today's filename, so we always produce a fresh file:
+
+```bash
+rm -f /home/sachin.p/.openclaw/workspace/seo-automation/outputs/intelligence-report/<site>-SEO-Intelligence-Report_<generated_at_underscored>.pdf
+```
+
+Replace `<site>` and `<generated_at_underscored>` with the actual values before running.
+
+**Step 3 — Generate PDF via puppeteer-core**
 
 Run a Node.js script using puppeteer-core and system Chrome.
 IMPORTANT: Run the node command from inside the seo-automation project directory so node_modules resolves correctly.
@@ -46,9 +56,9 @@ const path = require('path');
 const fs = require('fs');
 
 (async () => {
-  const htmlPath = path.resolve('outputs/intelligence-report.html');
+  const htmlPath = path.resolve('outputs/intelligence-report/intelligence-report.html');
   const pdfFilename = '<site>-SEO-Intelligence-Report_<generated_at_underscored>.pdf';
-  const pdfPath = path.resolve('outputs/' + pdfFilename);
+  const pdfPath = path.resolve('outputs/intelligence-report/' + pdfFilename);
 
   const browser = await puppeteer.launch({
     executablePath: '/usr/bin/google-chrome',
@@ -68,9 +78,17 @@ const fs = require('fs');
 ```
 
 Replace `<site>` with the site name (e.g. `BiztechCS`).
-Replace `<generated_at_underscored>` with `generated_at` using underscores instead of hyphens (e.g. `2026_04-14`).
+Replace `<generated_at_underscored>` with `generated_at` using underscores instead of hyphens (e.g. `2026_04_27`).
 
-**Step 3 — Write generate-pdf-status.json**
+**Step 4 — Verify PDF was actually created**
+
+```bash
+test -s "/home/sachin.p/.openclaw/workspace/seo-automation/outputs/intelligence-report/<site>-SEO-Intelligence-Report_<generated_at_underscored>.pdf" && echo "PDF_OK" || echo "PDF_MISSING"
+```
+
+If output is `PDF_MISSING`: set status to `html_fallback` and continue.
+
+**Step 5 — Write generate-pdf-status.json**
 
 If PDF generation succeeded (exit code 0, PDF_PATH present):
 
@@ -95,12 +113,12 @@ If PDF generation failed (non-zero exit or PDF_ERROR present):
   "status": "html_fallback",
   "pdf_filename": null,
   "pdf_path": null,
-  "fallback_html_path": "seo-automation/outputs/intelligence-report.html",
+  "fallback_html_path": "seo-automation/outputs/intelligence-report/intelligence-report.html",
   "error": "<error message>"
 }
 ```
 
-Write to: `seo-automation/outputs/generate-pdf-status.json`
+Write to: `seo-automation/outputs/intelligence-report/generate-pdf-status.json`
 
 ---
 

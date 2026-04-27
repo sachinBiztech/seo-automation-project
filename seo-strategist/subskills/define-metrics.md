@@ -10,9 +10,9 @@ claude-sonnet-4-6
 MOCK
 
 ## Input
-- seo-automation/outputs/sprint-plan.json
-- seo-automation/outputs/gsc-findings.json
-- seo-automation/outputs/ga4-findings.json
+- seo-automation/outputs/seo-strategist/sprint-plan.json
+- seo-automation/outputs/intelligence-report/gsc-findings.json
+- seo-automation/outputs/intelligence-report/ga4-findings.json
 
 ## Task
 
@@ -40,7 +40,7 @@ For each item in the sprint plan (content, technical, off-page), define:
 - Every metric must have a measurement method — no "check rankings" vagueness
 
 ## Output
-- Adds `metrics` field to `seo-automation/outputs/sprint-plan.json` (in-place update)
+- Adds `metrics` field to `seo-automation/outputs/seo-strategist/sprint-plan.json` (in-place update)
 
 Metrics schema per item:
 ```json

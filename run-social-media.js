@@ -15,8 +15,10 @@ const fs   = require('fs');
 const path = require('path');
 const { spawnSync } = require('child_process');
 
-const WORKSPACE   = '/home/sachin.p/.openclaw/workspace';
-const OUTPUTS_DIR = path.join(WORKSPACE, 'seo-automation', 'outputs');
+const WORKSPACE      = '/home/sachin.p/.openclaw/workspace';
+const OUTPUTS_DIR    = path.join(WORKSPACE, 'seo-automation', 'outputs');
+const PUBLISH_OUT    = path.join(OUTPUTS_DIR, 'publishing-agent');
+const SOCIAL_OUT     = path.join(OUTPUTS_DIR, 'social-media');
 
 const args      = process.argv.slice(2);
 const getArg    = (f) => { const i = args.indexOf(f); return i !== -1 ? args[i + 1] : null; };
@@ -43,7 +45,7 @@ function main() {
   if (DRY_RUN) console.log('Mode: DRY RUN');
   console.log('═══════════════════════════════════════════════════════\n');
 
-  const triggerFile = path.join(OUTPUTS_DIR, `social-media-trigger-${SPRINT_ID}.json`);
+  const triggerFile = path.join(PUBLISH_OUT, `social-media-trigger-${SPRINT_ID}.json`);
   if (!fs.existsSync(triggerFile)) {
     console.error(`ERROR: social-media-trigger-${SPRINT_ID}.json not found`);
     process.exit(1);
@@ -72,8 +74,8 @@ function main() {
       `Sprint ID: ${SPRINT_ID}. Slug: ${trigger.slug}. ` +
       `Published URL: ${trigger.published_url}. Title: ${trigger.title}. ` +
       `Primary keyword: ${trigger.primary_keyword}. ` +
-      `Mode: MOCK — generate fictional news items, auto-approve all ideas, write output files. ` +
-      `Do not ask questions — execute all 5 steps and write the output files.`,
+      `Mode: MOCK — generate fictional news items, auto-approve all ideas, auto-approve all posts (Step 5), write output files. ` +
+      `Do not ask questions — execute all 6 steps and write the output files.`,
     ],
     { encoding: 'utf8', stdio: 'inherit', timeout: 600000 }
   );
@@ -83,8 +85,8 @@ function main() {
     process.exit(1);
   }
 
-  const postsFile = path.join(OUTPUTS_DIR, `social-posts-${SPRINT_ID}.json`);
-  const queueFile = path.join(OUTPUTS_DIR, `social-manual-queue-${SPRINT_ID}.md`);
+  const postsFile = path.join(SOCIAL_OUT, `social-posts-${SPRINT_ID}.json`);
+  const queueFile = path.join(SOCIAL_OUT, `social-manual-queue-${SPRINT_ID}.md`);
 
   if (fs.existsSync(postsFile)) console.log(`\n✅ Social posts: social-posts-${SPRINT_ID}.json`);
   if (fs.existsSync(queueFile)) console.log(`✅ Manual queue: social-manual-queue-${SPRINT_ID}.md`);

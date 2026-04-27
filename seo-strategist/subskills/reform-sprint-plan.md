@@ -14,9 +14,9 @@ MOCK
 
 ## Input
 
-Read: `seo-automation/outputs/sprint-plan.json` — existing sprint plan to be modified
-Read: `seo-automation/outputs/sprint-feedback.json` — human's feedback text
-Read: `seo-automation/outputs/sprint-feedback-decision.json` — which sections to reform
+Read: `seo-automation/outputs/seo-strategist/sprint-plan.json` — existing sprint plan to be modified
+Read: `seo-automation/outputs/seo-strategist/sprint-feedback.json` — human's feedback text
+Read: `seo-automation/outputs/seo-strategist/sprint-feedback-decision.json` — which sections to reform
 
 ---
 
@@ -31,15 +31,15 @@ you are working with real JSON files on disk.
 
 **Step 1 — Read the existing sprint plan**
 
-Read `seo-automation/outputs/sprint-plan.json`.
+Read `seo-automation/outputs/seo-strategist/sprint-plan.json`.
 Hold the full plan in context. You will modify only the sections flagged by revision notes.
 
 **Step 2 — Read the feedback and decision**
 
-Read `seo-automation/outputs/sprint-feedback.json`.
+Read `seo-automation/outputs/seo-strategist/sprint-feedback.json`.
 Extract `feedback` — the human's written feedback text.
 
-Read `seo-automation/outputs/sprint-feedback-decision.json`.
+Read `seo-automation/outputs/seo-strategist/sprint-feedback-decision.json`.
 Extract:
 - `reform_sections` — the list of section keys to modify
 - `feedback_summary` — one-line summary of what needs to change
@@ -64,9 +64,9 @@ Apply the revision notes to the sprint plan JSON. Rules:
 
 Write three files with the reformed plan:
 
-5a. Write `seo-automation/outputs/sprint-plan.json` — updated JSON (preserve all unchanged fields)
+5a. Write `seo-automation/outputs/seo-strategist/sprint-plan.json` — updated JSON (preserve all unchanged fields)
 
-5b. Generate `seo-automation/outputs/sprint-plan.md` — markdown version of the reformed plan.
+5b. Generate `seo-automation/outputs/seo-strategist/sprint-plan.md` — markdown version of the reformed plan.
 
 Format:
 ```markdown
@@ -97,7 +97,7 @@ Format:
 Content: [n] | Technical: [n] | Off-Page: [n]
 ```
 
-5c. Generate `seo-automation/outputs/sprint-plan.html` — HTML version for PDF rendering.
+5c. Generate `seo-automation/outputs/seo-strategist/sprint-plan.html` — HTML version for PDF rendering.
 Use clean, professional HTML. Include all sections from the markdown above.
 Add a header banner: "BiztechCS SEO Sprint Plan — Iteration [N]"
 

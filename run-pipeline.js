@@ -22,10 +22,12 @@ const fs   = require('fs');
 const path = require('path');
 const { spawnSync } = require('child_process');
 
-const WORKSPACE = '/home/sachin.p/.openclaw/workspace';
-const OUTPUTS   = path.join(WORKSPACE, 'seo-automation', 'outputs');
-const DRY_RUN   = process.argv.includes('--dry-run');
-const FORCE     = process.argv.includes('--force');
+const WORKSPACE  = '/home/sachin.p/.openclaw/workspace';
+const OUTPUTS    = path.join(WORKSPACE, 'seo-automation', 'outputs');
+const IR_OUT     = path.join(OUTPUTS, 'intelligence-report');
+const STRAT_OUT  = path.join(OUTPUTS, 'seo-strategist');
+const DRY_RUN    = process.argv.includes('--dry-run');
+const FORCE      = process.argv.includes('--force');
 
 // ── Session cleanup ────────────────────────────────────────────────────────────
 function clearSession(agentId) {
@@ -47,7 +49,7 @@ function clearSession(agentId) {
 
 // ── Pre-check ─────────────────────────────────────────────────────────────────
 function preCheck() {
-  const reportApprovalPath = path.join(OUTPUTS, 'report-approval.json');
+  const reportApprovalPath = path.join(IR_OUT, 'report-approval.json');
   if (!fs.existsSync(reportApprovalPath)) {
     console.error('❌ report-approval.json missing. Run intelligence-report first.');
     return false;
@@ -67,28 +69,30 @@ function preCheck() {
 // may see them as already-done and skip those steps.
 function clearSprintOutputs() {
   const staleFiles = [
-    // Step 1 output — must clear so stale brief doesn't contaminate new run
-    'intelligence-brief-parsed.json',
+    // Step 1 output — all subskills write/read it from intelligence-report/ not seo-strategist/
+    path.join(IR_OUT, 'intelligence-brief-parsed.json'),
     // Step 2 output
-    'attack-vectors.json',
+    path.join(STRAT_OUT, 'attack-vectors.json'),
     // Step 3 outputs
-    'content-plan.json',
-    'technical-plan.json',
-    'offpage-plan.json',
+    path.join(STRAT_OUT, 'content-plan.json'),
+    path.join(STRAT_OUT, 'technical-plan.json'),
+    path.join(STRAT_OUT, 'offpage-plan.json'),
     // Step 4 outputs
-    'sprint-plan.json',
-    'sprint-plan.md',
-    'sprint-plan.html',
+    path.join(STRAT_OUT, 'sprint-plan.json'),
+    path.join(STRAT_OUT, 'sprint-plan.md'),
+    path.join(STRAT_OUT, 'sprint-plan.html'),
+    // Step 4d/4e/4f outputs
+    path.join(STRAT_OUT, 'expert-intelligence-map.json'),
+    path.join(STRAT_OUT, 'history-rationale.json'),
     // Step 5 output — clearing ensures sprint_id is always from the current sprint-plan.json
-    'generate-sprint-pdf-status.json',
+    path.join(STRAT_OUT, 'generate-sprint-pdf-status.json'),
     // Step 6 output
-    'sprint-approval.json',
+    path.join(STRAT_OUT, 'sprint-approval.json'),
   ];
-  for (const f of staleFiles) {
-    const p = path.join(OUTPUTS, f);
+  for (const p of staleFiles) {
     if (fs.existsSync(p)) {
       fs.unlinkSync(p);
-      console.log(`  🗑  Cleared ${f} (will be regenerated this run)`);
+      console.log(`  🗑  Cleared ${path.basename(p)} (will be regenerated this run)`);
     }
   }
 }
@@ -105,7 +109,7 @@ function checkOutputs() {
   console.log('\n── Verifying outputs ──');
   let allOk = true;
   for (const f of required) {
-    const full = path.join(OUTPUTS, f);
+    const full = path.join(STRAT_OUT, f);
     if (fs.existsSync(full) && fs.statSync(full).size > 0) {
       console.log(`  ✅ ${f}`);
     } else {
@@ -115,7 +119,7 @@ function checkOutputs() {
   }
 
   // Verify Step 6 actually ran: sprint-approval.json must be "pending" (freshly sent)
-  const approvalPath = path.join(OUTPUTS, 'sprint-approval.json');
+  const approvalPath = path.join(STRAT_OUT, 'sprint-approval.json');
   if (fs.existsSync(approvalPath)) {
     const approval = JSON.parse(fs.readFileSync(approvalPath, 'utf8'));
     if (approval.status === 'pending') {
@@ -166,13 +170,10 @@ function main() {
     [
       'agent', '--agent', 'seo-strategist',
       '--message',
-      'Run the full SEO Strategist pipeline from Step 1 to the final step. ' +
-      'Execute ALL steps sequentially without stopping: ' +
-      'Step 1 (Intelligence Brief), Step 2 (Attack Vectors), ' +
-      'Step 3a (Content Offensive), Step 3b (Technical Offensive), Step 3c (Off-Page Offensive), ' +
-      'Step 4 (Assemble Sprint Plan), Step 5 (Generate Sprint PDF), Step 6 (Deliver to Telegram). ' +
-      'Do NOT skip Step 5 or Step 6 — these are required for delivery. ' +
-      'Do not stop mid-pipeline. Follow the orchestrator exactly.',
+      'Read seo-automation/seo-strategist/orchestrator.md and follow every step inline. ' +
+      'Do NOT use any shell script. Do NOT look for .sh files. ' +
+      'Read each subskill .md file listed and execute it directly using the read and write tools. ' +
+      'Complete all steps from Step 0 through Step 6 without stopping.',
     ],
     { encoding: 'utf8', stdio: 'inherit', timeout: 1800000 }
   );

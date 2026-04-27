@@ -10,9 +10,9 @@ claude-haiku-4-5-20251001
 MOCK
 
 ## Input
-- seo-automation/outputs/preview-[slug].html
-- seo-automation/outputs/content-approval-[sprint_id].json
-- seo-automation/outputs/content-brief-[slug].json
+- seo-automation/outputs/content-pipeline/preview-[slug].html
+- seo-automation/outputs/content-pipeline/content-approval-[sprint_id].json
+- seo-automation/outputs/content-pipeline/content-brief-[slug].json
 
 ## Task
 
@@ -25,14 +25,14 @@ MOCK
    - BiztechCS runs on [CMS type from product owner config]
    - Send HTML content via CMS REST API
    - Set: title, slug, author, categories, tags, publish date
-   - In MOCK mode: write a publish record to `outputs/publish-log-[sprint_id].json`
+   - In MOCK mode: write a publish record to `outputs/publishing-agent/publish-log-[sprint_id].json`
 
 3. **Verify publication**
    - In PRODUCTION: HTTP GET the published URL, check HTTP 200 + title match
    - In MOCK: mark as `published_mock: true`
 
 4. **Archive HTML**
-   - Move `preview-[slug].html` to `outputs/approved/preview-[slug].html`
+   - Move `preview-[slug].html` to `outputs/publishing-agent/approved/preview-[slug].html`
 
 5. **Update sprint sheet**
    - Update task row in `sprint-tasks-[sprint_id].json`:
@@ -41,7 +41,7 @@ MOCK
      - Drive Link: published URL
 
 6. **Trigger Social Media Engine**
-   - Write `seo-automation/outputs/social-media-trigger-[sprint_id].json`:
+   - Write `seo-automation/outputs/publishing-agent/social-media-trigger-[sprint_id].json`:
    ```json
    {
      "sprint_id": "[sprint_id]",
@@ -66,5 +66,5 @@ MOCK
 - Reply ONLY with: `✅ [slug] published — publish-log-[sprint_id].json written`
 
 ## Output
-- `seo-automation/outputs/publish-log-[sprint_id].json`
-- Updates `seo-automation/outputs/sprint-tasks-[sprint_id].json`
+- `seo-automation/outputs/publishing-agent/publish-log-[sprint_id].json`
+- Updates `seo-automation/outputs/sprint-pm/sprint-tasks-[sprint_id].json`

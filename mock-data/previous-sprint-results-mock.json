@@ -1,0 +1,115 @@
+{
+  "sprint_id": "biztechcs_sprint_2026-04-01",
+  "sprint_dates": "2026-04-01 to 2026-04-15",
+  "site": "BiztechCS",
+  "source": "Sprint task sheet + GSC + Odoo CRM post-sprint verification",
+  "summary": "Sprint 1 complete. 2 of 3 technical fixes recovered. 1 blog post published and ranking. Off-page outreach had 1 successful placement.",
+  "technical_tasks": [
+    {
+      "sr": 1,
+      "title": "Title tag + meta description optimization — /odoo-crm-module",
+      "status": "Done",
+      "completed": "2026-04-03",
+      "outcome": "RECOVERED",
+      "evidence": "Position improved from 10.4 to 7.8 (+2.6). Impressions up 27%. CTR improved 21%. GSC Insights no longer flags this page.",
+      "verdict_for_section_10": "Tactic validated. On-page title/meta optimization produced measurable position improvement within 15 days. Repeat this approach for underperforming pages."
+    },
+    {
+      "sr": 2,
+      "title": "Service + FAQ schema markup — /odoo-implementation-services",
+      "status": "Done",
+      "completed": "2026-04-05",
+      "outcome": "IN_PROGRESS",
+      "evidence": "Position moved from 6.8 to 6.2 (slight improvement). Impressions up 6%. Schema not yet triggering rich results consistently — may need 1 more cycle.",
+      "cooldown_expires": "2026-07-04",
+      "verdict_for_section_10": "Schema markup tactic inconclusive — early positive signal but needs full 90-day cooldown. Page in cooldown until 2026-07-04. Do not re-touch."
+    },
+    {
+      "sr": 3,
+      "title": "Internal linking from blog to /odoo-manufacturing",
+      "status": "Done",
+      "completed": "2026-04-08",
+      "outcome": "NOT_RECOVERED",
+      "evidence": "Position continued to drop from 7 to 11 despite internal links added. Root cause likely off-page — ksolves.com earned 5+ backlinks pointing to their manufacturing page.",
+      "verdict_for_section_10": "Internal link addition insufficient when competitor is actively earning authoritative backlinks. Need backlink strategy + content quality upgrade for this page, not just internal links."
+    }
+  ],
+  "content_tasks": [
+    {
+      "sr": 4,
+      "title": "Blog post: Odoo CRM Customization in 2026 — Step-by-Step for Manufacturers",
+      "primary_keyword": "odoo crm customization",
+      "status": "Done",
+      "completed": "2026-04-09",
+      "published_url": "/blog/odoo-crm-customization-manufacturers-2026",
+      "word_count": 2100,
+      "ai_score_pct": 5,
+      "author": "Uttam",
+      "outcome": "RANKING",
+      "evidence": "Article indexed within 3 days. Impressions: 840 in first 15 days. Position: 18.2 for primary keyword. Contributing to overall /odoo-crm-module page authority.",
+      "verdict_for_section_10": "Tactic validated. 2100-word expert-authored blog on CRM customization indexed quickly and gaining impressions. Repeat: expert-authored, 2000+ word, specific how-to format for manufacturing audience."
+    },
+    {
+      "sr": 5,
+      "title": "Blog post: Odoo vs SAP for Mid-Market Indian Manufacturers",
+      "primary_keyword": "odoo vs sap mid market",
+      "status": "Done",
+      "completed": "2026-04-11",
+      "published_url": "/blog/odoo-vs-sap-mid-market-india",
+      "word_count": 2400,
+      "ai_score_pct": 6,
+      "author": "Nandeep",
+      "outcome": "RANKING",
+      "evidence": "Article indexed, 520 impressions in 15 days. Position: 24.1 for primary keyword. Lower velocity than CRM post — comparison format may take longer to establish authority.",
+      "verdict_for_section_10": "Tactic validated but slower to gain traction than expected. Comparison articles need more authoritative backlinks to rank faster. Next sprint: secure 1-2 backlinks to this page."
+    }
+  ],
+  "offpage_tasks": [
+    {
+      "sr": 6,
+      "title": "Guest post — analyticsinsight.net",
+      "target_domain": "analyticsinsight.net",
+      "status": "Done",
+      "completed": "2026-04-14",
+      "outcome": "PLACED",
+      "evidence": "Article published: 'How Indian Manufacturers Are Using Odoo ERP to Cut Costs in 2026'. DA 62. 1 contextual backlink to /odoo-manufacturing. Link active.",
+      "verdict_for_section_10": "Guest post on analyticsinsight.net successful. Editor is Priya Sharma (priya@analyticsinsight.net). Relationship established. Pitch follow-up in 6 weeks viable."
+    },
+    {
+      "sr": 7,
+      "title": "Backlink outreach — techcircle.in",
+      "target_domain": "techcircle.in",
+      "status": "Done",
+      "completed": "2026-04-06",
+      "outcome": "NO_RESPONSE",
+      "evidence": "Cold email to editorial@techcircle.in — no response after 15 days.",
+      "verdict_for_section_10": "Cold email to techcircle.in unsuccessful. Note: cybrosys.com earned a techcircle.in backlink this cycle — they likely pitched a data story, not a cold link request. Pivot to data-story angle. Do not repeat cold email."
+    },
+    {
+      "sr": 8,
+      "title": "Quora answers — 4 answers on Odoo manufacturing + CRM questions",
+      "status": "Done",
+      "completed": "2026-04-12",
+      "outcome": "PARTIAL",
+      "evidence": "4 answers published. Combined: 380 views in 15 days, 12 organic referral sessions to site. 1 answer (Odoo manufacturing question) ranking at position 7 on Google for the Quora thread URL.",
+      "verdict_for_section_10": "Quora answers produced measurable referral traffic. The manufacturing-focused answer ranked on Google. Strategy: continue Quora for manufacturing + CRM questions. Ensure answers are 400+ words with one internal link."
+    },
+    {
+      "sr": 9,
+      "title": "Reddit post — r/Odoo discussion on manufacturing deployment learnings",
+      "status": "Done",
+      "completed": "2026-04-13",
+      "outcome": "MODERATE",
+      "evidence": "Post received 48 upvotes, 14 comments, 6 organic site visits. No direct lead attribution but brand visibility in Odoo community.",
+      "verdict_for_section_10": "Reddit r/Odoo community receptive to practical case study format. No self-promotion in post — technical insights only. Repeat this format. Do not include direct promotional links."
+    }
+  ],
+  "sprint_metrics": {
+    "leads": 9,
+    "mqls": 5,
+    "sqls": 2,
+    "vs_target": { "leads": "9/10 — 90%", "mqls": "5/4 — 125%", "sqls": "2/1.4 — 143%" },
+    "top_lead_page": "/odoo-implementation-services",
+    "organic_share_pct": 64
+  }
+}

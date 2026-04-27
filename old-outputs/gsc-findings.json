@@ -1,4 +1,13 @@
 {
+  "site": "BiztechCS",
+  "pulled_at": "2026-04-09",
+  "priority_1_pages": [
+    {
+      "url": "/odoo-manufacturing",
+      "signal": "Impressions dropped 34% in last 30 days",
+      "priority": "HIGH"
+    }
+  ],
   "ctr_opportunities": [
     {
       "query": "odoo implementation partner india",
@@ -13,6 +22,13 @@
       "ctr": 0.01,
       "position": 11.3,
       "trend": "Declining"
+    },
+    {
+      "query": "odoo vs sap mid market",
+      "impressions": 1900,
+      "ctr": 0.004,
+      "position": 22.1,
+      "trend": "Climbing"
     }
   ],
   "quick_win_keywords": [
@@ -29,13 +45,6 @@
       "impressions": 3100,
       "ctr": 0.01,
       "trend": "Declining"
-    }
-  ],
-  "priority_1_pages": [
-    {
-      "url": "/odoo-manufacturing",
-      "signal": "Impressions dropped 34% in last 30 days",
-      "priority": "HIGH"
     }
   ],
   "raw_top_keywords": [

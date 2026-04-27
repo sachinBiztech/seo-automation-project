@@ -19,8 +19,9 @@ const fs   = require('fs');
 const path = require('path');
 const { spawnSync, spawn } = require('child_process');
 
-const WORKSPACE = '/home/sachin.p/.openclaw/workspace';
-const OUTPUTS   = path.join(WORKSPACE, 'seo-automation', 'outputs');
+const WORKSPACE   = '/home/sachin.p/.openclaw/workspace';
+const OUTPUTS     = path.join(WORKSPACE, 'seo-automation', 'outputs');
+const SPRINT_PM_OUT = path.join(OUTPUTS, 'sprint-pm');
 
 const args      = process.argv.slice(2);
 const getArg    = (f) => { const i = args.indexOf(f); return i !== -1 ? args[i + 1] : null; };
@@ -91,7 +92,7 @@ function main() {
   }
 
   // ── Step 2: Read dispatch manifest ───────────────────────────────────────────
-  const dispatchFile = path.join(OUTPUTS, `sprint-pm-dispatch-${TODAY}.json`);
+  const dispatchFile = path.join(SPRINT_PM_OUT, `sprint-pm-dispatch-${TODAY}.json`);
   if (!fs.existsSync(dispatchFile)) {
     console.warn('\n⚠️  No dispatch file found — no tasks scheduled for today or agent skipped it.');
     process.exit(0);

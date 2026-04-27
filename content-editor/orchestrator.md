@@ -10,8 +10,8 @@ claude-opus-4-6
 MOCK
 
 ## Input
-- seo-automation/outputs/draft-[slug].md
-- seo-automation/outputs/content-brief-[slug].json
+- seo-automation/outputs/content-pipeline/draft-[slug].md
+- seo-automation/outputs/content-pipeline/content-brief-[slug].json
 
 ## Task
 
@@ -72,5 +72,5 @@ Verify:
 - On FAIL: Reply ONLY with: `✅ FAIL revision-brief-[slug].md written`
 
 ## Output
-- `seo-automation/outputs/edited-draft-[slug].md` (on pass)
-- `seo-automation/outputs/revision-brief-[slug].md` (on fail)
+- `seo-automation/outputs/content-pipeline/edited-draft-[slug].md` (on pass)
+- `seo-automation/outputs/content-pipeline/revision-brief-[slug].md` (on fail)

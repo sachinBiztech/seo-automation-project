@@ -10,8 +10,8 @@ claude-haiku-4-5-20251001
 MOCK
 
 ## Input
-- seo-automation/outputs/sprint-plan.json
-- seo-automation/outputs/competitor-findings.json
+- seo-automation/outputs/seo-strategist/sprint-plan.json
+- seo-automation/outputs/intelligence-report/competitor-findings.json
 
 ## Task
 
@@ -33,7 +33,7 @@ For each claim:
 In MOCK mode: mark all claims as VERIFIED if a matching competitor domain appears in competitor-findings.json, regardless of action details.
 
 ## Output
-- `seo-automation/outputs/competitor-claims-check.json`
+- `seo-automation/outputs/post-approval/competitor-claims-check.json`
 
 Schema:
 ```json

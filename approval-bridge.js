@@ -6,11 +6,14 @@ const { execFileSync, spawn } = require('child_process');
 
 const repoRoot              = __dirname;
 const outputsDir            = path.join(repoRoot, 'outputs');
-const reportApprovalPath    = path.join(outputsDir, 'report-approval.json');
-const sprintApprovalPath    = path.join(outputsDir, 'sprint-approval.json');
-const postApprovalStatusPath = path.join(outputsDir, 'post-approval-status.json');
-const pendingTextReplyPath  = path.join(outputsDir, 'pending-text-reply.json');
-const sprintFeedbackPath    = path.join(outputsDir, 'sprint-feedback.json');
+const irDir                 = path.join(outputsDir, 'intelligence-report');
+const stratDir              = path.join(outputsDir, 'seo-strategist');
+const postApprovalDir       = path.join(outputsDir, 'post-approval');
+const reportApprovalPath    = path.join(irDir, 'report-approval.json');
+const sprintApprovalPath    = path.join(stratDir, 'sprint-approval.json');
+const postApprovalStatusPath = path.join(postApprovalDir, 'post-approval-status.json');
+const pendingTextReplyPath  = path.join(stratDir, 'pending-text-reply.json');
+const sprintFeedbackPath    = path.join(stratDir, 'sprint-feedback.json');
 
 const strategistOrchestratorPath     = path.join(repoRoot, 'seo-strategist', 'orchestrator.md');
 const postApprovalOrchestratorPath   = path.join(repoRoot, 'post-approval', 'orchestrator.md');
@@ -124,7 +127,7 @@ if (entityId.startsWith('biztechcs_intelligence_')) {
   writeJson(reportApprovalPath, approval);
 
   if (action === 'approve') {
-    const reportSummaryPath = path.join(outputsDir, 'report-summary.json');
+    const reportSummaryPath = path.join(irDir, 'report-summary.json');
     if (!fs.existsSync(reportSummaryPath) || fs.statSync(reportSummaryPath).size === 0) {
       console.error('report-summary.json missing, refusing to trigger strategist');
       process.exit(1);
@@ -134,11 +137,18 @@ if (entityId.startsWith('biztechcs_intelligence_')) {
       triggered_at: nowIso(), trigger: 'seo-strategist',
       orchestrator: strategistOrchestratorPath, status: 'approved'
     };
-    writeJson(path.join(outputsDir, 'seo-strategist-trigger.json'), triggerRecord);
-    fireEvent(
-      `SEO report approved: ${approval.report_id}. Start seo-strategist using ${strategistOrchestratorPath}`,
-      path.join(outputsDir, 'seo-strategist-trigger.json'), triggerRecord
+    writeJson(path.join(stratDir, 'seo-strategist-trigger.json'), triggerRecord);
+
+    // Spawn seo-strategist agent directly
+    const ss = spawn(
+      'openclaw',
+      ['agent', '--agent', 'seo-strategist',
+       '--message', `Read seo-automation/seo-strategist/orchestrator.md and follow every step inline. Report approved: ${approval.report_id}. Do NOT use shell scripts. Use read and write tools only.`],
+      { detached: true, stdio: 'ignore', cwd: repoRoot }
     );
+    ss.unref();
+    triggerRecord.event_dispatch = 'agent_spawned';
+    writeJson(path.join(stratDir, 'seo-strategist-trigger.json'), triggerRecord);
   }
 
   console.log(JSON.stringify({ ok: true, kind: 'report', action, report_id: entityId }, null, 2));
@@ -163,7 +173,7 @@ if (action === 'approve' && entityId.startsWith('biztechcs_sprint_')) {
   sprintApproval.approved_by = actor;
   writeJson(sprintApprovalPath, sprintApproval);
 
-  const sprintPlanPath = path.join(outputsDir, 'sprint-plan.json');
+  const sprintPlanPath = path.join(stratDir, 'sprint-plan.json');
   if (!fs.existsSync(sprintPlanPath) || fs.statSync(sprintPlanPath).size === 0) {
     console.error('sprint-plan.json missing, refusing to trigger post-approval'); process.exit(1);
   }
@@ -173,11 +183,19 @@ if (action === 'approve' && entityId.startsWith('biztechcs_sprint_')) {
     triggered_at: nowIso(), trigger: 'post-approval',
     orchestrator: postApprovalOrchestratorPath, status: 'approved'
   };
-  writeJson(path.join(outputsDir, 'post-approval-trigger.json'), triggerRecord);
-  fireEvent(
-    `Sprint plan approved: ${entityId}. Start post-approval pipeline using ${postApprovalOrchestratorPath}`,
-    path.join(outputsDir, 'post-approval-trigger.json'), triggerRecord
+  writeJson(path.join(stratDir, 'post-approval-trigger.json'), triggerRecord);
+
+  // Spawn post-approval agent directly — openclaw system event is not listened to
+  const pa = spawn(
+    'openclaw',
+    ['agent', '--agent', 'post-approval',
+     '--message', `Read seo-automation/post-approval/orchestrator.md and follow every step inline. Sprint approved: ${entityId}. Do NOT use shell scripts. Use read and write tools only.`],
+    { detached: true, stdio: 'ignore', cwd: repoRoot }
   );
+  pa.unref();
+  triggerRecord.event_dispatch = 'agent_spawned';
+  writeJson(path.join(stratDir, 'post-approval-trigger.json'), triggerRecord);
+  console.log(`[approve] post-approval agent spawned for ${entityId}`);
 
   console.log(JSON.stringify({ ok: true, kind: 'sprint', action, sprint_id: entityId }, null, 2));
   process.exit(0);
@@ -259,11 +277,18 @@ if (action === 'sprint-feedback' && entityId.startsWith('biztechcs_sprint_')) {
     trigger: 'review-sprint-feedback',
     orchestrator: reviewFeedbackOrchestratorPath
   };
-  writeJson(path.join(outputsDir, 'review-sprint-trigger.json'), triggerRecord);
-  fireEvent(
-    `Sprint feedback received: ${entityId}. Start review-sprint-feedback using ${reviewFeedbackOrchestratorPath}`,
-    path.join(outputsDir, 'review-sprint-trigger.json'), triggerRecord
+  writeJson(path.join(stratDir, 'review-sprint-trigger.json'), triggerRecord);
+
+  // Spawn review-sprint-feedback agent directly
+  const rsf = spawn(
+    'openclaw',
+    ['agent', '--agent', 'review-sprint-feedback',
+     '--message', `Read seo-automation/review-sprint-feedback/orchestrator.md and follow every step inline. Sprint feedback received: ${entityId}. Do NOT use shell scripts. Use read and write tools only.`],
+    { detached: true, stdio: 'ignore', cwd: repoRoot }
   );
+  rsf.unref();
+  triggerRecord.event_dispatch = 'agent_spawned';
+  writeJson(path.join(stratDir, 'review-sprint-trigger.json'), triggerRecord);
 
   console.log(JSON.stringify({ ok: true, kind: 'sprint', action: 'sprint-feedback', sprint_id: entityId }));
   process.exit(0);
@@ -290,7 +315,7 @@ if (action === 'proceed' && entityId.startsWith('biztechcs_sprint_')) {
     source: 'telegram_proceed', sprint_id: entityId,
     triggered_at: nowIso(), trigger: 'task-sheet-populator', status: 'proceed_confirmed'
   };
-  writeJson(path.join(outputsDir, 'task-sheet-trigger.json'), triggerRecord);
+  writeJson(path.join(postApprovalDir, 'task-sheet-trigger.json'), triggerRecord);
 
   // Spawn task-sheet-populator.js directly — no openclaw event needed
   const tsp = spawn(

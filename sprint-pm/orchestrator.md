@@ -35,10 +35,10 @@ The "be minimal" rule does NOT apply here. All steps must complete.
 ## PRECONDITIONS
 
 Before starting, verify:
-- `seo-automation/outputs/sprint-tasks-[sprint_id].json` exists
-- `seo-automation/outputs/sprint-approval.json` exists with `status: "approved"`
+- `seo-automation/outputs/sprint-pm/sprint-tasks-[sprint_id].json` exists
+- `seo-automation/outputs/seo-strategist/sprint-approval.json` exists with `status: "approved"`
 
-Read `seo-automation/outputs/sprint-approval.json` to get `sprint_id` and `sprint_start`.
+Read `seo-automation/outputs/seo-strategist/sprint-approval.json` to get `sprint_id` and `sprint_start`.
 
 ---
 
@@ -54,11 +54,11 @@ If `sprint_day > 10`:
 
 ## Step 2 — Find today's tasks
 
-Read `seo-automation/outputs/sprint-tasks-[sprint_id].json`.
+Read `seo-automation/outputs/sprint-pm/sprint-tasks-[sprint_id].json`.
 
 Find tasks where `scheduledDay == "Day [sprint_day]"` AND `status == "Not Started"`.
 
-**Before processing missed tasks:** Check which days have already run by reading any existing `seo-automation/outputs/sprint-pm-log-[date].json` files. If a previous log exists for Day N, treat ALL tasks from that day as already dispatched — do NOT re-trigger them even if their status shows "Not Started" (status may have been reset by regeneration).
+**Before processing missed tasks:** Check which days have already run by reading any existing `seo-automation/outputs/sprint-pm/sprint-pm-log-[date].json` files. If a previous log exists for Day N, treat ALL tasks from that day as already dispatched — do NOT re-trigger them even if their status shows "Not Started" (status may have been reset by regeneration).
 
 Also find missed tasks: `scheduledDay` day number < sprint_day AND `status == "Not Started"` AND no prior sprint-pm-log covers that day → reschedule to `"Day [sprint_day+1]"`. Do NOT re-run tasks that were already dispatched in a prior log.
 
@@ -66,7 +66,7 @@ Also find missed tasks: `scheduledDay` day number < sprint_day AND `status == "N
 
 ## Step 3 — Update sprint-tasks JSON
 
-Read the full `seo-automation/outputs/sprint-tasks-[sprint_id].json`.
+Read the full `seo-automation/outputs/sprint-pm/sprint-tasks-[sprint_id].json`.
 For every task found in Step 2, change ONLY the `status` field to `"In Progress"`.
 For rescheduled tasks, change ONLY the `scheduledDay` field.
 Do NOT modify any other field (title, notes, slug, etc.) — copy them exactly as-is.
@@ -94,7 +94,7 @@ label: "Step 4 — Technical SEO"
 task: "Read the file seo-automation/technical-seo/orchestrator.md and follow ALL instructions exactly. Sprint ID: [sprint_id]. Technical tasks for today: [list each Sr + title]. Write all output files using the write tool. Reply ONLY with: ✅ technical-changes-[date].md written"
 ```
 
-Expected output: `seo-automation/outputs/technical-changes-[today].md`
+Expected output: `seo-automation/outputs/sprint-pm/technical-changes-[today].md`
 Failure action: WARNING — log failure, continue to off-page step.
 
 ---
@@ -113,7 +113,7 @@ label: "Step 5 — Off-Page SEO"
 task: "Read the file seo-automation/off-page-seo/orchestrator.md and follow ALL instructions exactly. Sprint ID: [sprint_id]. Off-page tasks for today: [list each Sr + title]. Write all output files using the write tool. Reply ONLY with: ✅ outreach-package-[sprint_id].json written"
 ```
 
-Expected output: `seo-automation/outputs/outreach-package-[sprint_id].json`
+Expected output: `seo-automation/outputs/social-media/outreach-package-[sprint_id].json`
 Failure action: WARNING — log failure, continue.
 
 After off-page completes, spawn outreach-manager:
@@ -124,10 +124,10 @@ agentId: "sprint-pm"
 lightContext: true
 cleanup: "delete"
 label: "Step 5b — Outreach Manager"
-task: "Read the file seo-automation/outreach-manager/orchestrator.md and follow ALL instructions exactly. Sprint ID: [sprint_id]. Read seo-automation/outputs/outreach-package-[sprint_id].json. Write all output files using the write tool. Reply ONLY with: ✅ outreach-log-[sprint_id].json written"
+task: "Read the file seo-automation/outreach-manager/orchestrator.md and follow ALL instructions exactly. Sprint ID: [sprint_id]. Read seo-automation/outputs/social-media/outreach-package-[sprint_id].json. Write all output files using the write tool. Reply ONLY with: ✅ outreach-log-[sprint_id].json written"
 ```
 
-Expected output: `seo-automation/outputs/outreach-log-[sprint_id].json`
+Expected output: `seo-automation/outputs/social-media/outreach-log-[sprint_id].json`
 Failure action: WARNING — log failure, continue.
 
 ---
@@ -145,14 +145,14 @@ label: "Step 6 — Content Sr[sr]"
 task: "Read the file seo-automation/content-pipeline/orchestrator.md and follow ALL instructions exactly. Sprint ID: [sprint_id]. Task Sr[sr]: [title]. Primary keyword: [primary_keyword]. Author: [author]. Target word count: [target_word_count]. Write all output files using the write tool. Reply ONLY with: ✅ content-brief-[slug].json written"
 ```
 
-Expected output: `seo-automation/outputs/content-brief-[slug].json`
+Expected output: `seo-automation/outputs/content-pipeline/content-brief-[slug].json`
 Failure action: WARNING — log and continue to next content task.
 
 ---
 
 ## Step 7 — Write sprint-pm log
 
-Write `seo-automation/outputs/sprint-pm-log-[today].json`:
+Write `seo-automation/outputs/sprint-pm/sprint-pm-log-[today].json`:
 ```json
 {
   "run_date": "<ISO8601>",
@@ -182,8 +182,8 @@ Next: Day 2 content pipeline starts tomorrow."
 
 ## Output files
 
-- `seo-automation/outputs/sprint-tasks-[sprint_id].json` — updated statuses
-- `seo-automation/outputs/sprint-pm-log-[today].json`
-- `seo-automation/outputs/technical-changes-[today].md` — written by technical-seo subagent
-- `seo-automation/outputs/outreach-package-[sprint_id].json` — written by off-page-seo subagent
-- `seo-automation/outputs/outreach-log-[sprint_id].json` — written by outreach-manager subagent
+- `seo-automation/outputs/sprint-pm/sprint-tasks-[sprint_id].json` — updated statuses
+- `seo-automation/outputs/sprint-pm/sprint-pm-log-[today].json`
+- `seo-automation/outputs/sprint-pm/technical-changes-[today].md` — written by technical-seo subagent
+- `seo-automation/outputs/social-media/outreach-package-[sprint_id].json` — written by off-page-seo subagent
+- `seo-automation/outputs/social-media/outreach-log-[sprint_id].json` — written by outreach-manager subagent

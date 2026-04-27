@@ -10,10 +10,10 @@ claude-opus-4-6
 MOCK
 
 ## Input
-- seo-automation/outputs/alignment-check.json
-- seo-automation/outputs/competitor-claims-check.json
-- seo-automation/outputs/guardrails-check.json
-- seo-automation/outputs/enriched-sprint-plan.json
+- seo-automation/outputs/post-approval/alignment-check.json
+- seo-automation/outputs/post-approval/competitor-claims-check.json
+- seo-automation/outputs/post-approval/guardrails-check.json
+- seo-automation/outputs/post-approval/enriched-sprint-plan.json
 
 ## Task
 
@@ -56,7 +56,7 @@ Read `revision_count` from previous `product-owner-review.json`. If `revision_co
 - Send Telegram: "⚠️ Product Owner: 3 revision cycles failed for [sprint_id]. Human review required."
 
 ## Output
-- `seo-automation/outputs/product-owner-review.json`
+- `seo-automation/outputs/post-approval/product-owner-review.json`
 
 Schema:
 ```json

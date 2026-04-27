@@ -1,0 +1,58 @@
+{
+  "site": "BiztechCS",
+  "pulled_at": "2026-04-09",
+  "all_keywords": [
+    {
+      "keyword": "odoo implementation partner india",
+      "pos_now": 14,
+      "pos_90d_ago": 19,
+      "position_change": 5,
+      "trend": "Climbing",
+      "classification": "climber"
+    },
+    {
+      "keyword": "odoo crm customization",
+      "pos_now": 8,
+      "pos_90d_ago": 8,
+      "position_change": 0,
+      "trend": "Holding",
+      "classification": "holding"
+    },
+    {
+      "keyword": "odoo manufacturing module",
+      "pos_now": 11,
+      "pos_90d_ago": 7,
+      "position_change": -4,
+      "trend": "Declining",
+      "classification": "dropper"
+    },
+    {
+      "keyword": "odoo vs sap",
+      "pos_now": 22,
+      "pos_90d_ago": 28,
+      "position_change": 6,
+      "trend": "Climbing",
+      "classification": "climber"
+    }
+  ],
+  "near_page_1": [
+    {
+      "keyword": "odoo implementation partner india",
+      "pos_now": 14,
+      "positions_to_page_1": 13
+    },
+    {
+      "keyword": "odoo manufacturing module",
+      "pos_now": 11,
+      "positions_to_page_1": 10
+    }
+  ],
+  "at_risk": [
+    {
+      "keyword": "odoo manufacturing module",
+      "pos_now": 11,
+      "pos_90d_ago": 7,
+      "drop": 4
+    }
+  ]
+}

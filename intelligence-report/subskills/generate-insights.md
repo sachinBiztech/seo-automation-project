@@ -16,8 +16,8 @@ MOCK
 
 Read both files:
 
-1. `seo-automation/outputs/analysis-findings.json`
-2. `seo-automation/outputs/gsc-findings.json`
+1. `seo-automation/outputs/intelligence-report/analysis-findings.json`
+2. `seo-automation/outputs/intelligence-report/gsc-findings.json`
 
 ---
 
@@ -56,7 +56,7 @@ Pages or keywords to monitor this sprint but not act on yet.
 
 ## Output
 
-Create the file `seo-automation/outputs/insights.json` and write the
+Create the file `seo-automation/outputs/intelligence-report/insights.json` and write the
 following JSON to it completely before finishing.
 
 ```json

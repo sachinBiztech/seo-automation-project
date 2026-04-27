@@ -1,0 +1,35 @@
+{
+  "site": "BiztechCS",
+  "checked_at": "2026-04-27",
+  "mode": "mock",
+  "source_note": "MOCK mode — in PRODUCTION this pulls Search Engine Roundtable RSS + MozCast API + Google Search Central blog RSS",
+  "active_updates": [],
+  "recent_update_history": [
+    {
+      "update_name": "March 2026 Core Update",
+      "confirmed_date": "2026-03-18",
+      "recovery_window": "6–8 weeks post-rollout",
+      "status": "RESOLVED",
+      "biztechcs_impact": "No pages affected. Traffic was stable during rollout period.",
+      "note": "Recovery window ends ~2026-05-06. If any pages are still recovering, cooldown applies."
+    }
+  ],
+  "mozcast_score": 68,
+  "mozcast_trend": "stable",
+  "volatility_level": "normal",
+  "volatility_thresholds": {
+    "normal": "below 75",
+    "elevated": "75–85",
+    "high": "85+"
+  },
+  "serp_observations": {
+    "informational_queries": "Stable. No major SERP feature changes detected for Odoo-related informational queries.",
+    "commercial_queries": "Stable. No new ad formats or SERP features disrupting commercial Odoo queries.",
+    "ai_overview_trend": "AI Overviews present on ~40% of our tracked informational queries. cybrosys.com and Odoo.com are most frequently cited. BiztechCS cited on 'odoo 17 new features'.",
+    "featured_snippet_trend": "Featured snippets present on comparison queries (odoo vs sap, odoo vs dynamics). We have no featured snippet ownership on any tracked query yet."
+  },
+  "sprint_interrupt_required": false,
+  "sprint_interrupt_assessment": "No qualifying sprint interrupt conditions met. No confirmed core update active. MozCast below 75 threshold for 15+ consecutive days. No top-20 lead pages dropped >10 positions. Sprint can proceed as planned.",
+  "algorithm_intelligence_recommendation": "Focus on content quality and E-E-A-T signals — Lily Ray and Marie Haynes both emphasize this remains the primary ranking lever post-March 2026 core update. No tactical response to algorithm events required this sprint.",
+  "next_real_check": "Replace with live Search Engine Roundtable RSS + MozCast API call in Phase 5 production upgrade."
+}

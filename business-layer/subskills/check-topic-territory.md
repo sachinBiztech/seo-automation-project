@@ -10,7 +10,7 @@ claude-haiku-4-5-20251001
 MOCK
 
 ## Input
-- seo-automation/outputs/enriched-sprint-plan.json
+- seo-automation/outputs/post-approval/enriched-sprint-plan.json
 - seo-automation/business-layer/biztechcs-business-config.md
 
 ## Task
@@ -33,7 +33,7 @@ For every content item and attack vector in the enriched sprint plan:
 Note: For other websites (PrintXpand, CRMJetty, AppJetty), this check is quantity-only — no territory enforcement.
 
 ## Output
-- `seo-automation/outputs/topic-territory-check.json`
+- `seo-automation/outputs/post-approval/topic-territory-check.json`
 
 Schema:
 ```json

@@ -48,7 +48,7 @@ Copy the `summary` object from the input as-is.
 
 ## Output
 
-Create the file `seo-automation/outputs/clarity-findings.json` and write the following JSON to it.
+Create the file `seo-automation/outputs/intelligence-report/clarity-findings.json` and write the following JSON to it.
 
 Do not leave any field empty. If a list has no matching items, write an empty array `[]`.
 

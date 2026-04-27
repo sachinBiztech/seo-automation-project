@@ -31,10 +31,12 @@ const { spawnSync } = require('child_process');
 
 // ── Config ────────────────────────────────────────────────────────────────────
 
-const WORKSPACE   = '/home/sachin.p/.openclaw/workspace';
-const SEO_DIR     = path.join(WORKSPACE, 'seo-automation');
-const OUTPUTS_DIR = path.join(SEO_DIR, 'outputs');
-const TELEGRAM_ID = '-1003829892114';
+const WORKSPACE        = '/home/sachin.p/.openclaw/workspace';
+const SEO_DIR          = path.join(WORKSPACE, 'seo-automation');
+const OUTPUTS_DIR      = path.join(SEO_DIR, 'outputs');
+const SPRINT_PM_OUT    = path.join(OUTPUTS_DIR, 'sprint-pm');
+const CONTENT_OUT      = path.join(OUTPUTS_DIR, 'content-pipeline');
+const TELEGRAM_ID      = '-1003829892114';
 
 // ── Arg Parsing ───────────────────────────────────────────────────────────────
 
@@ -98,7 +100,7 @@ function telegramSend(message, extra = []) {
 
 function updateTaskStatus(taskId, status, extraFields = {}) {
   if (!taskId) return;
-  const tasksFile = path.join(OUTPUTS_DIR, `sprint-tasks-${SPRINT_ID}.json`);
+  const tasksFile = path.join(SPRINT_PM_OUT, `sprint-tasks-${SPRINT_ID}.json`);
   const data = readJson(tasksFile);
   if (!data) return;
   const task = data.tasks.find(t => t.sr === taskId);
@@ -113,7 +115,7 @@ function updateTaskStatus(taskId, status, extraFields = {}) {
 // ── Content Approval JSON ─────────────────────────────────────────────────────
 
 function upsertContentApproval(slug, fields) {
-  const approvalFile = path.join(OUTPUTS_DIR, `content-approval-${SPRINT_ID}.json`);
+  const approvalFile = path.join(CONTENT_OUT, `content-approval-${SPRINT_ID}.json`);
   let data = readJson(approvalFile) || { sprint_id: SPRINT_ID, items: [] };
   const existing = data.items.find(i => i.slug === slug);
   if (existing) {
@@ -142,7 +144,7 @@ function main() {
   let slug = SLUG_OVERRIDE;
 
   if (TASK_ID) {
-    const data = readJson(path.join(OUTPUTS_DIR, `sprint-tasks-${SPRINT_ID}.json`));
+    const data = readJson(path.join(SPRINT_PM_OUT, `sprint-tasks-${SPRINT_ID}.json`));
     if (!data) { console.error(`ERROR: sprint-tasks-${SPRINT_ID}.json not found`); process.exit(1); }
     task = data.tasks.find(t => t.sr === TASK_ID);
     if (!task) { console.error(`ERROR: Task ID ${TASK_ID} not found`); process.exit(1); }
@@ -162,7 +164,7 @@ function main() {
 
   // ── Step 1: Write pipeline context ─────────────────────────────────────────
 
-  const contextPath = path.join(OUTPUTS_DIR, `pipeline-context-${TASK_ID || slug}.json`);
+  const contextPath = path.join(CONTENT_OUT, `pipeline-context-${TASK_ID || slug}.json`);
   const kwMatch = task?.notes?.match(/Keyword:\s*([^|]+)/);
   const keyword = kwMatch ? kwMatch[1].trim() : slug.replace(/-/g, ' ');
   const wordMatch = task?.notes?.match(/Target:\s*(\d+)/);
@@ -222,9 +224,9 @@ function main() {
 
   console.log('\n── Reading pipeline result ─────────────────────────────');
 
-  const resultPath = path.join(OUTPUTS_DIR, `pipeline-result-${TASK_ID || slug}.json`);
+  const resultPath = path.join(CONTENT_OUT, `pipeline-result-${TASK_ID || slug}.json`);
   const result = DRY_RUN
-    ? { status: 'complete', slug, title: task?.title || slug, primary_keyword: keyword, author: task?.authorOwner || 'Unknown', word_count: contextData.target_word_count, ai_score_pct: null, html_path: path.join(OUTPUTS_DIR, `preview-${slug}.html`) }
+    ? { status: 'complete', slug, title: task?.title || slug, primary_keyword: keyword, author: task?.authorOwner || 'Unknown', word_count: contextData.target_word_count, ai_score_pct: null, html_path: path.join(CONTENT_OUT, `preview-${slug}.html`) }
     : readJson(resultPath);
 
   if (!result) {
@@ -238,7 +240,7 @@ function main() {
     telegramSend(
       `⚠️ Content Pipeline — revision limit reached\nSprint: ${SPRINT_ID}\nSlug: ${slug}\n\n` +
       `AI score gate failed after 2 revision cycles. Human review required.\n` +
-      `Draft: outputs/draft-${slug}.md`
+      `Draft: outputs/content-pipeline/draft-${slug}.md`
     );
     upsertContentApproval(slug, {
       task_id: TASK_ID, title: result.title || slug,
@@ -254,11 +256,11 @@ function main() {
 
   // ── Step 4: Generate PDF from HTML ──────────────────────────────────────────
 
-  const rawHtmlPath = result.html_path || `seo-automation/outputs/preview-${slug}.html`;
+  const rawHtmlPath = result.html_path || `seo-automation/outputs/content-pipeline/preview-${slug}.html`;
   const htmlPath = path.isAbsolute(rawHtmlPath)
     ? rawHtmlPath
     : path.join(WORKSPACE, rawHtmlPath);
-  const pdfPath  = path.join(OUTPUTS_DIR, `preview-${slug}.pdf`);
+  const pdfPath  = path.join(CONTENT_OUT, `preview-${slug}.pdf`);
   let pdfExists  = false;
 
   if (!DRY_RUN && fs.existsSync(htmlPath)) {

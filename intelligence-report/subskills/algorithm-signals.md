@@ -8,7 +8,13 @@ for the current sprint.
 claude-haiku-4-5-20251001
 
 ## Mode
-MOCK — return hardcoded stable signal for testing
+MOCK — read from local mock file
+
+---
+
+## Input
+
+File: `seo-automation/mock-data/algorithm-signals-mock.json`
 
 ---
 
@@ -16,13 +22,17 @@ MOCK — return hardcoded stable signal for testing
 
 You are an algorithm monitoring agent for BiztechCS.
 
-In MOCK mode, you do not call any external API.
-Return the hardcoded mock signal below as the output.
+Read `seo-automation/mock-data/algorithm-signals-mock.json` completely.
 
-This simulates a stable period with no confirmed updates active —
-the most common real-world scenario.
+Then produce the output file by extracting and carrying forward:
+- `active_updates` array (copy as-is)
+- `mozcast_score` value
+- `volatility_level` value
+- `sprint_interrupt_required` boolean
+- `serp_observations` (copy as-is if present)
+- Build a `notes` string: summarise the sprint interrupt assessment and any SERP observation highlights in 2–3 sentences.
 
-When real mode is enabled, this subskill will:
+In PRODUCTION mode, this subskill will:
 - Check Search Engine Roundtable RSS feed
 - Pull MozCast volatility score
 - Flag confirmed updates affecting our vertical
@@ -31,8 +41,8 @@ When real mode is enabled, this subskill will:
 
 ## Output
 
-Create the file `seo-automation/outputs/algorithm-findings.json` and write
-the following JSON exactly before finishing.
+Create the file `seo-automation/outputs/intelligence-report/algorithm-findings.json` and write
+the complete JSON below before finishing.
 
 ```json
 {
@@ -40,10 +50,13 @@ the following JSON exactly before finishing.
   "checked_at": "<today's date YYYY-MM-DD>",
   "mode": "mock",
   "active_updates": [],
-  "mozcast_score": 68,
-  "volatility_level": "normal",
+  "mozcast_score": 0,
+  "volatility_level": "<normal|elevated|high>",
   "sprint_interrupt_required": false,
-  "notes": "No confirmed algorithm updates active. MozCast score within normal range (below 75 threshold). Sprint can proceed as planned.",
+  "serp_observations": {},
+  "notes": "<2-3 sentence summary from sprint_interrupt_assessment and serp_observations>",
   "next_real_check": "Replace this subskill with live Search Engine Roundtable RSS + MozCast API call in Phase 5."
 }
 ```
+
+Populate all fields from the mock file. Do not leave any field at its default if the mock file contains better data.

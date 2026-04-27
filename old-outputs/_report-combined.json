@@ -1,0 +1,79 @@
+{
+  "report_summary": {
+    "report_id": "biztechcs_intelligence_2026-04-14",
+    "site": "BiztechCS",
+    "mode": "mock",
+    "report_type": "Intelligence Report",
+    "generated_at": "2026-04-14",
+    "top_opportunity": "odoo implementation partner india",
+    "priority_fix": "Optimize server response time and critical rendering path to reduce LCP below 2.5 seconds on the /odoo-manufacturing page this sprint.",
+    "traffic_summary": {
+      "organic_sessions_15d": 1420,
+      "organic_sessions_90d": 9800,
+      "organic_share_pct": 37.4,
+      "traffic_trend": "below_average"
+    },
+    "lead_summary": {
+      "leads_mtd": 0,
+      "mqls_mtd": 0,
+      "sqls_mtd": 0,
+      "organic_share_pct": 0,
+      "performance_flag": "on_track"
+    },
+    "ranking_summary": {
+      "climbers": [
+        {
+          "keyword": "odoo implementation partner india",
+          "pos_now": 14,
+          "pos_90d_ago": 19,
+          "position_change": 5,
+          "trend": "Climbing",
+          "classification": "climber"
+        },
+        {
+          "keyword": "odoo vs sap",
+          "pos_now": 22,
+          "pos_90d_ago": 28,
+          "position_change": 6,
+          "trend": "Climbing",
+          "classification": "climber"
+        }
+      ],
+      "droppers": [
+        {
+          "keyword": "odoo manufacturing module",
+          "pos_now": 11,
+          "pos_90d_ago": 7,
+          "position_change": -4,
+          "trend": "Declining",
+          "classification": "dropper"
+        }
+      ],
+      "near_page_1": [
+        {
+          "keyword": "odoo manufacturing module",
+          "pos_now": 11,
+          "positions_to_page_1": 10
+        },
+        {
+          "keyword": "odoo implementation partner india",
+          "pos_now": 14,
+          "positions_to_page_1": 13
+        }
+      ]
+    },
+    "competitor_summary": {
+      "highest_threat": "unknown",
+      "new_competitor_pages_count": 0,
+      "top_content_gap": "unknown"
+    },
+    "algorithm_status": {
+      "sprint_interrupt_required": false,
+      "volatility_level": "normal"
+    },
+    "research_findings": {},
+    "performance_context": "No anomalies detected"
+  },
+  "report_md": "# BiztechCS Intelligence Report — 2026-04-14\n\n## Executive Summary\n- Top opportunity: \"odoo implementation partner india\" keyword climbing with high impressions (4200) and position improving from 19 to 14.\n- Priority technical fix: Optimize server response and critical rendering path on /odoo-manufacturing page to reduce LCP below 2.5s.\n- Organic sessions in last 15 days are 1420, showing a slight downward trend compared to 90-day average.\n- Lead data not available; monitoring needed to ensure alignment with traffic.\n- Competitor activity minimal this cycle.\n\n## Traffic Overview\n- 15-day organic sessions: 1420 (down from 90-day average of 1633 per 15 days).\n- Organic share of total sessions at 37.4%.\n- Key traffic landing pages: /odoo-implementation-services (1200 sessions, bounce 42%), /odoo-crm-module (890 sessions, high bounce 51%), and /odoo-manufacturing (640 sessions).\n\n## Keyword Ranking Insights\n- 2 keywords climbing: \"odoo implementation partner india\", \"odoo vs sap\".\n- 1 keyword dropping: \"odoo manufacturing module\" declining by 4 positions.\n- Keywords near page 1: \"odoo manufacturing module\", \"odoo implementation partner india\".\n\n## Technical Health\n- Core Web Vitals show LCP at 2.8 seconds, needing improvement.\n- /odoo-manufacturing page impressions dropped 34% recently.\n- Focus technical sprint on improving LCP and server response for this page.\n\n## Competitor Analysis\n- No new competitor pages detected this cycle.\n- No urgent competitive content gaps identified.\n\n## Recommendations\n- Prioritize technical fixes on /odoo-manufacturing page to recover ranking and impressions.\n- Accelerate content development targeting \"odoo implementation partner india\" keyword.\n- Improve CTR via meta tag optimizations for low-CTR, high-impression keywords.\n- Monitor bounce rates on /odoo-crm-module page.\n\n## Appendix\n- Full ranking, traffic, and performance data included in annexes.\n",
+  "report_html": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n<meta charset=\"UTF-8\" />\n<meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\" />\n<title>BiztechCS Intelligence Report — 2026-04-14</title>\n<style>\n  body { font-family: Arial, sans-serif; margin: 20px; color: #333; }\n  h1 { color: #2c3e50; }\n  h2 { color: #34495e; border-bottom: 2px solid #3498db; padding-bottom: 5px; }\n  p, li { line-height: 1.5; margin-bottom: 10px; }\n  ul { margin-left: 20px; }\n</style>\n</head>\n<body>\n  <h1>BiztechCS Intelligence Report — 2026-04-14</h1>\n  <h2>Executive Summary</h2>\n  <ul>\n    <li>Top opportunity: \"odoo implementation partner india\" keyword climbing with high impressions (4200) and improving position from 19 to 14.</li>\n    <li>Priority technical fix: Optimize server response and critical rendering path on <code>/odoo-manufacturing</code> page to reduce LCP below 2.5 seconds.</li>\n    <li>Organic sessions in last 15 days are 1420, showing a slight downward trend compared to 90-day average.</li>\n    <li>Lead data not available; monitoring needed to ensure alignment with traffic.</li>\n    <li>Competitive activity minimal this cycle.</li>\n  </ul>\n\n  <h2>Traffic Overview</h2>\n  <p>15-day organic sessions: 1420 (down from 90-day average of approx 1633 per 15 days).</p>\n  <p>Organic share of total sessions at 37.4%.</p>\n  <p>Key traffic landing pages include:</p>\n  <ul>\n    <li><code>/odoo-implementation-services</code> - 1200 sessions, bounce rate 42%</li>\n    <li><code>/odoo-crm-module</code> - 890 sessions, with high bounce indicating UX issues</li>\n    <li><code>/odoo-manufacturing</code> - 640 sessions</li>\n  </ul>\n\n  <h2>Keyword Ranking Insights</h2>\n  <ul>\n    <li>Climbers: \"odoo implementation partner india\", \"odoo vs sap\".</li>\n    <li>Dropper: \"odoo manufacturing module\" with a 4 position drop.</li>\n    <li>Near page 1: \"odoo manufacturing module\", \"odoo implementation partner india\".</li>\n  </ul>\n\n  <h2>Technical Health</h2>\n  <p>Core Web Vitals assessment indicates LCP at 2.8 seconds requiring optimization.</p>\n  <p><code>/odoo-manufacturing</code> page impressions dropped 34% recently, highlighting urgency.</p>\n  <p>Sprint focus: fix LCP issues and server response to lift ranking.</p>\n\n  <h2>Competitor Analysis</h2>\n  <p>No new competitor pages detected in this sprint cycle; no urgent content gaps identified.</p>\n\n  <h2>Recommendations</h2>\n  <ul>\n    <li>Prioritize technical fixes on <code>/odoo-manufacturing</code> page.</li>\n    <li>Develop content targeting \"odoo implementation partner india\" keyword to leverage climbing position.</li>\n    <li>Improve meta tags to boost CTR for key high-impression queries.</li>\n    <li>Monitor <code>/odoo-crm-module</code> bounce rate and user experience.</li>\n  </ul>\n</body>\n</html>"
+}

@@ -10,8 +10,8 @@ claude-opus-4-6
 MOCK
 
 ## Input
-- seo-automation/outputs/content-brief-[slug].json
-- seo-automation/outputs/keyword-universe-[sprint_id].json
+- seo-automation/outputs/content-pipeline/content-brief-[slug].json
+- seo-automation/outputs/content-pipeline/keyword-universe-[sprint_id].json
 
 ## Task
 
@@ -56,7 +56,7 @@ Write draft to output file. If self-check fails any item, revise before saving.
 - Reply ONLY with: `✅ draft-[slug].md written`
 
 ## Output
-- `seo-automation/outputs/draft-[slug].md`
+- `seo-automation/outputs/content-pipeline/draft-[slug].md`
 
 Format: clean Markdown with frontmatter:
 ```markdown

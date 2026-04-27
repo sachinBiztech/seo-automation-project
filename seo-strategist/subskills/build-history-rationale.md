@@ -10,14 +10,18 @@ claude-sonnet-4-6
 MOCK
 
 ## Input
-- seo-automation/outputs/sprint-plan.json
-- seo-automation/outputs/sprint-tasks-[previous_sprint_id].json (if exists)
-- seo-automation/outputs/gsc-findings.json
+- seo-automation/outputs/seo-strategist/sprint-plan.json
+- seo-automation/outputs/intelligence-report/gsc-findings.json
+- seo-automation/mock-data/previous-sprint-results-mock.json (MOCK mode — use this as previous sprint data)
 
 ## Task
 
-### If no previous sprint data exists
-Output a baseline note: "Sprint 1 — no prior history. All tactics are baseline run. Results will seed future rationale."
+### In MOCK mode
+Read `seo-automation/mock-data/previous-sprint-results-mock.json` as the previous sprint data source.
+This file contains completed tasks from sprint biztechcs_sprint_2026-04-01 with outcomes and verdicts.
+
+Use the `verdict_for_section_10` field in each task as the primary source of validated/failed tactic notes.
+Cross-reference with `seo-automation/outputs/intelligence-report/gsc-findings.json` for current position data to confirm outcomes.
 
 ### If previous sprint data exists
 
@@ -39,7 +43,7 @@ Output a baseline note: "Sprint 1 — no prior history. All tactics are baseline
    - If the previous approach FAILED: flag with "WARNING: Previously attempted and failed. Reason: [X]. Only proceed if new approach differs in: [specific change]."
 
 ## Output
-- `seo-automation/outputs/history-rationale.json`
+- `seo-automation/outputs/seo-strategist/history-rationale.json`
 
 Schema:
 ```json

@@ -16,9 +16,9 @@ MOCK
 
 Read all of these files:
 
-1. `seo-automation/outputs/attack-vectors.json`
-2. `seo-automation/outputs/intelligence-brief-parsed.json`
-3. `seo-automation/outputs/competitor-findings.json`
+1. `seo-automation/outputs/seo-strategist/attack-vectors.json`
+2. `seo-automation/outputs/intelligence-report/intelligence-brief-parsed.json`
+3. `seo-automation/outputs/intelligence-report/competitor-findings.json`
 
 ---
 
@@ -87,7 +87,7 @@ For each: topic, hook sentence, target audience, link back to our site.
 
 ## Output
 
-Create the file `seo-automation/outputs/offpage-plan.json` and write
+Create the file `seo-automation/outputs/seo-strategist/offpage-plan.json` and write
 the complete JSON below before finishing.
 
 ```json

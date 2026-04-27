@@ -1,0 +1,29 @@
+{
+  "site": "BiztechCS",
+  "pulled_at": "2026-04-09",
+  "lead_summary": {
+    "mtd": { "leads": 14, "mqls": 7, "sqls": 3 },
+    "qtd": { "leads": 52, "mqls": 24, "sqls": 9 },
+    "ytd": { "leads": 98, "mqls": 41, "sqls": 16 },
+    "organic_share_pct": 61
+  },
+  "conversion_rates": {
+    "mql_rate_mtd": 50.0,
+    "sql_rate_mtd": 21.4
+  },
+  "top_lead_pages": [
+    {
+      "url": "/odoo-implementation-services",
+      "leads_90d": 18,
+      "mqls_90d": 8,
+      "mql_conversion_rate": 44.4
+    },
+    {
+      "url": "/odoo-crm-module",
+      "leads_90d": 11,
+      "mqls_90d": 4,
+      "mql_conversion_rate": 36.4
+    }
+  ],
+  "performance_flag": "on_track"
+}

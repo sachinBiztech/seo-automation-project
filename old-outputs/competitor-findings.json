@@ -1,0 +1,62 @@
+{
+  "site": "BiztechCS",
+  "pulled_at": "2026-04-09",
+  "competitors": [
+    {
+      "domain": "cybrosys.com",
+      "threat_level": "high_threat",
+      "new_pages_this_cycle": ["/odoo-17-manufacturing-module", "/odoo-pos-india"],
+      "keyword_gaps": [
+        {
+          "keyword": "odoo implementation partner india",
+          "our_position": 14.2,
+          "their_position": 4,
+          "gap": 10.2,
+          "we_are_behind": true
+        },
+        {
+          "keyword": "odoo crm customization",
+          "our_position": 7.8,
+          "their_position": 12,
+          "gap": -4.2,
+          "we_are_behind": false
+        }
+      ]
+    },
+    {
+      "domain": "ksolves.com",
+      "threat_level": "medium_threat",
+      "new_pages_this_cycle": [],
+      "keyword_gaps": [
+        {
+          "keyword": "odoo implementation partner india",
+          "our_position": 14.2,
+          "their_position": 9,
+          "gap": 5.2,
+          "we_are_behind": true
+        },
+        {
+          "keyword": "odoo manufacturing module",
+          "our_position": 11.3,
+          "their_position": 5,
+          "gap": 6.3,
+          "we_are_behind": true
+        }
+      ]
+    }
+  ],
+  "content_gaps": [
+    {
+      "topic": "Odoo POS in India",
+      "competitor_targeting_it": "cybrosys.com",
+      "their_page": "/odoo-pos-india",
+      "recommended_action": "Create detailed content and user guides on Odoo POS deployment and customization in the Indian market."
+    },
+    {
+      "topic": "Odoo 17 Manufacturing Module",
+      "competitor_targeting_it": "cybrosys.com",
+      "their_page": "/odoo-17-manufacturing-module",
+      "recommended_action": "Develop updated manufacturing module content covering new features in Odoo 17 with industry use cases."
+    }
+  ]
+}

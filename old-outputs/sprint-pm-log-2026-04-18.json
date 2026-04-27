@@ -1,0 +1,11 @@
+{
+  "run_date": "2026-04-18T00:00:00.000Z",
+  "run_date_local": "2026-04-18",
+  "sprint_id": "biztechcs_sprint_2026-04-17",
+  "site": "BiztechCS",
+  "sprint_day": 2,
+  "sprint_complete": false,
+  "tasks_triggered": ["Odoo Implementation Partner India: Why BiztechCS Delivers Better Value in 2026"],
+  "tasks_reassigned": [],
+  "agents_dispatched": ["technical-seo", "off-page-seo"]
+}

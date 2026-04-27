@@ -17,10 +17,10 @@ MOCK
 
 Read all of these files:
 
-1. `seo-automation/outputs/attack-vectors.json`
-2. `seo-automation/outputs/intelligence-brief-parsed.json`
-3. `seo-automation/outputs/analysis-findings.json`
-4. `seo-automation/outputs/gsc-findings.json`
+1. `seo-automation/outputs/seo-strategist/attack-vectors.json`
+2. `seo-automation/outputs/intelligence-report/intelligence-brief-parsed.json`
+3. `seo-automation/outputs/intelligence-report/analysis-findings.json`
+4. `seo-automation/outputs/intelligence-report/gsc-findings.json`
 
 ---
 
@@ -83,7 +83,7 @@ Cut lowest-priority items if over limit. State final counts.
 
 ## Output
 
-Create the file `seo-automation/outputs/technical-plan.json` and write
+Create the file `seo-automation/outputs/seo-strategist/technical-plan.json` and write
 the complete JSON below before finishing.
 
 ```json

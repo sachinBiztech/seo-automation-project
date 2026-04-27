@@ -15,11 +15,11 @@ MOCK
 
 ## Input
 
-Read: `seo-automation/outputs/sprint-plan.json`
-Read: `seo-automation/outputs/tiered-sprint-options.json`
-Read: `seo-automation/outputs/project-cost.json`
-Read: `seo-automation/outputs/product-owner-review.json`
-Read: `seo-automation/outputs/mql-check.json` (optional — skip gracefully if missing)
+Read: `seo-automation/outputs/seo-strategist/sprint-plan.json`
+Read: `seo-automation/outputs/post-approval/tiered-sprint-options.json`
+Read: `seo-automation/outputs/post-approval/project-cost.json`
+Read: `seo-automation/outputs/post-approval/product-owner-review.json`
+Read: `seo-automation/outputs/post-approval/mql-check.json` (optional — skip gracefully if missing)
 
 ---
 
@@ -29,22 +29,22 @@ You are the post-approval delivery agent for BiztechCS.
 
 **Step 1 — Read inputs**
 
-Read `seo-automation/outputs/sprint-plan.json`.
+Read `seo-automation/outputs/seo-strategist/sprint-plan.json`.
 Extract: `sprint_id`, `sprint_start`, `sprint_end`.
 
-Read `seo-automation/outputs/tiered-sprint-options.json`.
+Read `seo-automation/outputs/post-approval/tiered-sprint-options.json`.
 Extract:
 - `tiers.priority_1.items[*].title` — P1 task list
 - `tiers.priority_2.items[*].title` — P2 task list
 - `tiers.optional.items[*].title` — Optional task list
 
-Read `seo-automation/outputs/project-cost.json`.
+Read `seo-automation/outputs/post-approval/project-cost.json`.
 Extract: `summary.p1_total`, `summary.full_plan_total`, `summary.adjusted_budget`, `summary.over_budget`, `summary.overage_amount`, `human_summary`.
 
-Read `seo-automation/outputs/product-owner-review.json`.
+Read `seo-automation/outputs/post-approval/product-owner-review.json`.
 Extract: `enrichment_notes` (first 2 notes for display), `flagged_for_human_awareness` (count only).
 
-Read `seo-automation/outputs/mql-check.json` if it exists.
+Read `seo-automation/outputs/post-approval/mql-check.json` if it exists.
 Extract: `human_summary` (or use "MQL data not available" if missing).
 
 **Step 2 — Build message strings**
@@ -110,7 +110,7 @@ The approval-bridge.js listener depends on this exact pattern.
 
 **Step 5 — Write post-approval-status.json**
 
-Create `seo-automation/outputs/post-approval-status.json`:
+Create `seo-automation/outputs/post-approval/post-approval-status.json`:
 
 ```json
 {

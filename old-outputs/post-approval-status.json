@@ -1,0 +1,11 @@
+{
+  "sprint_id": "biztechcs_sprint_2026-04-17",
+  "status": "proceed_confirmed",
+  "validated_at": "2026-04-17T12:41:00Z",
+  "po_verdict": "approved",
+  "total_cost": 20500,
+  "budget": 101538,
+  "over_budget": false,
+  "proceed_clicked_at": "2026-04-17T12:56:04.547Z",
+  "proceed_by": "telegram"
+}

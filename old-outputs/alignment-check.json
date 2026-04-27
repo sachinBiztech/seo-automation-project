@@ -1,0 +1,41 @@
+{
+  "sprint_id": "biztechcs_sprint_2026-04-17",
+  "verdict": "aligned",
+  "vector_checks": [
+    {
+      "vector_number": 1,
+      "focus_area": "Odoo POS in India and Odoo 17 manufacturing module",
+      "result": "pass",
+      "note": "Focus area matches active offerings 'Odoo POS system setup' and 'Odoo Manufacturing Module implementation'. Target pages /odoo-pos-india and /odoo-17-manufacturing-module are planned and relevant. ICP matches product owner config."
+    },
+    {
+      "vector_number": 2,
+      "focus_area": "Odoo CRM Customization",
+      "result": "pass",
+      "note": "Focus area matches 'Odoo CRM customization' active offering. Target page /odoo-crm-module exists and keywords align. ICP matches config requirements."
+    },
+    {
+      "vector_number": 3,
+      "focus_area": "Technical recovery for /odoo-manufacturing (priority 1 locked)",
+      "result": "pass",
+      "note": "/odoo-manufacturing is an active offering page and targeted for technical fix to improve Core Web Vitals. ICP aligns with config."
+    }
+  ],
+  "content_checks": [
+    {
+      "title": "Odoo Implementation Partner India: Why BiztechCS Delivers Better Value in 2026",
+      "result": "pass",
+      "note": "Targets active offerings and top priority vector 1 focus keywords, authored by named expert Uttam Patel. Content promotes active services."
+    },
+    {
+      "title": "Odoo CRM Customization in 2026: A Step-by-Step Approach for Manufacturers",
+      "result": "pass",
+      "note": "Covers active offering of Odoo CRM customization, aligns with vector 2 keywords, authored by named expert Nandeep Shah."
+    },
+    {
+      "title": "Top 7 New Features in Odoo 17 Manufacturing Module for Indian Enterprises",
+      "result": "pass",
+      "note": "Listicle supports vector 1 focus on Odoo 17 manufacturing module and POS offerings. Authored by named expert."
+    }
+  ]
+}

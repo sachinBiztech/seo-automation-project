@@ -10,8 +10,8 @@ claude-sonnet-4-6
 MOCK
 
 ## Input
-- seo-automation/outputs/sprint-plan.json
-- seo-automation/outputs/sprint-tasks-[sprint_id].json
+- seo-automation/outputs/seo-strategist/sprint-plan.json
+- seo-automation/outputs/sprint-pm/sprint-tasks-[sprint_id].json
 
 ## Task
 
@@ -46,9 +46,9 @@ Write full LinkedIn article copy:
 - Save to `outputs/linkedin-draft-[slug].md`
 
 ## Output
-- `seo-automation/outputs/outreach-package-[sprint_id].json` (for Outreach Manager)
-- `seo-automation/outputs/manual-queue-[sprint_id].md` (Reddit/Quora — manual posting)
-- `seo-automation/outputs/linkedin-draft-[slug].md` (per LinkedIn article)
+- `seo-automation/outputs/social-media/outreach-package-[sprint_id].json` (for Outreach Manager)
+- `seo-automation/outputs/social-media/manual-queue-[sprint_id].md` (Reddit/Quora — manual posting)
+- `seo-automation/outputs/social-media/linkedin-draft-[slug].md` (per LinkedIn article)
 
 ## OUTPUT DISCIPLINE — CRITICAL
 

@@ -10,7 +10,7 @@ claude-opus-4-6
 MOCK
 
 ## Input
-- seo-automation/outputs/sprint-plan.json
+- seo-automation/outputs/seo-strategist/sprint-plan.json
 - seo-automation/product-owner/biztechcs-product-owner-config.md
 
 ## Task
@@ -21,32 +21,32 @@ You are the Product Owner Agent for BiztechCS. Your job is to review the SEO spr
 
 #### Step 1 — Scan Website
 Run subskill: `scan-website`
-Expected output: `seo-automation/outputs/website-scan.json`
+Expected output: `seo-automation/outputs/post-approval/website-scan.json`
 Failure action: WARNING. Proceed with config-only validation if scan fails.
 
 #### Step 2 — Validate Business Alignment
 Run subskill: `validate-business-alignment`
-Expected output: `seo-automation/outputs/alignment-check.json`
+Expected output: `seo-automation/outputs/post-approval/alignment-check.json`
 Failure action: STOP. Cannot validate without alignment check.
 
 #### Step 3 — Check Competitor Claims
 Run subskill: `check-competitor-claims`
-Expected output: `seo-automation/outputs/competitor-claims-check.json`
+Expected output: `seo-automation/outputs/post-approval/competitor-claims-check.json`
 Failure action: WARNING. Note unverified claims in output.
 
 #### Step 4 — Enrich With Product Context
 Run subskill: `enrich-with-product-context`
-Expected output: `seo-automation/outputs/enriched-sprint-plan.json`
+Expected output: `seo-automation/outputs/post-approval/enriched-sprint-plan.json`
 Failure action: STOP. Enrichment is required before review output.
 
 #### Step 5 — Apply Guardrails
 Run subskill: `apply-guardrails`
-Expected output: `seo-automation/outputs/guardrails-check.json`
+Expected output: `seo-automation/outputs/post-approval/guardrails-check.json`
 Failure action: STOP. Guardrails must be applied.
 
 #### Step 6 — Produce Review Output
 Run subskill: `produce-review-output`
-Expected output: `seo-automation/outputs/product-owner-review.json`
+Expected output: `seo-automation/outputs/post-approval/product-owner-review.json`
 Failure action: STOP. Send Telegram: "❌ Product Owner review failed. Manual intervention required."
 
 ### Reform loop
@@ -54,7 +54,7 @@ Failure action: STOP. Send Telegram: "❌ Product Owner review failed. Manual in
 - Max 3 revisions. On 3rd failure: escalate to human via Telegram with full revision history
 
 ## Output
-- `seo-automation/outputs/product-owner-review.json`
+- `seo-automation/outputs/post-approval/product-owner-review.json`
 
 Schema:
 ```json

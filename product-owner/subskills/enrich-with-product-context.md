@@ -10,8 +10,8 @@ claude-sonnet-4-6
 MOCK
 
 ## Input
-- seo-automation/outputs/sprint-plan.json
-- seo-automation/outputs/website-scan.json
+- seo-automation/outputs/seo-strategist/sprint-plan.json
+- seo-automation/outputs/post-approval/website-scan.json
 - seo-automation/product-owner/biztechcs-product-owner-config.md
 
 ## Task
@@ -30,7 +30,7 @@ For each content item in `sprint-plan.json.content_plan.items`:
 - Differentiation angle must be specific, not generic ("our 10 years of Odoo implementation" NOT "we are experts")
 
 ## Output
-- `seo-automation/outputs/enriched-sprint-plan.json`
+- `seo-automation/outputs/post-approval/enriched-sprint-plan.json`
 
 Same schema as `sprint-plan.json` with each content item extended:
 ```json

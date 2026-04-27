@@ -1,95 +1,148 @@
 {
   "site": "BiztechCS",
-  "pulled_at": "2026-04-16",
+  "pulled_at": "2026-04-27",
   "period": "last_15_days",
   "pages": [
     {
-      "url": "/solutions/odoo-implementation/",
-      "sessions": 1240,
-      "avg_session_duration_sec": 148,
-      "avg_scroll_depth_pct": 72,
-      "rage_clicks_pct": 2.1,
-      "dead_clicks_pct": 4.3,
-      "likely_rage_cause": "None significant",
-      "likely_dead_cause": "None significant"
-    },
-    {
-      "url": "/solutions/custom-software-development/",
-      "sessions": 890,
-      "avg_session_duration_sec": 62,
-      "avg_scroll_depth_pct": 31,
-      "rage_clicks_pct": 8.7,
-      "dead_clicks_pct": 14.2,
-      "likely_rage_cause": "CTA button not responding as expected",
-      "likely_dead_cause": "Hero section elements look clickable but are static"
-    },
-    {
-      "url": "/blog/odoo-erp-manufacturing/",
-      "sessions": 2310,
-      "avg_session_duration_sec": 234,
-      "avg_scroll_depth_pct": 81,
-      "rage_clicks_pct": 1.2,
-      "dead_clicks_pct": 3.8,
-      "likely_rage_cause": "None significant",
-      "likely_dead_cause": "None significant"
-    },
-    {
-      "url": "/case-studies/",
-      "sessions": 560,
-      "avg_session_duration_sec": 44,
-      "avg_scroll_depth_pct": 28,
-      "rage_clicks_pct": 3.1,
-      "dead_clicks_pct": 18.5,
-      "likely_rage_cause": "None significant",
-      "likely_dead_cause": "Case study thumbnail images not linked"
-    },
-    {
-      "url": "/contact/",
-      "sessions": 730,
-      "avg_session_duration_sec": 95,
-      "avg_scroll_depth_pct": 65,
-      "rage_clicks_pct": 11.4,
-      "dead_clicks_pct": 6.2,
-      "likely_rage_cause": "Form submit button unresponsive on first click (JS issue)",
-      "likely_dead_cause": "None significant"
-    },
-    {
-      "url": "/solutions/ai-development/",
-      "sessions": 1050,
-      "avg_session_duration_sec": 178,
-      "avg_scroll_depth_pct": 78,
-      "rage_clicks_pct": 1.8,
+      "url": "/services/odoo-development/",
+      "sessions": 2180,
+      "avg_session_duration_sec": 164,
+      "avg_scroll_depth_pct": 68,
+      "rage_clicks_pct": 2.4,
       "dead_clicks_pct": 5.1,
       "likely_rage_cause": "None significant",
-      "likely_dead_cause": "None significant"
+      "likely_dead_cause": "None significant",
+      "note": "P1 page — declining position. Engagement is decent but content depth insufficient vs cybrosys."
     },
     {
-      "url": "/solutions/product-engineering/",
-      "sessions": 680,
-      "avg_session_duration_sec": 38,
-      "avg_scroll_depth_pct": 22,
-      "rage_clicks_pct": 5.9,
-      "dead_clicks_pct": 12.7,
-      "likely_rage_cause": "Above-fold CTA not prominent enough causing repeated clicks",
-      "likely_dead_cause": "Service icons look interactive but are decorative"
+      "url": "/hire-odoo-developers/",
+      "sessions": 1560,
+      "avg_session_duration_sec": 192,
+      "avg_scroll_depth_pct": 74,
+      "rage_clicks_pct": 1.8,
+      "dead_clicks_pct": 4.2,
+      "likely_rage_cause": "None significant",
+      "likely_dead_cause": "None significant",
+      "note": "Good engagement. High scroll depth indicates strong content alignment with intent."
+    },
+    {
+      "url": "/services/crm-development/",
+      "sessions": 1280,
+      "avg_session_duration_sec": 148,
+      "avg_scroll_depth_pct": 66,
+      "rage_clicks_pct": 2.1,
+      "dead_clicks_pct": 6.3,
+      "likely_rage_cause": "None significant",
+      "likely_dead_cause": "Service comparison icons not linked"
+    },
+    {
+      "url": "/services/ai-ml-development/",
+      "sessions": 2340,
+      "avg_session_duration_sec": 186,
+      "avg_scroll_depth_pct": 76,
+      "rage_clicks_pct": 1.6,
+      "dead_clicks_pct": 4.8,
+      "likely_rage_cause": "None significant",
+      "likely_dead_cause": "None significant",
+      "note": "Strong engagement. High direct traffic driving sessions — brand/referral visitors are engaged."
+    },
+    {
+      "url": "/services/generative-ai-development-company/",
+      "sessions": 1120,
+      "avg_session_duration_sec": 154,
+      "avg_scroll_depth_pct": 69,
+      "rage_clicks_pct": 2.3,
+      "dead_clicks_pct": 5.6,
+      "likely_rage_cause": "None significant",
+      "likely_dead_cause": "FAQ accordion items look clickable but only some expand"
     },
     {
       "url": "/blog/",
-      "sessions": 3420,
-      "avg_session_duration_sec": 55,
-      "avg_scroll_depth_pct": 38,
-      "rage_clicks_pct": 2.4,
-      "dead_clicks_pct": 9.1,
+      "sessions": 6840,
+      "avg_session_duration_sec": 48,
+      "avg_scroll_depth_pct": 36,
+      "rage_clicks_pct": 2.2,
+      "dead_clicks_pct": 8.4,
       "likely_rage_cause": "None significant",
-      "likely_dead_cause": "Category filter buttons not functional on mobile"
+      "likely_dead_cause": "Category filter buttons non-functional on mobile (known issue)"
+    },
+    {
+      "url": "/case-studies/",
+      "sessions": 980,
+      "avg_session_duration_sec": 42,
+      "avg_scroll_depth_pct": 26,
+      "rage_clicks_pct": 3.4,
+      "dead_clicks_pct": 19.2,
+      "likely_rage_cause": "None significant",
+      "likely_dead_cause": "Case study thumbnail images not linked — visitors expect to click through",
+      "note": "Quick fix: link thumbnails to case study pages. High dead-click rate is costing bounces."
+    },
+    {
+      "url": "/contact/",
+      "sessions": 1320,
+      "avg_session_duration_sec": 102,
+      "avg_scroll_depth_pct": 62,
+      "rage_clicks_pct": 12.8,
+      "dead_clicks_pct": 5.9,
+      "likely_rage_cause": "Form submit button unresponsive on first click — JS initialisation delay",
+      "likely_dead_cause": "None significant",
+      "note": "Critical UX issue — 12.8% rage click on submit button. Losing conversions. Fix JS load order."
+    },
+    {
+      "url": "/services/mobile-app-development/",
+      "sessions": 1680,
+      "avg_session_duration_sec": 68,
+      "avg_scroll_depth_pct": 28,
+      "rage_clicks_pct": 6.4,
+      "dead_clicks_pct": 13.8,
+      "likely_rage_cause": "Above-fold CTA not prominent on mobile",
+      "likely_dead_cause": "Service technology icons look interactive but are decorative",
+      "note": "High bounce correlates with Clarity data. Above-fold redesign needed."
+    },
+    {
+      "url": "/solutions/hrms-solution/",
+      "sessions": 860,
+      "avg_session_duration_sec": 172,
+      "avg_scroll_depth_pct": 71,
+      "rage_clicks_pct": 1.9,
+      "dead_clicks_pct": 4.4,
+      "likely_rage_cause": "None significant",
+      "likely_dead_cause": "None significant",
+      "note": "Good engagement. Module comparison table drives strong scroll depth."
+    },
+    {
+      "url": "/services/odoo-erp-for-construction-real-estate/",
+      "sessions": 380,
+      "avg_session_duration_sec": 176,
+      "avg_scroll_depth_pct": 73,
+      "rage_clicks_pct": 1.4,
+      "dead_clicks_pct": 3.8,
+      "likely_rage_cause": "None significant",
+      "likely_dead_cause": "None significant",
+      "note": "Vertical page performing well. High scroll depth suggests content relevance."
+    },
+    {
+      "url": "/services/odoo-for-healthcare-and-hospitals/",
+      "sessions": 248,
+      "avg_session_duration_sec": 162,
+      "avg_scroll_depth_pct": 68,
+      "rage_clicks_pct": 2.1,
+      "dead_clicks_pct": 4.9,
+      "likely_rage_cause": "None significant",
+      "likely_dead_cause": "None significant"
     }
   ],
   "summary": {
-    "total_sessions": 10880,
-    "avg_rage_clicks_pct": 4.6,
-    "avg_dead_clicks_pct": 9.2,
-    "avg_scroll_depth_pct": 52,
+    "total_sessions": 20788,
+    "avg_rage_clicks_pct": 3.4,
+    "avg_dead_clicks_pct": 7.2,
+    "avg_scroll_depth_pct": 58,
     "top_friction_page": "/contact/",
-    "top_engagement_page": "/blog/odoo-erp-manufacturing/"
+    "top_engagement_page": "/hire-odoo-developers/",
+    "critical_fixes": [
+      "Fix JS load order on /contact/ — 12.8% rage click on submit button losing conversions",
+      "Link case study thumbnails on /case-studies/ — 19.2% dead clicks",
+      "Fix blog category filters on mobile — 8.4% dead clicks on /blog/"
+    ]
   }
 }

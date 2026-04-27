@@ -15,8 +15,8 @@ MOCK
 
 ## Input
 
-Read: `seo-automation/outputs/sprint-plan.html`
-Read: `seo-automation/outputs/sprint-plan.json`
+Read: `seo-automation/outputs/seo-strategist/sprint-plan.html`
+Read: `seo-automation/outputs/seo-strategist/sprint-plan.json`
 
 ---
 
@@ -25,12 +25,12 @@ Read: `seo-automation/outputs/sprint-plan.json`
 You are the PDF generation agent for BiztechCS Sprint Plans.
 
 **Step 1 — Read inputs**
-Read `seo-automation/outputs/sprint-plan.json`.
+Read `seo-automation/outputs/seo-strategist/sprint-plan.json`.
 Extract: `sprint_id`, `site`.
 
 Confirm `sprint-plan.html` exists and is non-empty:
 ```bash
-test -s "/home/sachin.p/.openclaw/workspace/seo-automation/outputs/sprint-plan.html" && echo "OK" || echo "MISSING"
+test -s "/home/sachin.p/.openclaw/workspace/seo-automation/outputs/seo-strategist/sprint-plan.html" && echo "OK" || echo "MISSING"
 ```
 If MISSING: write `generate-sprint-pdf-status.json` with `status: "html_fallback"` and `error: "sprint-plan.html not found"`. Stop.
 
@@ -50,11 +50,11 @@ const path = require('path');
 // Use absolute OUTPUTS_DIR — never relative paths — so the PDF always lands in the right place
 // regardless of which directory the shell was in before the cd above.
 const OUTPUTS_DIR = '/home/sachin.p/.openclaw/workspace/seo-automation/outputs';
-const htmlPath = path.join(OUTPUTS_DIR, 'sprint-plan.html');
+const htmlPath = path.join(OUTPUTS_DIR, 'seo-strategist', 'sprint-plan.html');
 
 const today = new Date().toISOString().slice(0, 10).replace(/-/g, '_');
 const pdfFilename = 'BiztechCS-SEO-Sprint-Plan_' + today + '.pdf';
-const pdfPath = path.join(OUTPUTS_DIR, pdfFilename);
+const pdfPath = path.join(OUTPUTS_DIR, 'seo-strategist', pdfFilename);
 
 (async () => {
   const browser = await puppeteer.launch({
@@ -107,12 +107,12 @@ If PDF generation failed (non-zero exit or PDF_ERROR present):
   "status": "html_fallback",
   "pdf_filename": null,
   "pdf_path": null,
-  "fallback_html_path": "seo-automation/outputs/sprint-plan.html",
+  "fallback_html_path": "seo-automation/outputs/seo-strategist/sprint-plan.html",
   "error": "<error message>"
 }
 ```
 
-Write to: `seo-automation/outputs/generate-sprint-pdf-status.json`
+Write to: `seo-automation/outputs/seo-strategist/generate-sprint-pdf-status.json`
 
 ---
 

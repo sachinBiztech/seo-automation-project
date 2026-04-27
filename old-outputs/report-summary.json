@@ -1,0 +1,46 @@
+{
+  "report_id": "biztechcs_intelligence_2026-04-16",
+  "site": "BiztechCS",
+  "mode": "mock",
+  "report_type": "Intelligence Report",
+  "generated_at": "2026-04-16",
+  "top_opportunity": "Optimize and build backlinks for 'odoo implementation partner india' to secure page 1 ranking",
+  "priority_fix": "Improve loading speed of /odoo-manufacturing to reduce LCP below 2.5s",
+  "traffic_summary": {
+    "organic_sessions_15d": 1420,
+    "organic_sessions_90d": 9800,
+    "organic_share_pct": 37.4,
+    "traffic_trend": "below_average"
+  },
+  "lead_summary": {
+    "leads_mtd": 14,
+    "mqls_mtd": 7,
+    "sqls_mtd": 3,
+    "organic_share_pct": 61,
+    "performance_flag": "above_target"
+  },
+  "ranking_summary": {
+    "climbers": [
+      "odoo implementation partner india",
+      "odoo vs sap"
+    ],
+    "droppers": [
+      "odoo manufacturing module"
+    ],
+    "near_page_1": [
+      "odoo implementation partner india",
+      "odoo manufacturing module"
+    ]
+  },
+  "competitor_summary": {
+    "highest_threat": "unknown",
+    "new_competitor_pages_count": 0,
+    "top_content_gap": "unknown"
+  },
+  "algorithm_status": {
+    "sprint_interrupt_required": false,
+    "volatility_level": "normal"
+  },
+  "research_findings": {},
+  "performance_context": "Core Web Vitals need improvement, especially LCP at 2.8s affecting /odoo-manufacturing."
+}

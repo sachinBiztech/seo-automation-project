@@ -1,14 +1,178 @@
 {
   "property": "BiztechCS",
-  "pulled_at": "2026-04-09",
+  "pulled_at": "2026-04-27",
+  "data_note": "Bot and spam traffic excluded at property level. Organic traffic assessed across 3 windows per Concept spec.",
   "windows": {
-    "15_day": { "organic_sessions": 1420, "total_sessions": 3800, "conversions": 12 },
-    "90_day": { "organic_sessions": 9800, "total_sessions": 24000, "conversions": 74 },
-    "180_day": { "organic_sessions": 18500, "total_sessions": 46000, "conversions": 131 }
+    "15_day": {
+      "organic_sessions": 2840,
+      "total_sessions": 6920,
+      "conversions": 22,
+      "organic_share_pct": 41.0,
+      "note": "15-day delta — supplementary signal only, not basis for strategic decisions"
+    },
+    "90_day": {
+      "organic_sessions": 18600,
+      "total_sessions": 44200,
+      "conversions": 141,
+      "organic_share_pct": 42.1
+    },
+    "180_day": {
+      "organic_sessions": 34800,
+      "total_sessions": 82400,
+      "conversions": 258,
+      "organic_share_pct": 42.2
+    }
   },
+  "traffic_by_source_90d": {
+    "organic_search": { "sessions": 18600, "share_pct": 42.1, "conversions": 141, "conversion_rate_pct": 0.76 },
+    "direct":         { "sessions": 10580, "share_pct": 23.9, "conversions": 68,  "conversion_rate_pct": 0.64 },
+    "referral":       { "sessions": 6640,  "share_pct": 15.0, "conversions": 31,  "conversion_rate_pct": 0.47 },
+    "paid_search":    { "sessions": 4420,  "share_pct": 10.0, "conversions": 48,  "conversion_rate_pct": 1.09 },
+    "social":         { "sessions": 3960,  "share_pct": 9.0,  "conversions": 14,  "conversion_rate_pct": 0.35 },
+    "note": "Organic has highest absolute conversions. Paid has highest conversion rate but limited volume."
+  },
+  "traffic_trend_15d": "above_average",
+  "traffic_trend_note": "15d organic sessions (2840) vs 90d/6 average (3100) — slightly below average per-period but within normal variance.",
   "top_landing_pages": [
-    { "url": "/odoo-implementation-services", "sessions_90d": 1200, "bounce_rate": 0.42 },
-    { "url": "/odoo-crm-module", "sessions_90d": 890, "bounce_rate": 0.51 },
-    { "url": "/odoo-manufacturing", "sessions_90d": 640, "bounce_rate": 0.38 }
-  ]
+    {
+      "url": "/services/odoo-development/",
+      "sessions_90d": 2840,
+      "organic_sessions_90d": 1960,
+      "bounce_rate": 0.38,
+      "avg_session_duration_sec": 172,
+      "flag": "declining_traffic",
+      "note": "Primary Odoo service page. Traffic falling inline with position drop from pos 8 to 11. P1 priority."
+    },
+    {
+      "url": "/hire-odoo-developers/",
+      "sessions_90d": 1980,
+      "organic_sessions_90d": 1420,
+      "bounce_rate": 0.34,
+      "avg_session_duration_sec": 188,
+      "flag": "ok",
+      "note": "Strong commercial intent page. Good engagement. Holding pos 5 for 'hire odoo developers'."
+    },
+    {
+      "url": "/services/crm-development/",
+      "sessions_90d": 1640,
+      "organic_sessions_90d": 1180,
+      "bounce_rate": 0.36,
+      "avg_session_duration_sec": 156,
+      "flag": "ok",
+      "note": "Climbing well. Odoo CRM focus driving conversions. Good internal linking from blog."
+    },
+    {
+      "url": "/services/ai-ml-development/",
+      "sessions_90d": 2980,
+      "organic_sessions_90d": 680,
+      "bounce_rate": 0.49,
+      "avg_session_duration_sec": 124,
+      "flag": "high_direct",
+      "note": "High direct traffic (brand + word-of-mouth). Organic share only 23% — significant opportunity if page 1 achieved."
+    },
+    {
+      "url": "/services/generative-ai-development-company/",
+      "sessions_90d": 1420,
+      "organic_sessions_90d": 820,
+      "bounce_rate": 0.41,
+      "avg_session_duration_sec": 148,
+      "flag": "ok",
+      "note": "Climbing from pos 19 to 13 in 90d. Close to page 1. Strong engagement when visitors land."
+    },
+    {
+      "url": "/solutions/hrms-solution/",
+      "sessions_90d": 1080,
+      "organic_sessions_90d": 680,
+      "bounce_rate": 0.43,
+      "avg_session_duration_sec": 164,
+      "flag": "ok",
+      "note": "Steady organic traffic. Case study support needed to push this past pos 15."
+    },
+    {
+      "url": "/solutions/dynamics-365-products/",
+      "sessions_90d": 860,
+      "organic_sessions_90d": 540,
+      "bounce_rate": 0.46,
+      "avg_session_duration_sec": 134,
+      "flag": "ok",
+      "note": "Secondary revenue stream performing steadily. Microsoft Dynamics 365 Partner India query climbing."
+    },
+    {
+      "url": "/services/mobile-app-development/",
+      "sessions_90d": 2120,
+      "organic_sessions_90d": 380,
+      "bounce_rate": 0.58,
+      "avg_session_duration_sec": 74,
+      "flag": "high_bounce",
+      "note": "High bounce. Competitive broad keyword — page content not matching search intent well. CWV issue (LCP 2.8s mobile)."
+    },
+    {
+      "url": "/services/software-development-service/",
+      "sessions_90d": 1760,
+      "organic_sessions_90d": 320,
+      "bounce_rate": 0.62,
+      "avg_session_duration_sec": 58,
+      "flag": "high_bounce",
+      "note": "Very high bounce. Broad keyword — above-fold content not matching intent. LCP issue."
+    },
+    {
+      "url": "/blog/",
+      "sessions_90d": 8640,
+      "organic_sessions_90d": 6480,
+      "bounce_rate": 0.33,
+      "avg_session_duration_sec": 204,
+      "flag": "ok",
+      "note": "Blog drives highest organic traffic. 400+ posts. Internal linking from blog to service pages is critical conversion lever."
+    },
+    {
+      "url": "/case-studies/",
+      "sessions_90d": 1240,
+      "organic_sessions_90d": 480,
+      "bounce_rate": 0.51,
+      "avg_session_duration_sec": 52,
+      "flag": "high_bounce",
+      "note": "High bounce — case study thumbnail images not linked (Clarity confirms). Quick fix opportunity."
+    },
+    {
+      "url": "/contact/",
+      "sessions_90d": 1640,
+      "organic_sessions_90d": 680,
+      "bounce_rate": 0.26,
+      "avg_session_duration_sec": 98,
+      "flag": "ok",
+      "note": "Good intent signals. Form submit conversion tracked here. Rage click issue on submit button (Clarity data)."
+    },
+    {
+      "url": "/services/odoo-erp-for-construction-real-estate/",
+      "sessions_90d": 480,
+      "organic_sessions_90d": 340,
+      "bounce_rate": 0.39,
+      "avg_session_duration_sec": 168,
+      "flag": "ok",
+      "note": "Vertical-specific page performing well early. Climbing from pos 21 to 10 in 90d."
+    },
+    {
+      "url": "/services/odoo-for-healthcare-and-hospitals/",
+      "sessions_90d": 320,
+      "organic_sessions_90d": 240,
+      "bounce_rate": 0.42,
+      "avg_session_duration_sec": 152,
+      "flag": "ok",
+      "note": "New page, early traction. Healthcare vertical showing strong intent signals."
+    },
+    {
+      "url": "/services/odoo-erp-for-food-and-beverage/",
+      "sessions_90d": 280,
+      "organic_sessions_90d": 200,
+      "bounce_rate": 0.44,
+      "avg_session_duration_sec": 144,
+      "flag": "ok",
+      "note": "New vertical page. Climbing from pos 19 to 9 in 90d. Strong early signals."
+    }
+  ],
+  "new_vs_returning_90d": {
+    "new_users_pct": 71,
+    "returning_users_pct": 29,
+    "note": "High new user share from organic expected for informational and commercial keywords."
+  }
 }

@@ -10,8 +10,8 @@ claude-sonnet-4-6
 MOCK
 
 ## Input
-- seo-automation/outputs/sprint-plan.json
-- seo-automation/outputs/website-scan.json
+- seo-automation/outputs/seo-strategist/sprint-plan.json
+- seo-automation/outputs/post-approval/website-scan.json
 - seo-automation/product-owner/biztechcs-product-owner-config.md
 
 ## Task
@@ -34,7 +34,7 @@ For each attack vector in `sprint-plan.json`:
 - If all PASS: `verdict: "aligned"`
 
 ## Output
-- `seo-automation/outputs/alignment-check.json`
+- `seo-automation/outputs/post-approval/alignment-check.json`
 
 Schema:
 ```json

@@ -56,7 +56,7 @@ Wait for each spawn to complete before starting the next step.
 ## PRE-CHECK
 
 Before running any step, verify:
-- `seo-automation/outputs/pipeline-context-[task_id].json` exists
+- `seo-automation/outputs/content-pipeline/pipeline-context-[task_id].json` exists
 - Read the `slug` and `task_id` values from it — use them in all subsequent steps
 
 ---
@@ -72,10 +72,10 @@ agentId: "content-pipeline"
 lightContext: true
 cleanup: "delete"
 label: "Step 1 — Content Strategist"
-task: "Read the file seo-automation/content-strategist/orchestrator.md and follow ALL instructions in it exactly. Also read seo-automation/outputs/pipeline-context-[task_id].json to get the slug and task context. Read required input files as specified. Write output JSON using the write tool. Do not ask questions. Reply ONLY with: ✅ content-brief-[slug].json written"
+task: "Read the file seo-automation/content-strategist/orchestrator.md and follow ALL instructions in it exactly. Also read seo-automation/outputs/content-pipeline/pipeline-context-[task_id].json to get the slug and task context. Read required input files as specified. Write output JSON using the write tool. Do not ask questions. Reply ONLY with: ✅ content-brief-[slug].json written"
 ```
 
-Expected output: `seo-automation/outputs/content-brief-[slug].json`
+Expected output: `seo-automation/outputs/content-pipeline/content-brief-[slug].json`
 Failure action: STOP. Reply: "❌ Content pipeline FAILED at Step 1 (Strategist) for [slug]."
 
 ---
@@ -89,10 +89,10 @@ agentId: "content-pipeline"
 lightContext: true
 cleanup: "delete"
 label: "Step 2 — Content Writer"
-task: "Read the file seo-automation/content-writer/orchestrator.md and follow ALL instructions in it exactly. Read seo-automation/outputs/content-brief-[slug].json as the primary input. Write the draft using the write tool. Do not ask questions. Reply ONLY with: ✅ draft-[slug].md written"
+task: "Read the file seo-automation/content-writer/orchestrator.md and follow ALL instructions in it exactly. Read seo-automation/outputs/content-pipeline/content-brief-[slug].json as the primary input. Write the draft using the write tool. Do not ask questions. Reply ONLY with: ✅ draft-[slug].md written"
 ```
 
-Expected output: `seo-automation/outputs/draft-[slug].md`
+Expected output: `seo-automation/outputs/content-pipeline/draft-[slug].md`
 Failure action: STOP. Reply: "❌ Content pipeline FAILED at Step 2 (Writer) for [slug]."
 
 ---
@@ -106,7 +106,7 @@ agentId: "content-pipeline"
 lightContext: true
 cleanup: "delete"
 label: "Step 3a — Content Editor (pass 1)"
-task: "Read the file seo-automation/content-editor/orchestrator.md and follow ALL instructions in it exactly. Read seo-automation/outputs/draft-[slug].md and seo-automation/outputs/content-brief-[slug].json. If all checks pass: write edited-draft-[slug].md. If any check fails: write revision-brief-[slug].md. Do not ask questions. Reply ONLY with: ✅ PASS edited-draft-[slug].md written  —OR—  ✅ FAIL revision-brief-[slug].md written"
+task: "Read the file seo-automation/content-editor/orchestrator.md and follow ALL instructions in it exactly. Read seo-automation/outputs/content-pipeline/draft-[slug].md and seo-automation/outputs/content-pipeline/content-brief-[slug].json. If all checks pass: write edited-draft-[slug].md. If any check fails: write revision-brief-[slug].md. Do not ask questions. Reply ONLY with: ✅ PASS edited-draft-[slug].md written  —OR—  ✅ FAIL revision-brief-[slug].md written"
 ```
 
 **After Step 3a:** Check reply.
@@ -120,7 +120,7 @@ agentId: "content-pipeline"
 lightContext: true
 cleanup: "delete"
 label: "Step 3b — Writer Revision"
-task: "Read the file seo-automation/content-writer/orchestrator.md and follow ALL instructions in it exactly. This is a revision pass. Read seo-automation/outputs/draft-[slug].md AND seo-automation/outputs/revision-brief-[slug].md. Apply ONLY the specific changes in the revision brief (do not rewrite from scratch). Write the revised draft back to draft-[slug].md using the write tool. Do not ask questions. Reply ONLY with: ✅ draft-[slug].md revised"
+task: "Read the file seo-automation/content-writer/orchestrator.md and follow ALL instructions in it exactly. This is a revision pass. Read seo-automation/outputs/content-pipeline/draft-[slug].md AND seo-automation/outputs/content-pipeline/revision-brief-[slug].md. Apply ONLY the specific changes in the revision brief (do not rewrite from scratch). Write the revised draft back to draft-[slug].md using the write tool. Do not ask questions. Reply ONLY with: ✅ draft-[slug].md revised"
 ```
 
 **Second editor pass — spawn sub-agent** (same task as 3a, label: "Step 3c — Content Editor (pass 2)")
@@ -140,10 +140,10 @@ agentId: "content-pipeline"
 lightContext: true
 cleanup: "delete"
 label: "Step 4 — Graphics Designer"
-task: "Read the file seo-automation/graphics-designer/orchestrator.md and follow ALL instructions in it exactly. Read seo-automation/outputs/edited-draft-[slug].md and seo-automation/outputs/content-brief-[slug].json. Write output JSON using the write tool. Do not ask questions. Reply ONLY with: ✅ image-prompts-[slug].json written"
+task: "Read the file seo-automation/graphics-designer/orchestrator.md and follow ALL instructions in it exactly. Read seo-automation/outputs/content-pipeline/edited-draft-[slug].md and seo-automation/outputs/content-pipeline/content-brief-[slug].json. Write output JSON using the write tool. Do not ask questions. Reply ONLY with: ✅ image-prompts-[slug].json written"
 ```
 
-Expected output: `seo-automation/outputs/image-prompts-[slug].json`
+Expected output: `seo-automation/outputs/content-pipeline/image-prompts-[slug].json`
 Failure action: WARNING — continue to HTML Preview with placeholder image references.
 
 ---
@@ -157,17 +157,17 @@ agentId: "content-pipeline"
 lightContext: true
 cleanup: "delete"
 label: "Step 5 — HTML Preview"
-task: "Read the file seo-automation/html-preview/orchestrator.md and follow ALL instructions in it exactly. Read seo-automation/outputs/edited-draft-[slug].md, seo-automation/outputs/image-prompts-[slug].json, and seo-automation/outputs/content-brief-[slug].json. Write the HTML preview file using the write tool. Do not ask questions. Reply ONLY with: ✅ preview-[slug].html written"
+task: "Read the file seo-automation/html-preview/orchestrator.md and follow ALL instructions in it exactly. Read seo-automation/outputs/content-pipeline/edited-draft-[slug].md, seo-automation/outputs/content-pipeline/image-prompts-[slug].json, and seo-automation/outputs/content-pipeline/content-brief-[slug].json. Write the HTML preview file using the write tool. Do not ask questions. Reply ONLY with: ✅ preview-[slug].html written"
 ```
 
-Expected output: `seo-automation/outputs/preview-[slug].html`
+Expected output: `seo-automation/outputs/content-pipeline/preview-[slug].html`
 Failure action: STOP. Reply: "❌ Content pipeline FAILED at Step 5 (HTML Preview) for [slug]."
 
 ---
 
 ### Final Step — Write Pipeline Result
 
-After all steps complete, write `seo-automation/outputs/pipeline-result-[task_id].json`:
+After all steps complete, write `seo-automation/outputs/content-pipeline/pipeline-result-[task_id].json`:
 
 ```json
 {
@@ -180,7 +180,7 @@ After all steps complete, write `seo-automation/outputs/pipeline-result-[task_id
   "author": "<from content-brief>",
   "word_count": 2200,
   "ai_score_pct": 6,
-  "html_path": "seo-automation/outputs/preview-[slug].html",
+  "html_path": "seo-automation/outputs/content-pipeline/preview-[slug].html",
   "completed_at": "<ISO8601 timestamp>"
 }
 ```

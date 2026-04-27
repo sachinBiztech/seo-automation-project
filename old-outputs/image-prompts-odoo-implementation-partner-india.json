@@ -1,0 +1,53 @@
+{
+  "slug": "odoo-implementation-partner-india",
+  "images": [
+    {
+      "filename": "biztechcs-blog-odoo-implementation-partner-india-hero.png",
+      "section": "Hero image",
+      "prompt": "A professional, clean illustration representing the concept of Odoo ERP implementation in India with business elements like digital transformation icons and Indian landmarks. Flat tech-forward style, using BiztechCS brand colours #0A1628 (dark navy), #FF6B35 (orange), and #FFFFFF (white). Modern, minimal, and professional mood.",
+      "type": "hero"
+    },
+    {
+      "filename": "biztechcs-blog-odoo-implementation-partner-india-what-is-odoo.png",
+      "section": "What is Odoo and Why Choose an Implementation Partner?",
+      "prompt": "An interface mockup showing an Odoo ERP dashboard with key modules like inventory, sales, and accounting in a clean digital style. Flat illustration with dark navy #0A1628 background and orange #FF6B35 highlights. Professional, minimal, tech-forward.",
+      "type": "screenshot"
+    },
+    {
+      "filename": "biztechcs-blog-odoo-implementation-partner-india-challenges-diagram.png",
+      "section": "Key Challenges in Odoo Implementation in India",
+      "prompt": "A process diagram illustrating challenges like customization, regulatory compliance, and data localization specific to India, connected with arrows and icons symbolizing each challenge. Flat vector style with BiztechCS brand colours #0A1628, #FF6B35, and #FFFFFF. Clear, informative, tech professional.",
+      "type": "diagram"
+    },
+    {
+      "filename": "biztechcs-blog-odoo-implementation-partner-india-why-biztechcs-diff.png",
+      "section": "Why BiztechCS Stands Out as Your Odoo Implementation Partner",
+      "prompt": "A comparison visual showing BiztechCS advantages over competitors in Odoo implementation with side-by-side feature highlights and benefits. Clean infographic style with brand colours: dark navy #0A1628, orange #FF6B35, and white #FFFFFF. Professional and clear.",
+      "type": "comparison"
+    },
+    {
+      "filename": "biztechcs-blog-odoo-implementation-partner-india-implementation-process.png",
+      "section": "Our Implementation Process: Step-by-Step Guide",
+      "prompt": "A step-by-step process diagram showcasing BiztechCS's proven Odoo implementation methodology with 5 to 6 steps highlighted by icons and brief labels. Flat vector style with BiztechCS brand colours #0A1628, #FF6B35, and #FFFFFF. Clear, professional, and tech-forward.",
+      "type": "diagram"
+    },
+    {
+      "filename": "biztechcs-blog-odoo-implementation-partner-india-customer-success-data.png",
+      "section": "Customer Success Stories and Data-Driven Results",
+      "prompt": "A data visualization showing key performance metrics and client growth statistics from Odoo implementations by BiztechCS. Clean charts in dark navy #0A1628 and highlights in #FF6B35 orange with white background. Professional and data-driven.",
+      "type": "data"
+    },
+    {
+      "filename": "biztechcs-blog-odoo-implementation-partner-india-choose-right-partner.png",
+      "section": "How to Choose the Right Odoo Partner for Your Business",
+      "prompt": "An infographic illustrating key criteria for selecting the right Odoo implementation partner, with icons representing cost, expertise, local support, and scalability. Flat illustration, brand colours dark navy #0A1628, orange #FF6B35, white #FFFFFF. Professional and clear.",
+      "type": "diagram"
+    },
+    {
+      "filename": "biztechcs-blog-odoo-implementation-partner-india-cta.png",
+      "section": "Call to Action",
+      "prompt": "A bold, clean CTA graphic encouraging contacting BiztechCS for Odoo implementation consultations, featuring a digital phone or chat icon, and brand colors #0A1628 dark navy and #FF6B35 orange. Modern professional style.",
+      "type": "hero"
+    }
+  ]
+}

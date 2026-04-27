@@ -10,8 +10,8 @@ claude-sonnet-4-6
 MOCK
 
 ## Input
-- seo-automation/outputs/report-summary.json
-- seo-automation/outputs/goal-alignment.json
+- seo-automation/outputs/intelligence-report/report-summary.json
+- seo-automation/outputs/post-approval/goal-alignment.json
 - seo-automation/business-layer/biztechcs-business-config.md
 
 ## Task
@@ -32,7 +32,7 @@ Compare actuals vs target:
 This is informational for the human POC — it appears in the Telegram message as context, not as a blocking check.
 
 ## Output
-- `seo-automation/outputs/mql-check.json`
+- `seo-automation/outputs/post-approval/mql-check.json`
 
 Schema:
 ```json

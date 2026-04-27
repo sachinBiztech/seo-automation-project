@@ -1,11 +1,92 @@
 {
-  "pulled_at": "2026-04-09",
-  "mtd": { "leads": 14, "mqls": 7, "sqls": 3 },
-  "qtd": { "leads": 52, "mqls": 24, "sqls": 9 },
-  "ytd": { "leads": 98, "mqls": 41, "sqls": 16 },
-  "organic_share_pct": 61,
+  "pulled_at": "2026-04-27",
+  "site": "BiztechCS",
+  "source": "Odoo XML-RPC — crm.lead model",
+  "attribution_coverage_pct": 88,
+  "attribution_note": "88% of leads have source classification via custom UTM cookie. 12% without attribution excluded from landing page rankings.",
+  "annual_targets": {
+    "leads": 480,
+    "mqls": 192,
+    "sqls": 67,
+    "note": "Annual targets divided by 26 sprints for per-sprint tracking. BiztechCS has 200+ team — target reflects company scale."
+  },
+  "per_sprint_targets": {
+    "leads": 18,
+    "mqls": 7,
+    "sqls": 2.6,
+    "note": "Flat distribution — seasonality weights not yet configured for BiztechCS"
+  },
+  "mtd":  { "leads": 22, "mqls": 9,  "sqls": 4  },
+  "qtd":  { "leads": 84, "mqls": 34, "sqls": 13 },
+  "ytd":  { "leads": 198,"mqls": 79, "sqls": 28 },
+  "organic_share_pct": 64,
+  "lead_source_breakdown_90d": {
+    "organic":    { "leads": 134, "share_pct": 64 },
+    "direct":     { "leads": 42,  "share_pct": 20 },
+    "referral":   { "leads": 18,  "share_pct": 9  },
+    "paid_search":{ "leads": 12,  "share_pct": 6  },
+    "social":     { "leads": 3,   "share_pct": 1  }
+  },
+  "lead_velocity": {
+    "lead_to_mql_avg_days": 3.4,
+    "mql_to_sql_avg_days": 6.8,
+    "lead_to_sql_avg_days": 10.2,
+    "note": "Short lead-to-MQL velocity indicates high-intent organic traffic — visitors are pre-qualified before visiting."
+  },
+  "pipeline_value_from_organic_90d": {
+    "currency": "INR",
+    "expected_revenue": 7800000,
+    "note": "~₹78L pipeline value from organic-sourced leads in last 90 days."
+  },
+  "previous_sprint_actuals": {
+    "sprint_id": "biztechcs_sprint_2026-04-01",
+    "sprint_dates": "2026-04-01 to 2026-04-15",
+    "leads": 16,
+    "mqls": 8,
+    "sqls": 3,
+    "vs_target": {
+      "leads": "16 vs 18 target — 89% attainment",
+      "mqls": "8 vs 7 target — 114% attainment",
+      "sqls": "3 vs 2.6 target — 115% attainment"
+    },
+    "performance_flag": "above_target",
+    "performance_context": "MQL and SQL above target. Lead volume slightly under (16 vs 18) but quality was higher — MQL conversion rate improved to 50% vs 40% quarterly avg. UAE leads drove 2 of the 3 SQLs. Positive signal."
+  },
   "top_lead_pages": [
-    { "url": "/odoo-implementation-services", "leads_90d": 18, "mqls_90d": 8 },
-    { "url": "/odoo-crm-module", "leads_90d": 11, "mqls_90d": 4 }
-  ]
+    { "url": "/services/odoo-development/",                    "leads_90d": 38, "mqls_90d": 17, "mql_conversion_rate": 44.7, "note": "Highest lead volume page — P1 priority because position is dropping" },
+    { "url": "/hire-odoo-developers/",                         "leads_90d": 29, "mqls_90d": 14, "mql_conversion_rate": 48.3, "note": "Strong commercial intent. High MQL rate." },
+    { "url": "/services/crm-development/",                     "leads_90d": 22, "mqls_90d": 10, "mql_conversion_rate": 45.5 },
+    { "url": "/services/ai-ml-development/",                   "leads_90d": 18, "mqls_90d": 9,  "mql_conversion_rate": 50.0, "note": "High MQL rate — AI/ML leads are enterprise-grade" },
+    { "url": "/services/generative-ai-development-company/",   "leads_90d": 14, "mqls_90d": 7,  "mql_conversion_rate": 50.0 },
+    { "url": "/solutions/hrms-solution/",                      "leads_90d": 12, "mqls_90d": 5,  "mql_conversion_rate": 41.7 },
+    { "url": "/solutions/dynamics-365-products/",              "leads_90d": 10, "mqls_90d": 5,  "mql_conversion_rate": 50.0, "note": "Dynamics 365 leads have high deal value" },
+    { "url": "/services/mobile-app-development/",              "leads_90d": 9,  "mqls_90d": 3,  "mql_conversion_rate": 33.3 },
+    { "url": "/services/odoo-erp-for-construction-real-estate/","leads_90d": 8,  "mqls_90d": 4,  "mql_conversion_rate": 50.0, "note": "Vertical-specific leads convert well" },
+    { "url": "/services/odoo-for-healthcare-and-hospitals/",   "leads_90d": 6,  "mqls_90d": 3,  "mql_conversion_rate": 50.0, "note": "High-value vertical — pharma compliance projects" },
+    { "url": "/services/odoo-erp-for-food-and-beverage/",      "leads_90d": 5,  "mqls_90d": 2,  "mql_conversion_rate": 40.0 },
+    { "url": "/services/odoo-for-distribution-and-logistics/", "leads_90d": 5,  "mqls_90d": 2,  "mql_conversion_rate": 40.0 },
+    { "url": "/services/ai-agent-development-company/",        "leads_90d": 4,  "mqls_90d": 2,  "mql_conversion_rate": 50.0, "note": "New page, early but high-value leads" },
+    { "url": "/services/software-development-service/",        "leads_90d": 4,  "mqls_90d": 1,  "mql_conversion_rate": 25.0, "note": "Broad keyword — lower MQL quality" },
+    { "url": "/case-studies/odoo-erp-pvc-coated-fabric-manufacturer/", "leads_90d": 4, "mqls_90d": 2, "mql_conversion_rate": 50.0, "note": "Manufacturing case study drives high-intent leads" },
+    { "url": "/erp-for-modular-kitchen/",                      "leads_90d": 3,  "mqls_90d": 2,  "mql_conversion_rate": 66.7, "note": "Niche vertical — high conversion rate" },
+    { "url": "/services/odoo-erp-for-supply-chain-management/","leads_90d": 3,  "mqls_90d": 1,  "mql_conversion_rate": 33.3 },
+    { "url": "/services/odoo-for-field-service-management/",   "leads_90d": 2,  "mqls_90d": 1,  "mql_conversion_rate": 50.0 },
+    { "url": "/erp-for-printing-industry/",                    "leads_90d": 2,  "mqls_90d": 1,  "mql_conversion_rate": 50.0 },
+    { "url": "/contact/",                                       "leads_90d": 2,  "mqls_90d": 1,  "mql_conversion_rate": 50.0 }
+  ],
+  "mql_conversion_rate_overall": {
+    "mtd_rate_pct": 40.9,
+    "qtd_rate_pct": 40.5,
+    "note": "Consistent MQL conversion rate ~40-41%. Healthy signal — organic traffic qualifying well."
+  },
+  "sql_conversion_rate_overall": {
+    "mtd_rate_pct": 18.2,
+    "qtd_rate_pct": 17.6
+  },
+  "geo_breakdown_organic_leads_90d": {
+    "india": { "leads": 96, "share_pct": 72 },
+    "uae":   { "leads": 22, "share_pct": 16, "note": "UAE leads have highest SQL rate — priority geo" },
+    "uk":    { "leads": 9,  "share_pct": 7  },
+    "other": { "leads": 7,  "share_pct": 5  }
+  }
 }

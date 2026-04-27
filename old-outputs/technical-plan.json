@@ -1,0 +1,39 @@
+{
+  "site": "BiztechCS",
+  "generated_at": "2026-04-17",
+  "quota_check": {
+    "cwv_fixes_planned": 1,
+    "cwv_fixes_max": 3,
+    "page_fixes_planned": 1,
+    "page_fixes_max": 5,
+    "structural_fixes_planned": 1,
+    "structural_fixes_max": 2
+  },
+  "cwv_fixes": [
+    {
+      "metric": "LCP",
+      "current_value": "2.8s",
+      "target_value": "<2.5s",
+      "fix": "Compress and properly size hero image on /odoo-manufacturing; defer non-critical JS and optimize server TTFB for this page",
+      "estimated_impact": "Brings LCP below 2.5s and improves main content paint experience; expected 20% increase in CWV passing rate for /odoo-manufacturing",
+      "priority": 1
+    }
+  ],
+  "page_fixes": [
+    {
+      "url": "/odoo-manufacturing",
+      "issue_type": "speed",
+      "diagnosis": "Largest Contentful Paint above threshold due to unoptimized images and render-blocking resources.",
+      "fix": "Serve next-gen image formats for hero image, use lazy loading for below-the-fold images, and audit/remediate render-blocking CSS or JS in the head.",
+      "priority": 1
+    }
+  ],
+  "structural_fixes": [
+    {
+      "type": "internal_linking",
+      "description": "Add contextual inbound links to /odoo-manufacturing from /odoo-crm-module and the top traffic landing pages.",
+      "pages_involved": ["/odoo-manufacturing", "/odoo-crm-module"],
+      "rationale": "Priority 1 locked recovery for /odoo-manufacturing; will help redistribute link equity and return lost impressions faster."
+    }
+  ]
+}

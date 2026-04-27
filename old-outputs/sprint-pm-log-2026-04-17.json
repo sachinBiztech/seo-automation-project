@@ -1,0 +1,34 @@
+{
+  "run_date": "2026-04-17T12:19:00.000Z",
+  "run_date_local": "2026-04-17",
+  "sprint_id": "biztechcs_sprint_2026-04-17",
+  "site": "BiztechCS",
+  "sprint_day": 1,
+  "sprint_complete": false,
+  "tasks_triggered": [
+    "CWV Fix: LCP on /odoo-manufacturing (2.8s  <2.5s)",
+    "Page Fix: /odoo-manufacturing  speed",
+    "Structural Fix: internal_linking  /odoo-manufacturing, /odoo-crm-module",
+    "Backlink Outreach: odoomates.com  /odoo-17-manufacturing-module",
+    "Backlink Outreach: planet-odoo.com  /odoo-pos-india",
+    "Backlink Outreach: technaureus.com  /odoo-crm-module",
+    "Backlink Outreach: odoo-community.org  /odoo-manufacturing",
+    "Backlink Outreach: erpnext.com  /odoo-17-manufacturing-module",
+    "Backlink Outreach: manufacturingtodayindia.com  /odoo-pos-india",
+    "Backlink Outreach: crmsoftwareblog.com  /odoo-crm-module",
+    "Backlink Outreach: solutionsreview.com  /odoo-manufacturing",
+    "Guest Post: planet-odoo.com  \"How Manufacturing Companies in India Can Fast-Track Digital Transformation with Odoo 17\"",
+    "Guest Post: manufacturingtodayindia.com  \"Digitizing Retail & Manufacturing: A Practical Guide Using Odoo POS (India)\"",
+    "Quora Answer: \"What are the benefits of implementing Odoo 17 manufacturing module in Indian factories?\"",
+    "Quora Answer: \"How can businesses customize Odoo CRM to improve customer experience?\"",
+    "Quora Answer: \"Is Odoo POS a good fit for Indian retailers versus traditional POS systems?\"",
+    "Quora Answer: \"What are common technical problems in Odoo manufacturing module and how to solve them?\"",
+    "Reddit: r/Odoo  discussion",
+    "Reddit: r/ERP  case-study",
+    "Reddit: r/smallbusiness  value-answer",
+    "LinkedIn Article: \"The Indian Manufacturing Sector9s Digital Leap: Winning with Odoo 17 Manufacturing Module\"",
+    "LinkedIn Article: \"Beyond CRM: Driving Growth with Custom Odoo Solutions\""
+  ],
+  "tasks_reassigned": [],
+  "agents_dispatched": ["technical-seo", "off-page-seo", "outreach-manager"]
+}

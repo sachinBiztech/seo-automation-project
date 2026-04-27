@@ -10,7 +10,7 @@ claude-sonnet-4-6
 MOCK
 
 ## Input
-- seo-automation/outputs/enriched-sprint-plan.json
+- seo-automation/outputs/post-approval/enriched-sprint-plan.json
 - seo-automation/product-owner/biztechcs-product-owner-config.md
 
 ## Task
@@ -35,7 +35,7 @@ Read `guardrails` section from product owner config. Apply to every item in the 
 - Log every rule applied and its result
 
 ## Output
-- `seo-automation/outputs/guardrails-check.json`
+- `seo-automation/outputs/post-approval/guardrails-check.json`
 
 Schema:
 ```json

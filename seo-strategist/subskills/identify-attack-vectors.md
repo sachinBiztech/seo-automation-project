@@ -16,10 +16,11 @@ MOCK
 
 Read all of these files:
 
-1. `seo-automation/outputs/intelligence-brief-parsed.json`
-2. `seo-automation/outputs/competitor-findings.json`
-3. `seo-automation/outputs/ranking-findings.json`
-4. `seo-automation/outputs/analysis-findings.json`
+1. `seo-automation/outputs/intelligence-report/intelligence-brief-parsed.json`
+2. `seo-automation/outputs/intelligence-report/competitor-position-table.json`
+3. `seo-automation/outputs/intelligence-report/competitor-findings.json`
+4. `seo-automation/outputs/intelligence-report/ranking-findings.json`
+5. `seo-automation/outputs/intelligence-report/analysis-findings.json`
 
 ---
 
@@ -31,8 +32,13 @@ targeting mid-market manufacturers and enterprises in India and internationally.
 Your job is to select exactly 3 attack vectors for this 15-day sprint.
 A vector is a focused area of competitive advantage we can create — not a vague theme.
 
-**Mandatory pre-read rule:** You must read competitor-findings.json completely before
-selecting any vector. The Competitor Keyword Position Table is your primary lens.
+**Mandatory pre-read rule:** You must read competitor-position-table.json completely
+before selecting any vector. This is the Competitor Keyword Position Table — a
+cumulative, cycle-over-cycle record of our position vs every named competitor
+across all tracked keywords. It is your primary lens for vector selection.
+
+Use `attack_windows` and `defense_alerts` arrays from competitor-position-table.json
+as direct input to selection criteria 1 and 2 below.
 
 **Selection criteria (in order of priority):**
 1. Competitors who gained 5+ positions on any keyword we target → their topic area is Vector 1
@@ -45,11 +51,12 @@ Each vector must be one of: `content` / `technical` / `offpage`
 
 ## Task
 
-**Step 1 — Scan competitor movements**
-From competitor-findings.json:
-- List all keywords where any competitor has gained 5+ positions this cycle
-- List all keywords where we are within 3–5 positions of passing a competitor
-- Flag the highest-threat competitor domain
+**Step 1 — Scan Competitor Keyword Position Table**
+From competitor-position-table.json:
+- Read `attack_windows` array: keywords where we are within 3–5 positions of overtaking a competitor
+- Read `defense_alerts` array: competitors who gained 5+ positions on our keywords
+- From `keywords` array: identify the highest-threat competitor domain (most positions gained overall)
+- Note any keywords where we hold AI Overview citations (protect these)
 
 **Step 2 — Read locked Priority 1 pages**
 From intelligence-brief-parsed.json, list all `priority_1_locked` entries.
@@ -72,7 +79,7 @@ Before finalising, check each vector:
 
 ## Output
 
-Create the file `seo-automation/outputs/attack-vectors.json` and write
+Create the file `seo-automation/outputs/seo-strategist/attack-vectors.json` and write
 the complete JSON below before finishing.
 
 ```json

@@ -1,0 +1,43 @@
+{
+  "sprint_id": "biztechcs_sprint_2026-04-14",
+  "per_sprint_budget": 92307,
+  "tiers": {
+    "priority_1": {
+      "items": [
+        {
+          "title": "Comprehensive Guide to Odoo 17 Manufacturing Module Features",
+          "type": "blog_post",
+          "cost_estimate": 1
+        },
+        {
+          "title": "Top 7 Reasons to Choose Odoo Implementation Partner India for Mid-Market Manufacturers",
+          "type": "listicle",
+          "cost_estimate": 0.6
+        },
+        {
+          "title": "N/A - Attack Vector 2",
+          "type": "technical_fix",
+          "cost_estimate": 0.5
+        }
+      ],
+      "total_cost": 2.1
+    },
+    "priority_2": {
+      "items": [
+        {
+          "title": "Optimizing Odoo CRM Customization for Mid-Market Enterprises",
+          "type": "blog_post",
+          "cost_estimate": 1
+        }
+      ],
+      "total_cost": 1
+    },
+    "optional": {
+      "items": [],
+      "total_cost": 0
+    }
+  },
+  "full_plan_cost": 3.1,
+  "budget_overage": false,
+  "overage_amount": 0
+}

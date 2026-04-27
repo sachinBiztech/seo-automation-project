@@ -27,8 +27,11 @@ const { spawnSync } = require('child_process');
 const SESSIONS_DIR    = path.join(os.homedir(), '.openclaw', 'agents');
 const SEO_DIR         = '/home/sachin.p/.openclaw/workspace/seo-automation';
 const OUTPUTS_DIR     = path.join(SEO_DIR, 'outputs');
-const LOG_FILE        = path.join(OUTPUTS_DIR, 'content-approval-bridge.log');
-const STATE_FILE      = path.join(OUTPUTS_DIR, 'content-approval-bridge-state.json');
+const LOGS_DIR        = path.join(OUTPUTS_DIR, 'logs');
+const CONTENT_OUT     = path.join(OUTPUTS_DIR, 'content-pipeline');
+const SPRINT_PM_OUT   = path.join(OUTPUTS_DIR, 'sprint-pm');
+const LOG_FILE        = path.join(LOGS_DIR, 'content-approval-bridge.log');
+const STATE_FILE      = path.join(LOGS_DIR, 'content-approval-bridge-state.json');
 const TELEGRAM_ID     = '-1003829892114';
 const POLL_INTERVAL   = 3000; // ms
 const ONCE_MODE       = process.argv.includes('--once');
@@ -118,7 +121,7 @@ function telegramSend(message) {
 // ── Update content approval JSON ──────────────────────────────────────────────
 
 function updateApproval(sprintId, slug, action, notes = null) {
-  const approvalFile = path.join(OUTPUTS_DIR, `content-approval-${sprintId}.json`);
+  const approvalFile = path.join(CONTENT_OUT, `content-approval-${sprintId}.json`);
   if (!fs.existsSync(approvalFile)) {
     log('WARN', `Approval file not found: ${approvalFile}`);
     return null;
@@ -151,7 +154,7 @@ function updateApproval(sprintId, slug, action, notes = null) {
 
 function updateTaskStatus(sprintId, taskId, status) {
   if (!taskId) return;
-  const tasksFile = path.join(OUTPUTS_DIR, `sprint-tasks-${sprintId}.json`);
+  const tasksFile = path.join(SPRINT_PM_OUT, `sprint-tasks-${sprintId}.json`);
   if (!fs.existsSync(tasksFile)) return;
   const data = JSON.parse(fs.readFileSync(tasksFile, 'utf8'));
   const task = data.tasks.find(t => t.sr === taskId);
@@ -165,10 +168,10 @@ function updateTaskStatus(sprintId, taskId, status) {
 // ── Handle callback ───────────────────────────────────────────────────────────
 
 function findApprovalByTaskId(taskId) {
-  const files = fs.readdirSync(OUTPUTS_DIR).filter(f => f.startsWith('content-approval-') && f.endsWith('.json'));
+  const files = fs.readdirSync(CONTENT_OUT).filter(f => f.startsWith('content-approval-') && f.endsWith('.json'));
   for (const f of files) {
     try {
-      const data = JSON.parse(fs.readFileSync(path.join(OUTPUTS_DIR, f), 'utf8'));
+      const data = JSON.parse(fs.readFileSync(path.join(CONTENT_OUT, f), 'utf8'));
       const item = data.items.find(i => String(i.task_id) === String(taskId));
       if (item) return { sprintId: data.sprint_id, slug: item.slug };
     } catch (_) {}

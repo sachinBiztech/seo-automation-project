@@ -1,0 +1,55 @@
+{
+  "sprint_id": "biztechcs_sprint_2026-04-14",
+  "verdict": "compliant",
+  "checks": [
+    {
+      "content_type": "blog_posts",
+      "planned": 2,
+      "max_allowed": 10,
+      "status": "within_limit",
+      "override_reason": null
+    },
+    {
+      "content_type": "listicles",
+      "planned": 1,
+      "max_allowed": 3,
+      "status": "within_limit",
+      "override_reason": null
+    },
+    {
+      "content_type": "free_backlinks",
+      "planned": 0,
+      "max_allowed": 100,
+      "status": "within_limit",
+      "override_reason": null
+    },
+    {
+      "content_type": "paid_backlinks",
+      "planned": 0,
+      "max_allowed": 20,
+      "status": "within_limit",
+      "override_reason": null
+    },
+    {
+      "content_type": "quora_answers",
+      "planned": 0,
+      "max_allowed": 5,
+      "status": "within_limit",
+      "override_reason": null
+    },
+    {
+      "content_type": "reddit_posts",
+      "planned": 0,
+      "max_allowed": 5,
+      "status": "within_limit",
+      "override_reason": null
+    },
+    {
+      "content_type": "linkedin_articles",
+      "planned": 0,
+      "max_allowed": 1,
+      "status": "over_limit",
+      "override_reason": null
+    }
+  ]
+}

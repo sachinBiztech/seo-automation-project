@@ -31,14 +31,14 @@ function getBotToken() {
 const BOT_TOKEN = getBotToken();
 const SCRIPT_DIR = __dirname;
 const BRIDGE_SCRIPT = path.join(SCRIPT_DIR, 'approval-bridge.js');
-const LOG_FILE = path.join(SCRIPT_DIR, 'outputs', 'callback-listener.log');
-const OFFSET_FILE = path.join(SCRIPT_DIR, 'outputs', 'callback-listener-offset.json');
+const LOG_FILE = path.join(SCRIPT_DIR, 'outputs', 'logs', 'callback-listener.log');
+const OFFSET_FILE = path.join(SCRIPT_DIR, 'outputs', 'logs', 'callback-listener-offset.json');
 const POLL_TIMEOUT = 30; // seconds — long polling
 
 const KNOWN_ACTIONS = ['approve', 'revise', 'reject'];
 const CONTENT_ACTIONS = ['content_approve', 'content_revise', 'content_reject'];
 const CONTENT_BRIDGE_SCRIPT = path.join(SCRIPT_DIR, 'content-approval-bridge.js');
-const PENDING_TEXT_REPLY_PATH = path.join(SCRIPT_DIR, 'outputs', 'pending-text-reply.json');
+const PENDING_TEXT_REPLY_PATH = path.join(SCRIPT_DIR, 'outputs', 'seo-strategist', 'pending-text-reply.json');
 
 // ── Logging ───────────────────────────────────────────────────────────────────
 

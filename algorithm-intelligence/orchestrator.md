@@ -59,8 +59,8 @@ Log daily check result to algorithm event log.
 - Reply ONLY with: `✅ algorithm-findings.json updated — sprint_interrupt_required: [true/false]`
 
 ## Output
-- `seo-automation/outputs/algorithm-findings.json` (updates daily)
-- `seo-automation/outputs/algorithm-event-log.json` (appends)
+- `seo-automation/outputs/intelligence-report/algorithm-findings.json` (updates daily)
+- `seo-automation/outputs/logs/algorithm-event-log.json` (appends)
 
 Algorithm findings schema:
 ```json

@@ -10,7 +10,7 @@ claude-haiku-4-5-20251001
 MOCK
 
 ## Input
-- seo-automation/outputs/competitor-findings.json (previous run)
+- seo-automation/outputs/intelligence-report/competitor-findings.json (previous run)
 - seo-automation/product-owner/biztechcs-product-owner-config.md (competitor domain list)
 
 ## Task
@@ -53,7 +53,7 @@ If sitemap or RSS is blocked, cascade through:
 7. Manual flag to human (Telegram: "⚠️ Cannot access [domain] — manual check needed")
 
 ## Output
-- `seo-automation/outputs/competitor-findings.json` (updates daily, appends new entries)
+- `seo-automation/outputs/intelligence-report/competitor-findings.json` (updates daily, appends new entries)
 
 ## OUTPUT DISCIPLINE — CRITICAL
 

@@ -47,7 +47,7 @@ These need defensive action.
 
 ## Output
 
-Create the file `seo-automation/outputs/ranking-findings.json` and write
+Create the file `seo-automation/outputs/intelligence-report/ranking-findings.json` and write
 the complete JSON below before finishing.
 
 ```json

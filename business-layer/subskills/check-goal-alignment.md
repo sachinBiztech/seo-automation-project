@@ -10,9 +10,9 @@ claude-sonnet-4-6
 MOCK
 
 ## Input
-- seo-automation/outputs/enriched-sprint-plan.json
+- seo-automation/outputs/post-approval/enriched-sprint-plan.json
 - seo-automation/business-layer/biztechcs-business-config.md
-- seo-automation/outputs/report-summary.json
+- seo-automation/outputs/intelligence-report/report-summary.json
 
 ## Task
 
@@ -36,7 +36,7 @@ For the current sprint plan, evaluate:
 - Always include what the per-sprint MQL/lead target is
 
 ## Output
-- `seo-automation/outputs/goal-alignment.json`
+- `seo-automation/outputs/post-approval/goal-alignment.json`
 
 Schema:
 ```json

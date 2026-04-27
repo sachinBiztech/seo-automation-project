@@ -17,11 +17,11 @@ MOCK
 
 Read all of these files:
 
-1. `seo-automation/outputs/attack-vectors.json`
-2. `seo-automation/outputs/intelligence-brief-parsed.json`
-3. `seo-automation/outputs/content-plan.json`
-4. `seo-automation/outputs/technical-plan.json`
-5. `seo-automation/outputs/offpage-plan.json`
+1. `seo-automation/outputs/seo-strategist/attack-vectors.json`
+2. `seo-automation/outputs/intelligence-report/intelligence-brief-parsed.json`
+3. `seo-automation/outputs/seo-strategist/content-plan.json`
+4. `seo-automation/outputs/seo-strategist/technical-plan.json`
+5. `seo-automation/outputs/seo-strategist/offpage-plan.json`
 
 ---
 
@@ -37,7 +37,7 @@ Read all 5 input files. Produce three output files.
 
 Machine-readable handoff consumed by the Product Owner Review and Task Sheet Populator.
 
-Create `seo-automation/outputs/sprint-plan.json`:
+Create `seo-automation/outputs/seo-strategist/sprint-plan.json`:
 
 ```json
 {
@@ -76,7 +76,25 @@ Create `seo-automation/outputs/sprint-plan.json`:
   },
   "mql_context": "<copy mql_context.context_note from intelligence-brief-parsed.json>",
   "top_opportunity": "<from attack-vectors vector 1 focus_area>",
-  "priority_fix": "<from technical-plan cwv_fixes[0].fix or page_fixes[0].fix>"
+  "priority_fix": "<from technical-plan cwv_fixes[0].fix or page_fixes[0].fix>",
+  "social_amplification": [
+    {
+      "content_title": "<title of content piece>",
+      "linkedin": {"post_type": "text|carousel|poll", "hook": "string", "best_day": "Tue|Wed|Thu"},
+      "twitter_x": {"thread_tweets": ["tweet 1 ≤280 chars", "tweet 2", "...up to 7"]},
+      "instagram": {"format": "Reel|Carousel", "concept": "string"},
+      "reddit": {"subreddit": "string", "angle": "string"},
+      "quora": {"matched_question": "string"}
+    }
+  ],
+  "ai_overview_targets": [
+    {
+      "query": "string",
+      "current_status": "we_cited|competitor_cited|none",
+      "cited_source": "string or null",
+      "content_approach": "string"
+    }
+  ]
 }
 ```
 
@@ -88,7 +106,7 @@ Write this file completely before moving to Output 2.
 
 Human-readable sprint plan for stakeholder review.
 
-Create `seo-automation/outputs/sprint-plan.md`:
+Create `seo-automation/outputs/seo-strategist/sprint-plan.md`:
 
 ```
 # BiztechCS SEO Sprint Plan — <YYYY-MM-DD> to <sprint_end>
@@ -108,6 +126,12 @@ Create `seo-automation/outputs/sprint-plan.md`:
 [Backlink targets (list domains + outreach angle), Guest posts, Quora (list questions),
 Reddit (list subreddits + angle), LinkedIn (list topics)]
 
+## Social Amplification
+[Per content piece: LinkedIn (post type + hook + best day) | Twitter/X (5-7 tweet thread outline) | Instagram (Reel/Carousel concept) | Reddit (subreddit + angle) | Quora (matched question)]
+
+## AI Overview Targets
+[Table: Query | Current Status | Content Approach to Get Cited]
+
 ## MQL Context
 [Plain English explanation from mql_context]
 
@@ -123,7 +147,7 @@ Write this file completely before moving to Output 3.
 
 Styled HTML version used by the PDF generator and Telegram delivery.
 
-Create `seo-automation/outputs/sprint-plan.html` using the structure below.
+Create `seo-automation/outputs/seo-strategist/sprint-plan.html` using the structure below.
 Populate every section with actual data. Replace all placeholders.
 
 ```html
@@ -203,6 +227,18 @@ Populate every section with actual data. Replace all placeholders.
     <h2>Off-Page Plan</h2>
     <!-- Backlink Targets table: Domain | Relevance | Our Page | Outreach Angle | Type -->
     <!-- Quora/Reddit/LinkedIn as compact list items -->
+  </div>
+
+  <div class="section">
+    <h2>Social Amplification</h2>
+    <!-- Per content piece: LinkedIn post type + hook + best day | Twitter/X thread outline (5-7 tweets) | Instagram Reel/Carousel concept | Reddit subreddit + angle | Quora matched question -->
+    <!-- One .task-card per content piece with social plan breakdown -->
+  </div>
+
+  <div class="section">
+    <h2>AI Overview Targets</h2>
+    <!-- Table: Query | Current Status (we cited / competitor cited / none) | Content Approach to Get Cited -->
+    <!-- Current Status: badge-green if we are cited, badge-red if competitor, badge-yellow if none -->
   </div>
 
   <div class="section">

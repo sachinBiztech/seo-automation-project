@@ -14,8 +14,8 @@ MOCK
 
 ## Input
 
-Read: `seo-automation/outputs/sprint-plan.json`
-Read: `seo-automation/outputs/generate-sprint-pdf-status.json`
+Read: `seo-automation/outputs/seo-strategist/sprint-plan.json`
+Read: `seo-automation/outputs/seo-strategist/generate-sprint-pdf-status.json`
 
 ---
 
@@ -23,12 +23,17 @@ Read: `seo-automation/outputs/generate-sprint-pdf-status.json`
 
 You are the sprint plan delivery agent for BiztechCS.
 
-**MOCK MODE NOTE:** MOCK mode means data comes from mock files — it does NOT suppress Telegram sends.
-All `openclaw message send` commands below MUST be executed as real bash commands. Do not skip them.
+**⚠️ MANDATORY EXECUTION RULE — READ BEFORE ANYTHING ELSE:**
+Every `openclaw message send` command in this file is a REAL bash command that MUST be executed using the exec/bash tool.
+- Do NOT simulate, summarize, or skip any send command
+- Do NOT write "Telegram message sent" without actually running the bash command
+- Do NOT consider this step done unless the command returns "Sent via telegram"
+- If a send fails, retry once. If it fails twice, log the error and continue to the next step.
+This rule applies in ALL modes including MOCK.
 
 **Step 1 — Read sprint-plan.json**
 
-Read `seo-automation/outputs/sprint-plan.json`.
+Read `seo-automation/outputs/seo-strategist/sprint-plan.json`.
 Extract these fields:
 - `sprint_id` — **CRITICAL: use this value for sprint-approval.json. NEVER use sprint_id from generate-sprint-pdf-status.json or any other file.**
 - `sprint_start`
@@ -45,7 +50,7 @@ Extract these fields:
 
 **Step 2 — Resolve document to send**
 
-Try to read `seo-automation/outputs/generate-sprint-pdf-status.json`.
+Try to read `seo-automation/outputs/seo-strategist/generate-sprint-pdf-status.json`.
 
 If the file exists:
 - Extract `status`, `pdf_path`, `fallback_html_path`
@@ -57,14 +62,14 @@ If the file exists:
 test -f "<candidate DOCUMENT path>" && echo "EXISTS" || echo "MISSING"
 ```
 - If "EXISTS": DOCUMENT = candidate path, proceed.
-- If "MISSING": run `ls /home/sachin.p/.openclaw/workspace/seo-automation/outputs/BiztechCS-SEO-Sprint-Plan_*.pdf 2>/dev/null` to find any sprint plan PDF.
+- If "MISSING": run `ls /home/sachin.p/.openclaw/workspace/seo-automation/outputs/seo-strategist/BiztechCS-SEO-Sprint-Plan_*.pdf 2>/dev/null` to find any sprint plan PDF.
   - If a PDF is found: DOCUMENT = that path, DOCUMENT_NOTE = "⚠️ PDF found at alternate path."
-  - If no PDF found: DOCUMENT = `/home/sachin.p/.openclaw/workspace/seo-automation/outputs/sprint-plan.html`, DOCUMENT_NOTE = "⚠️ PDF not found — plan sent as HTML."
+  - If no PDF found: DOCUMENT = `/home/sachin.p/.openclaw/workspace/seo-automation/outputs/seo-strategist/sprint-plan.html`, DOCUMENT_NOTE = "⚠️ PDF not found — plan sent as HTML."
 
 If `generate-sprint-pdf-status.json` does NOT exist (read returns error):
-- Run `ls /home/sachin.p/.openclaw/workspace/seo-automation/outputs/BiztechCS-SEO-Sprint-Plan_*.pdf 2>/dev/null`
+- Run `ls /home/sachin.p/.openclaw/workspace/seo-automation/outputs/seo-strategist/BiztechCS-SEO-Sprint-Plan_*.pdf 2>/dev/null`
 - If found: DOCUMENT = that path, DOCUMENT_NOTE = "⚠️ PDF status file missing — attached latest found PDF."
-- If not found: DOCUMENT = `/home/sachin.p/.openclaw/workspace/seo-automation/outputs/sprint-plan.html`, DOCUMENT_NOTE = "⚠️ PDF not found — plan sent as HTML."
+- If not found: DOCUMENT = `/home/sachin.p/.openclaw/workspace/seo-automation/outputs/seo-strategist/sprint-plan.html`, DOCUMENT_NOTE = "⚠️ PDF not found — plan sent as HTML."
 
 **Do NOT attempt `openclaw message send --media <path>` without first confirming the file exists.
 Do NOT write `local_file_missing` and stop** — always continue to Steps 3–7 with whatever document is available.
@@ -143,7 +148,7 @@ Do NOT change this format.
 
 **Step 7 — Write sprint-approval.json**
 
-Create `seo-automation/outputs/sprint-approval.json`:
+Create `seo-automation/outputs/seo-strategist/sprint-approval.json`:
 
 ```json
 {

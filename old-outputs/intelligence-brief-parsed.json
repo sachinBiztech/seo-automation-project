@@ -1,0 +1,62 @@
+{
+  "site": "BiztechCS",
+  "report_id": "biztechcs_intelligence_2026-04-16",
+  "parsed_at": "2026-04-17",
+  "priority_1_locked": [
+    {
+      "url": "/odoo-manufacturing",
+      "signal": "Impressions dropped 34% in last 30 days",
+      "action_required": "Investigate and remediate causes for impression decline, focusing on technical and content issues to restore visibility."
+    }
+  ],
+  "top_opportunities": [
+    {
+      "source_question": "Q1",
+      "finding": "The biggest ranking opportunity is the keyword 'odoo implementation partner india' which is climbing at position 14.2 with 4200 impressions and a low CTR of 0.006, indicating high potential for growth.",
+      "action": "Focus this sprint on optimizing the content targeting 'odoo implementation partner india' to improve ranking and CTR."
+    },
+    {
+      "source_question": "Q3",
+      "finding": "Keyword 'odoo crm customization' has the best position-to-effort ratio at position 7.8 and holding steady, making it the easiest to push to page 1.",
+      "action": "Enhance content around 'odoo crm customization' with targeted on-page SEO improvements this sprint."
+    },
+    {
+      "source_question": "Q12",
+      "finding": "There is a keyword cluster around manufacturing modules where we partially own positions but competitors are ahead, especially on 'odoo manufacturing module'.",
+      "action": "Create authoritative content to dominate the manufacturing module keyword cluster."
+    },
+    {
+      "source_question": "Q16",
+      "finding": "The fastest climbing keyword is 'odoo implementation partner india' which improved 5 positions in 90 days.",
+      "action": "Accelerate ranking gains by creating fresh, targeted content and improving user engagement for this keyword."
+    }
+  ],
+  "technical_flags": [
+    {
+      "source_question": "Q9",
+      "finding": "Core Web Vitals need improvement, specifically Largest Contentful Paint (LCP) at 2.8s which may be suppressing rankings.",
+      "action": "Optimize server response times and image loading on key landing pages to improve LCP."
+    },
+    {
+      "source_question": "Q10",
+      "finding": "The LCP is the furthest Core Web Vital from passing at 2.8 seconds, slowing page load speed.",
+      "action": "Implement image optimization and reduce render-blocking resources to fix LCP."
+    },
+    {
+      "traffic_trend": "below_average"
+    }
+  ],
+  "competitor_threats": {
+    "highest_threat_domain": "unknown",
+    "content_gap_to_fill": "unknown",
+    "key_findings": [
+      "Competitor cybrosys.com moved most aggressively with new pages on '/odoo-17-manufacturing-module' and '/odoo-pos-india' targeting relevant keywords.",
+      "Competitors are targeting the content topic 'Odoo POS in India' which we currently lack in our pages.",
+      "The most dangerous competitor page is cybrosys.com's '/odoo-17-manufacturing-module' which targets high-value manufacturing keywords."
+    ]
+  },
+  "mql_context": {
+    "performance_flag": "above_target",
+    "context_note": "Core Web Vitals need improvement, especially LCP at 2.8s affecting /odoo-manufacturing."
+  }
+}

@@ -10,8 +10,8 @@ claude-sonnet-4-6
 MOCK
 
 ## Input
-- seo-automation/outputs/sprint-plan.json
-- seo-automation/outputs/research-findings.json
+- seo-automation/outputs/seo-strategist/sprint-plan.json
+- seo-automation/outputs/intelligence-report/research-findings.json
 
 ## Task
 
@@ -37,7 +37,7 @@ For each attack vector and content/technical/off-page item in `sprint-plan.json`
 In MOCK mode: if `research-findings.json` only has mock data, use LLM knowledge of established SEO research to generate plausible evidence statements. Label these as `source_type: "llm_knowledge"` so they can be replaced with real citations in PRODUCTION.
 
 ## Output
-- `seo-automation/outputs/expert-intelligence-map.json`
+- `seo-automation/outputs/seo-strategist/expert-intelligence-map.json`
 
 Schema:
 ```json

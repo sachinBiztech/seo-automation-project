@@ -10,8 +10,8 @@ claude-sonnet-4-6
 MOCK
 
 ## Input
-- seo-automation/outputs/edited-draft-[slug].md
-- seo-automation/outputs/content-brief-[slug].json
+- seo-automation/outputs/content-pipeline/edited-draft-[slug].md
+- seo-automation/outputs/content-pipeline/content-brief-[slug].json
 
 ## Task
 
@@ -62,8 +62,8 @@ Generate all prompts and storyboard text. Do not call image generation API in MO
 - Reply ONLY with: `✅ image-prompts-[slug].json written`
 
 ## Output
-- `seo-automation/outputs/image-prompts-[slug].json`
-- `seo-automation/outputs/video-storyboard-[slug].md` (for articles ≥2000w)
+- `seo-automation/outputs/content-pipeline/image-prompts-[slug].json`
+- `seo-automation/outputs/content-pipeline/video-storyboard-[slug].md` (for articles ≥2000w)
 
 Schema (image prompts):
 ```json

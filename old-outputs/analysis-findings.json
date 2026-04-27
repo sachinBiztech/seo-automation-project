@@ -1,0 +1,42 @@
+{
+  "site": "BiztechCS",
+  "analyzed_at": "2026-04-17",
+  "Q1_ranking_health": {
+    "climbers_count": 2,
+    "droppers_count": 1,
+    "holding_count": 1,
+    "most_at_risk_keyword": "odoo manufacturing module",
+    "at_risk_reason": "Dropped 4 positions from 7 to 11 in last 90 days, impressions dropped 34%.",
+    "best_opportunity_keyword": "odoo implementation partner india",
+    "opportunity_reason": "Climbing trend with +5 positions gained, 4200 impressions, but still far from page 1 (position 14)."
+  },
+  "Q2_traffic_conversion": {
+    "traffic_trend_15d": "below_average",
+    "organic_lead_share_pct": 61,
+    "lead_traffic_alignment": "aligned",
+    "alignment_note": "Top lead pages /odoo-implementation-services and /odoo-crm-module are also top traffic pages."
+  },
+  "Q3_competitor_threat": {
+    "most_active_competitor": "cybrosys.com",
+    "new_pages_count": 2,
+    "most_dangerous_gap": {
+      "keyword": "odoo implementation partner india",
+      "our_position": 14.2,
+      "competitor_position": 4,
+      "gap": 10.2
+    },
+    "urgent_content_gap": "Odoo POS in India"
+  },
+  "Q4_technical_risk": {
+    "core_web_vitals_status": "partial",
+    "biggest_cwv_issue": "LCP at 2.8s, needs improvement",
+    "downtrending_pages_count": 1,
+    "top_technical_fix": "Improve LCP by optimizing images and server response for /odoo-manufacturing"
+  },
+  "Q5_sprint_priority": {
+    "primary_vector": "content",
+    "anchor_page_or_keyword": "/odoo-pos-india",
+    "rationale": "Competitor cybrosys.com created two new pages on manufacturing and POS, showing a gap we must close urgently.",
+    "measurable_outcome": "Increase impressions by 20% and improve ranking positions for targeted keywords by Day 15."
+  }
+}

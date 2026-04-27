@@ -1,0 +1,46 @@
+{
+  "site": "BiztechCS",
+  "scan_mode": "config_only",
+  "scanned_at": "2026-04-17T12:41:00+05:30",
+  "active_offerings": [
+    "Odoo ERP implementation (manufacturing, retail, distribution, services)",
+    "Odoo CRM customization",
+    "Odoo Manufacturing Module implementation",
+    "Odoo POS system setup",
+    "Odoo 17 upgrade services",
+    "Custom Odoo module development",
+    "Odoo integration services (third-party APIs)",
+    "AI-powered Odoo automation",
+    "Product Engineering (web/mobile app development)"
+  ],
+  "named_authors": [
+    {
+      "name": "Uttam Patel",
+      "title": "Odoo Implementation Lead",
+      "bio_url": "LinkedIn: [pending]"
+    },
+    {
+      "name": "Nandeep Shah",
+      "title": "Senior Odoo Developer",
+      "bio_url": "LinkedIn: [pending]"
+    }
+  ],
+  "icp_signals": [
+    "Manufacturing",
+    "Distribution",
+    "Retail",
+    "Professional Services",
+    "Mid-market companies",
+    "Company size 50-500 employees",
+    "Pain points: Legacy ERP migration, manual processes, disconnected systems, scaling challenges",
+    "Geographies: India, US mid-market, UK SMB"
+  ],
+  "content_gaps": [
+    "Dedicated pages on AI-powered Odoo automation",
+    "Content on specific pain point solutions like legacy ERP migration",
+    "Detailed case studies or testimonials not in approved library",
+    "Odoo Manufacturing Module detailed content improvements",
+    "Technical SEO improvements on /odoo-manufacturing page (LCP issue)"
+  ],
+  "flagged_pages": []
+}

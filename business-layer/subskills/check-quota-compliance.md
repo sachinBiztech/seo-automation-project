@@ -10,7 +10,7 @@ claude-haiku-4-5-20251001
 MOCK
 
 ## Input
-- seo-automation/outputs/enriched-sprint-plan.json
+- seo-automation/outputs/post-approval/enriched-sprint-plan.json
 - seo-automation/business-layer/biztechcs-business-config.md
 
 ## Task
@@ -35,7 +35,7 @@ Read content quotas from business config. Count each content type in `enriched-s
 Override rule: A quota override is accepted only if `override_reason` field is present in the sprint plan item. Log override in output.
 
 ## Output
-- `seo-automation/outputs/quota-check.json`
+- `seo-automation/outputs/post-approval/quota-check.json`
 
 Schema:
 ```json

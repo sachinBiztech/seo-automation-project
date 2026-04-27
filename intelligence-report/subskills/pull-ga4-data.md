@@ -46,7 +46,7 @@ Flag pages with bounce_rate > 0.50 as "high_bounce".
 
 ## Output
 
-Create the file `seo-automation/outputs/ga4-findings.json` and write
+Create the file `seo-automation/outputs/intelligence-report/ga4-findings.json` and write
 the complete JSON below before finishing.
 
 ```json

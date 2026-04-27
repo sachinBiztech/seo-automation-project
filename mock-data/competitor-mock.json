@@ -1,23 +1,196 @@
 {
-  "pulled_at": "2026-04-09",
+  "pulled_at": "2026-04-27",
+  "site": "BiztechCS",
+  "cycle": "2026-04-12 to 2026-04-27",
+  "monitoring_note": "Data sourced from: sitemap XML diff, RSS diff, Wayback CDX API, Ahrefs Webmaster Tools public data, LinkedIn public profiles, Google site: queries",
   "competitors": [
     {
       "domain": "cybrosys.com",
-      "new_pages_this_cycle": ["/odoo-17-manufacturing-module", "/odoo-pos-india"],
-      "new_backlinks": 3,
+      "threat_level": "high_threat",
+      "new_pages_this_cycle": [
+        "/odoo-17-manufacturing-module",
+        "/odoo-pos-india",
+        "/odoo-erp-implementation-india"
+      ],
+      "new_backlinks": 9,
+      "new_backlink_detail": [
+        { "source_domain": "techcircle.in",       "domain_type": "media",      "da": 58, "anchor": "odoo implementation partner india" },
+        { "source_domain": "yourstory.com",        "domain_type": "media",      "da": 72, "anchor": "odoo erp india" },
+        { "source_domain": "clutch.co",            "domain_type": "directory",  "da": 79, "anchor": "top odoo developer india" },
+        { "source_domain": "g2.com",               "domain_type": "directory",  "da": 92, "anchor": "odoo software reviews" },
+        { "source_domain": "techgig.com",          "domain_type": "niche_site", "da": 44, "anchor": "odoo erp partner" },
+        { "source_domain": "erptodaysolutions.com","domain_type": "niche_site", "da": 38, "anchor": "best odoo partner india" },
+        { "source_domain": "medium.com",           "domain_type": "guest_post", "da": 96, "anchor": "odoo implementation services" },
+        { "source_domain": "nasscom.in",           "domain_type": "niche_site", "da": 68, "anchor": "odoo development company" },
+        { "source_domain": "linkedin.com",         "domain_type": "social",     "da": 99, "anchor": "cybrosys technologies" }
+      ],
       "keyword_positions": {
-        "odoo implementation partner india": 4,
-        "odoo crm customization": 12
+        "odoo development company india":    2,
+        "odoo erp implementation india":     4,
+        "odoo crm development":              3,
+        "odoo implementation partner india": 3,
+        "odoo 17 new features":              4,
+        "hire odoo developers":              7,
+        "odoo erp for manufacturing india":  3
+      },
+      "social_signals": {
+        "linkedin_posts_this_cycle": 7,
+        "linkedin_notable": "Published 'Odoo 17 Manufacturing ROI for Indian Companies' — 920 reactions, 140 comments. Targeting our #1 priority keyword cluster directly.",
+        "twitter_posts_this_cycle": 4
+      },
+      "job_postings": {
+        "open_roles": ["Odoo Developer (x4)", "SEO Content Writer (x2)", "Digital Marketing Manager"],
+        "strategic_signal": "Hiring 2 SEO Content Writers — signals aggressive content scaling. Expected 4-5 new high-quality pages per month."
+      },
+      "technical_changes": {
+        "schema_added": ["FAQPage on /odoo-erp-implementation-india/", "HowTo schema on /odoo-development/"],
+        "cwv_improvement": "LCP improved from 3.4s to 2.0s on main service pages — CDN addition confirmed",
+        "note": "CWV improvement significant — this directly contributed to their position gains on our tracked queries."
       }
     },
     {
       "domain": "ksolves.com",
+      "threat_level": "high_threat",
+      "new_pages_this_cycle": [
+        "/odoo-17-accounting-features",
+        "/odoo-erp-implementation-india"
+      ],
+      "new_backlinks": 4,
+      "new_backlink_detail": [
+        { "source_domain": "analyticsinsight.net", "domain_type": "media",      "da": 62, "anchor": "odoo erp implementation" },
+        { "source_domain": "nasscom.in",            "domain_type": "niche_site", "da": 68, "anchor": "it services company india" },
+        { "source_domain": "techbehemoths.com",     "domain_type": "directory",  "da": 52, "anchor": "ksolves odoo partner" },
+        { "source_domain": "erp.today",             "domain_type": "niche_site", "da": 48, "anchor": "odoo development india" }
+      ],
+      "keyword_positions": {
+        "odoo development company india":      8,
+        "odoo erp implementation india":       9,
+        "hire odoo developers":                6,
+        "odoo 17 accounting features":         4,
+        "odoo crm development":                11,
+        "odoo implementation partner india":   12
+      },
+      "social_signals": {
+        "linkedin_posts_this_cycle": 4,
+        "linkedin_notable": "Posted Odoo 17 accounting walkthrough video — 310 reactions. Targeting accounting module keyword cluster."
+      },
+      "job_postings": {
+        "open_roles": ["Odoo Technical Consultant (x2)", "Content Writer"],
+        "strategic_signal": "Adding content writer — moderate content expansion expected."
+      },
+      "prior_backlink_overlap": {
+        "note": "We share a link from techbehemoths.com (DA 52). ksolves.com just acquired same. Verify our link is still active and on a higher-value page."
+      }
+    },
+    {
+      "domain": "odoosolutions.co.in",
+      "threat_level": "medium",
+      "new_pages_this_cycle": [
+        "/odoo-implementation-hyderabad",
+        "/odoo-erp-for-real-estate"
+      ],
+      "new_backlinks": 2,
+      "new_backlink_detail": [
+        { "source_domain": "indiamart.com",    "domain_type": "directory", "da": 71, "anchor": "odoo erp software india" },
+        { "source_domain": "softwareworld.co", "domain_type": "directory", "da": 54, "anchor": "odoo partner india" }
+      ],
+      "keyword_positions": {
+        "odoo implementation partner india": 6,
+        "odoo crm development":              9,
+        "odoo erp implementation india":     13
+      },
+      "social_signals": {
+        "linkedin_posts_this_cycle": 2,
+        "linkedin_notable": "Regional expansion announcement — opening Hyderabad office. Signals South India territory coverage increasing."
+      },
+      "job_postings": {
+        "open_roles": ["Odoo Implementation Consultant (Hyderabad)"],
+        "strategic_signal": "Hyderabad expansion — could target South India manufacturing segment where BiztechCS has case studies."
+      }
+    },
+    {
+      "domain": "openerpindia.com",
+      "threat_level": "low",
       "new_pages_this_cycle": [],
       "new_backlinks": 1,
+      "new_backlink_detail": [
+        { "source_domain": "capterra.com", "domain_type": "directory", "da": 91, "anchor": "open erp india reviews" }
+      ],
       "keyword_positions": {
-        "odoo implementation partner india": 9,
-        "odoo manufacturing module": 5
-      }
+        "odoo implementation partner india": 19,
+        "odoo erp implementation india":     24
+      },
+      "social_signals": { "linkedin_posts_this_cycle": 1 },
+      "job_postings": { "open_roles": [], "strategic_signal": "No major hiring activity — stable." }
+    },
+    {
+      "domain": "erpnext.com",
+      "threat_level": "medium",
+      "new_pages_this_cycle": [
+        "/erpnext-vs-odoo-2026"
+      ],
+      "new_backlinks": 6,
+      "new_backlink_detail": [
+        { "source_domain": "hackernews.com",    "domain_type": "niche_site", "da": 91, "anchor": "open source erp" },
+        { "source_domain": "producthunt.com",   "domain_type": "niche_site", "da": 90, "anchor": "erpnext" },
+        { "source_domain": "reddit.com",        "domain_type": "social",     "da": 99, "anchor": "erpnext review" },
+        { "source_domain": "github.com",        "domain_type": "niche_site", "da": 99, "anchor": "frappe erpnext" },
+        { "source_domain": "indiehackers.com",  "domain_type": "niche_site", "da": 72, "anchor": "open source erp india" },
+        { "source_domain": "alternativeto.net", "domain_type": "directory",  "da": 73, "anchor": "erpnext alternative" }
+      ],
+      "keyword_positions": {
+        "odoo vs sap for manufacturing": 5,
+        "open source erp india":         1,
+        "erp software india":            6
+      },
+      "social_signals": {
+        "linkedin_posts_this_cycle": 5,
+        "linkedin_notable": "Published 'ERPNext vs Odoo 2026' comparison — direct attack on our comparison keyword cluster. Developer community links acquired."
+      },
+      "job_postings": { "open_roles": ["Growth Marketing Manager"], "strategic_signal": "Comparison content strategy likely to accelerate." }
+    }
+  ],
+  "content_gaps_identified": [
+    {
+      "gap": "Odoo vs SAP dedicated comparison page",
+      "evidence": "erpnext.com and cybrosys.com both have comparison content. BiztechCS has no dedicated /odoo-vs-sap/ page — only blog mentions.",
+      "search_volume_est": 3200,
+      "action": "Publish comprehensive 'Odoo vs SAP for Indian Manufacturing' comparison page targeting high commercial intent"
+    },
+    {
+      "gap": "Odoo 17 accounting features deep-dive",
+      "evidence": "ksolves.com and cybrosys.com both published new Odoo 17 accounting content this cycle. BiztechCS has no dedicated page.",
+      "search_volume_est": 1800,
+      "action": "Publish comprehensive Odoo 17 Accounting module guide on /blog/ or as a service page"
+    },
+    {
+      "gap": "Odoo implementation for UAE businesses — expanded",
+      "evidence": "No major competitor has deep UAE-specific Odoo content. BiztechCS has blog post but no dedicated service landing page. UAE leads have highest SQL rate.",
+      "search_volume_est": 640,
+      "action": "Create /odoo-implementation-uae/ landing page with UAE-specific case studies and compliance context"
+    }
+  ],
+  "prior_outreach_history": [
+    {
+      "domain": "techcircle.in",
+      "outreach_date": "2026-02-14",
+      "outcome": "No response — cold email",
+      "action": "Research editorial contact on LinkedIn. cybrosys.com earned link via data story pitch — try same approach.",
+      "note": "Do not cold email again without warm intro."
+    },
+    {
+      "domain": "clutch.co",
+      "outreach_date": "2025-11-20",
+      "outcome": "Listed and verified. Profile active.",
+      "existing_link": true,
+      "link_url": "https://clutch.co/profile/biztechcs",
+      "action": "Request upgrade to 'Top Odoo Developer India' category listing for better anchor text"
+    },
+    {
+      "domain": "yourstory.com",
+      "outreach_date": "2026-01-08",
+      "outcome": "No response — cold email",
+      "action": "Wait for 2026 company milestone story (19 years, 1200 projects) as news hook"
     }
   ]
 }

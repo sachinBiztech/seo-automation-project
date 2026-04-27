@@ -37,7 +37,7 @@ Scan the following BiztechCS pages and extract structured data. In MOCK mode, us
 - In MOCK mode: populate from config file, set `scan_mode: "config_only"`
 
 ## Output
-- `seo-automation/outputs/website-scan.json`
+- `seo-automation/outputs/post-approval/website-scan.json`
 
 Schema:
 ```json

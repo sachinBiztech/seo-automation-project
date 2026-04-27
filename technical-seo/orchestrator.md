@@ -10,8 +10,8 @@ claude-opus-4-6
 MOCK
 
 ## Input
-- seo-automation/outputs/sprint-tasks-[sprint_id].json
-- seo-automation/outputs/sprint-plan.json
+- seo-automation/outputs/sprint-pm/sprint-tasks-[sprint_id].json
+- seo-automation/outputs/seo-strategist/sprint-plan.json
 
 ## Task
 
@@ -58,6 +58,6 @@ For each technical task:
 - Reply ONLY with: `✅ technical-changes-[date].md written — [N] tasks completed`
 
 ## Output
-- `seo-automation/outputs/technical-brief-[task-slug].md` (per task)
-- `seo-automation/outputs/technical-changes-[date].md`
-- Updates `seo-automation/outputs/sprint-tasks-[sprint_id].json`
+- `seo-automation/outputs/sprint-pm/technical-brief-[task-slug].md` (per task)
+- `seo-automation/outputs/sprint-pm/technical-changes-[date].md`
+- Updates `seo-automation/outputs/sprint-pm/sprint-tasks-[sprint_id].json`

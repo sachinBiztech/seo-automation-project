@@ -54,7 +54,7 @@ that they are actively targeting.
 
 ## Output
 
-Create the file `seo-automation/outputs/competitor-findings.json` and write
+Create the file `seo-automation/outputs/intelligence-report/competitor-findings.json` and write
 the complete JSON below before finishing.
 
 ```json

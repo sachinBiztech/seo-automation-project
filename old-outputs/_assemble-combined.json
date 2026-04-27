@@ -1,0 +1,318 @@
+{
+  "sprint_plan": {
+    "sprint_id": "biztechcs_sprint_2026-04-14",
+    "site": "BiztechCS",
+    "mode": "mock",
+    "generated_at": "2026-04-14",
+    "sprint_start": "2026-04-14",
+    "sprint_end": "2026-04-28",
+    "attack_vectors": [
+      {
+        "vector_number": 1,
+        "type": "content",
+        "focus_area": "Odoo 17 Manufacturing Module",
+        "competitor_context": "Targeting cybrosys.com which has new pages on this topic",
+        "structural_advantage_at_day_15": "Establish detailed, authoritative content to capture topic leadership",
+        "pages_or_keywords": [
+          "/odoo-17-manufacturing-module"
+        ],
+        "rationale": "Competitor cybrosys.com has gained ground with new pages targeting this content gap"
+      },
+      {
+        "vector_number": 2,
+        "type": "technical",
+        "focus_area": "/odoo-manufacturing page LCP optimization",
+        "competitor_context": "Defending against ranking decline and impression loss against competitors like ksolves.com",
+        "structural_advantage_at_day_15": "Improve page load times, recover ranking positions and impressions",
+        "pages_or_keywords": [
+          "/odoo-manufacturing"
+        ],
+        "rationale": "Page ranking declined with Core Web Vitals issues affecting impressions, priority technical fix"
+      },
+      {
+        "vector_number": 3,
+        "type": "content",
+        "focus_area": "Odoo CRM Customization",
+        "competitor_context": "Overtake cybrosys.com where we are within 3-5 ranking positions",
+        "structural_advantage_at_day_15": "Gain higher positioning to capture more search traffic",
+        "pages_or_keywords": [
+          "odoo crm customization"
+        ],
+        "rationale": "Close ranking gap with competitor at position 12, we are at 7.8"
+      }
+    ],
+    "content_plan": {
+      "blogs_planned": 2,
+      "listicles_planned": 1,
+      "page_rewrites_planned": 0,
+      "items": {
+        "blog_posts": [
+          {
+            "priority": 1,
+            "title": "Comprehensive Guide to Odoo 17 Manufacturing Module Features",
+            "primary_keyword": "/odoo-17-manufacturing-module",
+            "secondary_keywords": [
+              "Odoo manufacturing module",
+              "Odoo 17 features",
+              "manufacturing solutions"
+            ],
+            "target_word_count": 2500,
+            "competitor_to_displace": {
+              "domain": "cybrosys.com",
+              "their_ranking_page": "/odoo-17-manufacturing-module",
+              "their_position": 1
+            },
+            "differentiation_angle": "More detailed feature explanations and practical use cases with visual aids and customer testimonials",
+            "internal_links": {
+              "link_from": [
+                "/odoo-manufacturing",
+                "/odoo-implementation-services"
+              ],
+              "link_to": [
+                "/odoo-pos-india",
+                "/odoo-crm-customization"
+              ]
+            },
+            "author": "Uttam",
+            "vector": 1,
+            "attack_rationale": "Competitor cybrosys.com has gained ground with new pages targeting this content gap"
+          },
+          {
+            "priority": 2,
+            "title": "Optimizing Odoo CRM Customization for Mid-Market Enterprises",
+            "primary_keyword": "odoo crm customization",
+            "secondary_keywords": [
+              "Odoo CRM features",
+              "CRM customization tips",
+              "crm solutions"
+            ],
+            "target_word_count": 2000,
+            "competitor_to_displace": {
+              "domain": "cybrosys.com",
+              "their_ranking_page": "/odoo-crm-module",
+              "their_position": 12
+            },
+            "differentiation_angle": "In-depth customization tutorials and integration tips tailored for Indian mid-market enterprises",
+            "internal_links": {
+              "link_from": [
+                "/odoo-implementation-services"
+              ],
+              "link_to": [
+                "/odoo-manufacturing",
+                "/odoo-implementation-partner-india"
+              ]
+            },
+            "author": "Nandeep",
+            "vector": 3,
+            "attack_rationale": "Close ranking gap with competitor at position 12, we are at 7.8"
+          }
+        ],
+        "listicles": [
+          {
+            "priority": 1,
+            "title": "Top 7 Reasons to Choose Odoo Implementation Partner India for Mid-Market Manufacturers",
+            "primary_keyword": "odoo implementation partner india",
+            "secondary_keywords": [
+              "Odoo implementation India",
+              "Odoo partner benefits",
+              "mid-market ERP solutions"
+            ],
+            "target_word_count": 1800,
+            "competitor_to_displace": {
+              "domain": "cybrosys.com",
+              "their_ranking_page": "/odoo-implementation-partner-india",
+              "their_position": 4
+            },
+            "differentiation_angle": "Clear, benefit-driven list emphasizing local expertise and tailored solutions for mid-market manufacturing companies",
+            "internal_links": {
+              "link_from": [
+                "/odoo-implementation-services",
+                "/odoo-crm-customization"
+              ],
+              "link_to": [
+                "/odoo-manufacturing",
+                "/odoo-pos-india"
+              ]
+            },
+            "author": "Uttam",
+            "vector": 1
+          }
+        ],
+        "page_rewrites": []
+      }
+    },
+    "technical_plan": {
+      "cwv_fixes_planned": 1,
+      "page_fixes_planned": 1,
+      "structural_fixes_planned": 0,
+      "items": {
+        "cwv_fixes": [
+          {
+            "metric": "LCP",
+            "current_value": "2.8s",
+            "target_value": "2.5s",
+            "fix": "Optimize server response times and defer non-critical JS on /odoo-manufacturing page",
+            "estimated_impact": "Reduce LCP to under 2.5s to improve Core Web Vitals and recover impressions",
+            "priority": 1
+          }
+        ],
+        "page_fixes": [
+          {
+            "url": "/odoo-manufacturing",
+            "issue_type": "speed",
+            "diagnosis": "Impressions dropped 34% in last 30 days due to LCP above threshold and ranking decline",
+            "fix": "Implement server-side optimizations and defer JS loading to improve page speed and LCP",
+            "priority": 1
+          }
+        ],
+        "structural_fixes": []
+      }
+    },
+    "offpage_plan": {
+      "backlink_targets_count": 7,
+      "guest_posts_count": 2,
+      "quora_count": 4,
+      "reddit_count": 3,
+      "linkedin_count": 2,
+      "items": {
+        "backlink_targets": [
+          {
+            "domain": "odoo.com",
+            "relevance": "Official Odoo site highly relevant for credibility and topic alignment",
+            "link_to_our_page": "/odoo-17-manufacturing-module",
+            "outreach_angle": "Offer detailed independent case studies and practical implementation guides",
+            "type": "free"
+          },
+          {
+            "domain": "manufacturingtodayindia.com",
+            "relevance": "Top manufacturing industry site with high DA, relevant audience",
+            "link_to_our_page": "/odoo-manufacturing",
+            "outreach_angle": "Provide insights on digital transformation using Odoo ERP for manufacturers",
+            "type": "free"
+          },
+          {
+            "domain": "erpnews.com",
+            "relevance": "Focused ERP news and analysis site with engaged readership",
+            "link_to_our_page": "/odoo-crm-customization",
+            "outreach_angle": "Guest expert content on CRM customization trends in ERP implementations",
+            "type": "free"
+          },
+          {
+            "domain": "softwareadvice.com",
+            "relevance": "Software comparison and review platform popular among ERP buyers",
+            "link_to_our_page": "/odoo-implementation-partner-india",
+            "outreach_angle": "Contribute expert advice on choosing Odoo partners for mid-market manufacturers",
+            "type": "free"
+          },
+          {
+            "domain": "midmarketerp.com",
+            "relevance": "Dedicated to ERP for mid-market businesses, DA 50+",
+            "link_to_our_page": "/odoo-implementation-partner-india",
+            "outreach_angle": "Insights on scaling Odoo ERP to mid-market manufacturers in India",
+            "type": "free"
+          },
+          {
+            "domain": "salesforce-alternatives.com",
+            "relevance": "Target audience searching for Salesforce alternatives; highly relevant",
+            "link_to_our_page": "/odoo-crm-customization",
+            "outreach_angle": "Showcase Odoo CRM as a powerful, cost-effective alternative to Salesforce",
+            "type": "free"
+          },
+          {
+            "domain": "manufacturingglobal.com",
+            "relevance": "Global manufacturing industry platform with strong digital presence",
+            "link_to_our_page": "/odoo-pos-india",
+            "outreach_angle": "Share insights on Odoo POS adoption in Indian manufacturing and retail sectors",
+            "type": "free"
+          }
+        ],
+        "guest_posts": [
+          {
+            "target_website": "erpnews.com",
+            "proposed_topic": "Advanced CRM Customization Strategies for Odoo ERP",
+            "site_value": "High DA ERP news site read by industry professionals and decision makers",
+            "pitch_angle": "Offer deep-dive technical insights and real-world Odoo CRM success stories"
+          },
+          {
+            "target_website": "manufacturingtodayindia.com",
+            "proposed_topic": "Digital Transformation in Indian Manufacturing with Odoo ERP",
+            "site_value": "Leading Indian manufacturing publication with a large executive readership",
+            "pitch_angle": "Present case studies on Odoo's impact on manufacturing efficiency and ROI"
+          }
+        ],
+        "digital_pr": null,
+        "quora_answers": [
+          {
+            "question": "How can I find the best Odoo implementation partner in India?",
+            "quora_url": "https://www.quora.com/How-can-I-find-the-best-Odoo-implementation-partner-in-India",
+            "our_angle": "Provide detailed criteria and questions for vetting partners based on industry experience",
+            "link_to": "/odoo-implementation-partner-india"
+          },
+          {
+            "question": "What are the benefits of customizing Odoo CRM for mid-market enterprises?",
+            "quora_url": "https://www.quora.com/What-are-the-benefits-of-customizing-Odoo-CRM-for-mid-market-enterprises",
+            "our_angle": "Share real-world examples of customization improving sales pipelines and customer retention",
+            "link_to": "/odoo-crm-customization"
+          },
+          {
+            "question": "How does Odoo 17 Manufacturing Module improve manufacturing processes?",
+            "quora_url": "https://www.quora.com/How-does-Odoo-17-Manufacturing-Module-improve-manufacturing-processes",
+            "our_angle": "Explain new features with practical impacts on efficiency supported by customer testimonials",
+            "link_to": "/odoo-17-manufacturing-module"
+          },
+          {
+            "question": "What is the best POS solution for manufacturers in India?",
+            "quora_url": "https://www.quora.com/What-is-the-best-POS-solution-for-manufacturers-in-India",
+            "our_angle": "Highlight Odoo POS advantages in compliance and integration tailored for Indian manufacturers",
+            "link_to": "/odoo-pos-india"
+          }
+        ],
+        "reddit_posts": [
+          {
+            "subreddit": "r/Odoo",
+            "post_type": "discussion",
+            "post_angle": "Discuss latest Odoo 17 Manufacturing Module features and user experiences",
+            "link_placement": "in-post"
+          },
+          {
+            "subreddit": "r/ERP",
+            "post_type": "value-answer",
+            "post_angle": "Answer questions on CRM customization challenges and solutions in ERP systems",
+            "link_placement": "in-comments"
+          },
+          {
+            "subreddit": "r/smallbusiness",
+            "post_type": "case-study",
+            "post_angle": "Share case study on successful Odoo POS implementation for Indian mid-market retailer",
+            "link_placement": "in-post"
+          }
+        ],
+        "linkedin_longform": [
+          {
+            "topic": "Driving Digital Transformation in Manufacturing with Odoo ERP",
+            "hook": "Manufacturers in India face unique challenges that Odoo ERP is ideally suited to solve.",
+            "target_audience": "Manufacturing executives, IT decision-makers, ERP consultants",
+            "link_back": "/odoo-17-manufacturing-module"
+          },
+          {
+            "topic": "Maximizing CRM ROI through Customization in Odoo for Mid-Market Businesses",
+            "hook": "A well-customized CRM is the key to unlocking revenue growth in competitive mid-market sectors.",
+            "target_audience": "Sales leaders, CRM managers, mid-market business owners",
+            "link_back": "/odoo-crm-customization"
+          }
+        ]
+      }
+    },
+    "total_deliverables": {
+      "content": 3,
+      "technical": 2,
+      "offpage": 16,
+      "total": 21
+    },
+    "mql_context": "No anomalies detected",
+    "top_opportunity": "Odoo 17 Manufacturing Module",
+    "priority_fix": "Optimize server response times and defer non-critical JS on /odoo-manufacturing page"
+  },
+  "sprint_md": "# BiztechCS SEO Sprint Plan — 2026-04-14 to 2026-04-28\n\n## Sprint ID: biztechcs_sprint_2026-04-14\n\n## Attack Vectors\n\n1. Content: Odoo 17 Manufacturing Module\nTargeting cybrosys.com which has new pages on this topic.\nExpected outcome: Establish detailed, authoritative content to capture topic leadership by Day 15.\n\n2. Technical: /odoo-manufacturing page LCP optimization\nDefending against ranking decline and impression loss against competitors like ksolves.com.\nExpected outcome: Improve page load times, recover ranking positions and impressions by Day 15.\n\n3. Content: Odoo CRM Customization\nOvertake cybrosys.com where we are within 3-5 ranking positions.\nExpected outcome: Gain higher positioning to capture more search traffic by Day 15.\n\n## Content Plan (3 pieces)\n\n1. Comprehensive Guide to Odoo 17 Manufacturing Module Features | /odoo-17-manufacturing-module | 2500 words | Author: Uttam | Vector 1\n\n2. Optimizing Odoo CRM Customization for Mid-Market Enterprises | odoo crm customization | 2000 words | Author: Nandeep | Vector 3\n\n3. Top 7 Reasons to Choose Odoo Implementation Partner India for Mid-Market Manufacturers | odoo implementation partner india | 1800 words | Author: Uttam | Vector 1\n\n## Technical Fixes (2 tasks)\n\n1. /odoo-manufacturing (LCP)\nDiagnosis: Impressions dropped 34% in last 30 days due to LCP above threshold and ranking decline.\nFix: Optimize server response times and defer non-critical JS on /odoo-manufacturing page.\nPriority: 1\n\n2. /odoo-manufacturing (speed)\nDiagnosis: Impressions dropped 34% in last 30 days due to LCP above threshold and ranking decline.\nFix: Implement server-side optimizations and defer JS loading to improve page speed and LCP.\nPriority: 1\n\n## Off-Page Plan (16 actions)\n\n- Backlink Targets:\n  - odoo.com: Offer detailed independent case studies and practical implementation guides.\n  - manufacturingtodayindia.com: Provide insights on digital transformation using Odoo ERP for manufacturers.\n  - erpnews.com: Guest expert content on CRM customization trends in ERP implementations.\n  - softwareadvice.com: Contribute expert advice on choosing Odoo partners for mid-market manufacturers.\n  - midmarketerp.com: Insights on scaling Odoo ERP to mid-market manufacturers in India.\n  - salesforce-alternatives.com: Showcase Odoo CRM as a powerful, cost-effective alternative to Salesforce.\n  - manufacturingglobal.com: Share insights on Odoo POS adoption in Indian manufacturing and retail sectors.\n\n- Guest Posts:\n  - erpnews.com: Advanced CRM Customization Strategies for Odoo ERP.\n  - manufacturingtodayindia.com: Digital Transformation in Indian Manufacturing with Odoo ERP.\n\n- Quora Answers:\n  - How can I find the best Odoo implementation partner in India?\n  - What are the benefits of customizing Odoo CRM for mid-market enterprises?\n  - How does Odoo 17 Manufacturing Module improve manufacturing processes?\n  - What is the best POS solution for manufacturers in India?\n\n- Reddit Posts:\n  - r/Odoo: Discuss latest Odoo 17 Manufacturing Module features and user experiences.\n  - r/ERP: Answer questions on CRM customization challenges and solutions in ERP systems.\n  - r/smallbusiness: Share case study on successful Odoo POS implementation for Indian mid-market retailer.\n\n- LinkedIn Longform:\n  - Driving Digital Transformation in Manufacturing with Odoo ERP.\n  - Maximizing CRM ROI through Customization in Odoo for Mid-Market Businesses.\n\n## MQL Context\n\nNo anomalies detected\n\n## Total Deliverables\nContent: 3 | Technical: 2 | Off-Page: 16 | Total: 21\n",
+  "sprint_html": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n  <meta charset=\"UTF-8\">\n  <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n  <title>BiztechCS SEO Sprint Plan — 2026-04-14 to 2026-04-28</title>\n  <style>\n    * { margin: 0; padding: 0; box-sizing: border-box; }\n    body { font-family: 'Segoe UI', Arial, sans-serif; font-size: 13px; color: #1a1a2e; background: #fff; }\n    .cover { background: #1a1a2e; color: #fff; padding: 60px 50px; min-height: 220px; }\n    .cover h1 { font-size: 28px; font-weight: 700; margin-bottom: 8px; }\n    .cover .subtitle { font-size: 14px; color: #a0aec0; }\n    .cover .meta { font-size: 13px; color: #63b3ed; margin-top: 16px; }\n    .section { padding: 32px 50px; border-bottom: 1px solid #e2e8f0; page-break-inside: avoid; }\n    h2 { font-size: 16px; font-weight: 700; color: #1a1a2e; margin-bottom: 16px; text-transform: uppercase; letter-spacing: 0.5px; border-left: 4px solid #3182ce; padding-left: 10px; }\n    h3 { font-size: 13px; font-weight: 600; color: #2d3748; margin: 12px 0 6px; }\n    p { line-height: 1.6; margin-bottom: 8px; }\n    ul { padding-left: 20px; margin-bottom: 12px; }\n    li { line-height: 1.7; }\n    table { width: 100%; border-collapse: collapse; margin: 12px 0; font-size: 12px; }\n    th { background: #2d3748; color: #fff; padding: 8px 12px; text-align: left; font-weight: 600; }\n    td { padding: 7px 12px; border-bottom: 1px solid #e2e8f0; }\n    tr:nth-child(even) td { background: #f7fafc; }\n    .badge { display: inline-block; padding: 2px 8px; border-radius: 4px; font-size: 11px; font-weight: 600; }\n    .badge-green { background: #c6f6d5; color: #276749; }\n    .badge-red { background: #fed7d7; color: #9b2335; }\n    .badge-yellow { background: #fefcbf; color: #744210; }\n    .badge-blue { background: #bee3f8; color: #2b6cb0; }\n    .task-card { background: #f7fafc; border-left: 3px solid #3182ce; padding: 10px 14px; margin-bottom: 8px; border-radius: 0 4px 4px 0; }\n    .task-card .type { font-size: 10px; font-weight: 700; text-transform: uppercase; color: #3182ce; margin-bottom: 4px; }\n    .task-card .action { font-size: 12px; color: #4a5568; margin-top: 4px; }\n    .vector-card { background: #ebf8ff; border: 1px solid #bee3f8; padding: 12px 16px; margin-bottom: 12px; border-radius: 4px; }\n    .footer { background: #f7fafc; padding: 20px 50px; font-size: 11px; color: #718096; text-align: center; }\n    .summary-box { display: inline-block; background: #2d3748; color: #fff; padding: 12px 20px; border-radius: 6px; margin: 4px; text-align: center; }\n    .summary-box .num { font-size: 24px; font-weight: 700; }\n    .summary-box .label { font-size: 11px; color: #a0aec0; }\n  </style>\n</head>\n<body>\n\n  <div class=\"cover\">\n    <h1>BiztechCS SEO Sprint Plan</h1>\n    <div class=\"subtitle\">15-Day Offensive Sprint — Automated by SEO Automation Engine</div>\n    <div class=\"meta\">\n      Sprint: 2026-04-14 → 2026-04-28 &nbsp;|&nbsp; Sprint ID: biztechcs_sprint_2026-04-14\n    </div>\n  </div>\n\n  <div class=\"section\">\n    <h2>Sprint Summary</h2>\n    <div class=\"summary-box\">\n      <div class=\"num\">3</div>\n      <div class=\"label\">Content Deliverables</div>\n    </div>\n    <div class=\"summary-box\">\n      <div class=\"num\">2</div>\n      <div class=\"label\">Technical Fixes</div>\n    </div>\n    <div class=\"summary-box\">\n      <div class=\"num\">16</div>\n      <div class=\"label\">Off-Page Actions</div>\n    </div>\n    <p>Top Opportunity Focus: Odoo 17 Manufacturing Module</p>\n    <p>Priority Fix: Optimize server response times and defer non-critical JS on /odoo-manufacturing page</p>\n  </div>\n\n  <div class=\"section\">\n    <h2>Attack Vectors</h2>\n    <div class=\"vector-card\">\n      <div><strong>Vector #1</strong> <span class=\"badge badge-blue\">Content</span></div>\n      <p><strong>Focus Area:</strong> Odoo 17 Manufacturing Module</p>\n      <p><strong>Competitor Context:</strong> Targeting cybrosys.com which has new pages on this topic.</p>\n      <p><strong>Expected Outcome:</strong> Establish detailed, authoritative content to capture topic leadership by Day 15.</p>\n    </div>\n    <div class=\"vector-card\">\n      <div><strong>Vector #2</strong> <span class=\"badge badge-blue\">Technical</span></div>\n      <p><strong>Focus Area:</strong> /odoo-manufacturing page LCP optimization</p>\n      <p><strong>Competitor Context:</strong> Defending against ranking decline and impression loss against competitors like ksolves.com.</p>\n      <p><strong>Expected Outcome:</strong> Improve page load times, recover ranking positions and impressions by Day 15.</p>\n    </div>\n    <div class=\"vector-card\">\n      <div><strong>Vector #3</strong> <span class=\"badge badge-blue\">Content</span></div>\n      <p><strong>Focus Area:</strong> Odoo CRM Customization</p>\n      <p><strong>Competitor Context:</strong> Overtake cybrosys.com where we are within 3-5 ranking positions.</p>\n      <p><strong>Expected Outcome:</strong> Gain higher positioning to capture more search traffic by Day 15.</p>\n    </div>\n  </div>\n\n  <div class=\"section\">\n    <h2>Content Plan</h2>\n    <h3>Blog Posts</h3>\n    <table>\n      <thead>\n        <tr><th>Priority</th><th>Title</th><th>Primary Keyword</th><th>Word Count</th><th>Author</th><th>Vector</th></tr>\n      </thead>\n      <tbody>\n        <tr><td>1</td><td>Comprehensive Guide to Odoo 17 Manufacturing Module Features</td><td>/odoo-17-manufacturing-module</td><td>2500</td><td>Uttam</td><td>1</td></tr>\n        <tr><td>2</td><td>Optimizing Odoo CRM Customization for Mid-Market Enterprises</td><td>odoo crm customization</td><td>2000</td><td>Nandeep</td><td>3</td></tr>\n      </tbody>\n    </table>\n    <h3>Listicles</h3>\n    <table>\n      <thead>\n        <tr><th>Priority</th><th>Title</th><th>Primary Keyword</th><th>Word Count</th><th>Author</th><th>Vector</th></tr>\n      </thead>\n      <tbody>\n        <tr><td>1</td><td>Top 7 Reasons to Choose Odoo Implementation Partner India for Mid-Market Manufacturers</td><td>odoo implementation partner india</td><td>1800</td><td>Uttam</td><td>1</td></tr>\n      </tbody>\n    </table>\n    <h3>Page Rewrites</h3>\n    <p>No page rewrites planned this sprint.</p>\n  </div>\n\n  <div class=\"section\">\n    <h2>Technical Fixes</h2>\n    <h3>Core Web Vitals Fixes</h3>\n    <table>\n      <thead>\n        <tr><th>Priority</th><th>Metric</th><th>Current Value</th><th>Fix</th><th>Impact</th></tr>\n      </thead>\n      <tbody>\n        <tr><td>1</td><td>LCP</td><td>2.8s</td><td>Optimize server response times and defer non-critical JS on /odoo-manufacturing page</td><td>Reduce LCP to under 2.5s to improve Core Web Vitals and recover impressions</td></tr>\n      </tbody>\n    </table>\n    <h3>Page-Level Fixes</h3>\n    <table>\n      <thead>\n        <tr><th>Priority</th><th>Page / Metric</th><th>Issue</th><th>Fix</th></tr>\n      </thead>\n      <tbody>\n        <tr><td>1</td><td>/odoo-manufacturing (speed)</td><td>Impressions dropped 34% in last 30 days due to LCP above threshold and ranking decline</td><td>Implement server-side optimizations and defer JS loading to improve page speed and LCP</td></tr>\n      </tbody>\n    </table>\n    <h3>Structural Fixes</h3>\n    <p>No structural fixes planned this sprint.</p>\n  </div>\n\n  <div class=\"section\">\n    <h2>Off-Page Plan</h2>\n    <h3>Backlink Targets</h3>\n    <table>\n      <thead>\n        <tr><th>Domain</th><th>Relevance</th><th>Our Page</th><th>Outreach Angle</th><th>Type</th></tr>\n      </thead>\n      <tbody>\n        <tr><td>odoo.com</td><td>Official Odoo site highly relevant for credibility and topic alignment</td><td>/odoo-17-manufacturing-module</td><td>Offer detailed independent case studies and practical implementation guides</td><td>free</td></tr>\n        <tr><td>manufacturingtodayindia.com</td><td>Top manufacturing industry site with high DA, relevant audience</td><td>/odoo-manufacturing</td><td>Provide insights on digital transformation using Odoo ERP for manufacturers</td><td>free</td></tr>\n        <tr><td>erpnews.com</td><td>Focused ERP news and analysis site with engaged readership</td><td>/odoo-crm-customization</td><td>Guest expert content on CRM customization trends in ERP implementations</td><td>free</td></tr>\n        <tr><td>softwareadvice.com</td><td>Software comparison and review platform popular among ERP buyers</td><td>/odoo-implementation-partner-india</td><td>Contribute expert advice on choosing Odoo partners for mid-market manufacturers</td><td>free</td></tr>\n        <tr><td>midmarketerp.com</td><td>Dedicated to ERP for mid-market businesses, DA 50+</td><td>/odoo-implementation-partner-india</td><td>Insights on scaling Odoo ERP to mid-market manufacturers in India</td><td>free</td></tr>\n        <tr><td>salesforce-alternatives.com</td><td>Target audience searching for Salesforce alternatives; highly relevant</td><td>/odoo-crm-customization</td><td>Showcase Odoo CRM as a powerful, cost-effective alternative to Salesforce</td><td>free</td></tr>\n        <tr><td>manufacturingglobal.com</td><td>Global manufacturing industry platform with strong digital presence</td><td>/odoo-pos-india</td><td>Share insights on Odoo POS adoption in Indian manufacturing and retail sectors</td><td>free</td></tr>\n      </tbody>\n    </table>\n    <h3>Guest Posts</h3>\n    <ul>\n      <li><strong>erpnews.com:</strong> Advanced CRM Customization Strategies for Odoo ERP</li>\n      <li><strong>manufacturingtodayindia.com:</strong> Digital Transformation in Indian Manufacturing with Odoo ERP</li>\n    </ul>\n    <h3>Quora Answers</h3>\n    <ul>\n      <li><a href=\"https://www.quora.com/How-can-I-find-the-best-Odoo-implementation-partner-in-India\">How can I find the best Odoo implementation partner in India?</a></li>\n      <li><a href=\"https://www.quora.com/What-are-the-benefits-of-customizing-Odoo-CRM-for-mid-market-enterprises\">What are the benefits of customizing Odoo CRM for mid-market enterprises?</a></li>\n      <li><a href=\"https://www.quora.com/How-does-Odoo-17-Manufacturing-Module-improve-manufacturing-processes\">How does Odoo 17 Manufacturing Module improve manufacturing processes?</a></li>\n      <li><a href=\"https://www.quora.com/What-is-the-best-POS-solution-for-manufacturers-in-India\">What is the best POS solution for manufacturers in India?</a></li>\n    </ul>\n    <h3>Reddit Posts</h3>\n    <ul>\n      <li><strong>r/Odoo:</strong> Discuss latest Odoo 17 Manufacturing Module features and user experiences</li>\n      <li><strong>r/ERP:</strong> Answer questions on CRM customization challenges and solutions in ERP systems</li>\n      <li><strong>r/smallbusiness:</strong> Share case study on successful Odoo POS implementation for Indian mid-market retailer</li>\n    </ul>\n    <h3>LinkedIn Longform Articles</h3>\n    <ul>\n      <li><strong>Driving Digital Transformation in Manufacturing with Odoo ERP:</strong> Manufacturers in India face unique challenges that Odoo ERP is ideally suited to solve.</li>\n      <li><strong>Maximizing CRM ROI through Customization in Odoo for Mid-Market Businesses:</strong> A well-customized CRM is the key to unlocking revenue growth in competitive mid-market sectors.</li>\n    </ul>\n  </div>\n\n  <div class=\"section\">\n    <h2>MQL Context</h2>\n    <p>No anomalies detected</p>\n  </div>\n\n  <div class=\"footer\">\n    BiztechCS &bull; SEO Automation Engine &bull; Confidential &bull; 2026-04-14\n  </div>\n\n</body>\n</html>"
+}

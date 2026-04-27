@@ -1,0 +1,18 @@
+{
+  "sprint_id": "biztechcs_sprint_2026-04-14",
+  "blocked_items": [],
+  "flagged_items": [
+    {
+      "item": "Content item titled 'Comprehensive Guide to Odoo 17 Manufacturing Module Features'",
+      "reason": "Mentions client outcomes which may require consent; confirm client testimonials are approved.",
+      "rule": "Specific client outcomes must have written consent; use 'a leading manufacturer' if no consent."
+    },
+    {
+      "item": "Content item titled 'Top 7 Reasons to Choose Odoo Implementation Partner India for Mid-Market Manufacturers'",
+      "reason": "Mentions client outcomes which may require consent; confirm all case studies/testimonials are from approved library.",
+      "rule": "Testimonials or case studies not in approved case study library must be flagged."
+    }
+  ],
+  "passed_items": 4,
+  "total_items": 6
+}

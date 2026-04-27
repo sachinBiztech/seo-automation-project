@@ -22,9 +22,9 @@ MOCK
 
 ## Input
 
-- `seo-automation/outputs/sprint-approval.json`
-- `seo-automation/outputs/sprint-plan.json`
-- `seo-automation/outputs/tiered-sprint-options.json`
+- `seo-automation/outputs/seo-strategist/sprint-approval.json`
+- `seo-automation/outputs/seo-strategist/sprint-plan.json`
+- `seo-automation/outputs/post-approval/tiered-sprint-options.json`
 
 ---
 
@@ -68,7 +68,7 @@ For each task, create a row with these columns:
 
 ### Step 4 — Write output files
 
-Write `seo-automation/outputs/sprint-tasks-[sprint_id].json`:
+Write `seo-automation/outputs/sprint-pm/sprint-tasks-[sprint_id].json`:
 ```json
 {
   "sprint_id": "string",
@@ -95,7 +95,7 @@ Write `seo-automation/outputs/sprint-tasks-[sprint_id].json`:
 }
 ```
 
-Also write `seo-automation/outputs/sprint-tasks-[sprint_id].csv` with the same data in CSV format (headers match column names above).
+Also write `seo-automation/outputs/sprint-pm/sprint-tasks-[sprint_id].csv` with the same data in CSV format (headers match column names above).
 
 ### Step 5 — Send Telegram confirmation
 
@@ -104,10 +104,10 @@ Send Telegram message:
 ✅ Sprint task sheet ready — [sprint_start] to [sprint_end]
 Total tasks: [N] | Technical: [N] | Content: [N] | Off-Page: [N]
 P1: [N] | P2: [N] | Optional: [N]
-File: seo-automation/outputs/sprint-tasks-[sprint_id].csv
+File: seo-automation/outputs/sprint-pm/sprint-tasks-[sprint_id].csv
 ```
 
 ## Output
 
-- `seo-automation/outputs/sprint-tasks-[sprint_id].json`
-- `seo-automation/outputs/sprint-tasks-[sprint_id].csv`
+- `seo-automation/outputs/sprint-pm/sprint-tasks-[sprint_id].json`
+- `seo-automation/outputs/sprint-pm/sprint-tasks-[sprint_id].csv`

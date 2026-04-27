@@ -14,9 +14,9 @@ MOCK
 
 ## Input
 
-File 1: `seo-automation/outputs/report-summary.json`
-File 2: `seo-automation/outputs/gsc-findings.json`
-File 3: `seo-automation/outputs/research-findings.json`
+File 1: `seo-automation/outputs/intelligence-report/report-summary.json`
+File 2: `seo-automation/outputs/intelligence-report/gsc-findings.json`
+File 3: `seo-automation/outputs/intelligence-report/research-findings.json`
 
 ---
 
@@ -54,7 +54,7 @@ This context must be passed to the Business Layer to prevent misreading.
 
 ## Output
 
-Create the file `seo-automation/outputs/intelligence-brief-parsed.json`
+Create the file `seo-automation/outputs/intelligence-report/intelligence-brief-parsed.json`
 and write the complete JSON below before finishing.
 
 ```json

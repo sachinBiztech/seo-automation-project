@@ -47,7 +47,7 @@ Compare MTD leads against QTD average per month (qtd.leads / 3).
 
 ## Output
 
-Create the file `seo-automation/outputs/odoo-findings.json` and write
+Create the file `seo-automation/outputs/intelligence-report/odoo-findings.json` and write
 the complete JSON below before finishing.
 
 ```json

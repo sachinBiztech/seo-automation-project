@@ -1,0 +1,77 @@
+{
+  "site": "BiztechCS",
+  "sprint_start": "2026-04-17",
+  "sprint_end": "2026-05-01",
+  "generated_at": "2026-04-17",
+  "competitor_scan": {
+    "highest_threat_domain": "cybrosys.com",
+    "competitor_gaining_ground": [
+      {
+        "keyword": "odoo implementation partner india",
+        "competitor": "cybrosys.com",
+        "their_position": 4,
+        "our_position": 14,
+        "positions_gained_by_competitor": 5
+      },
+      {
+        "keyword": "odoo vs sap",
+        "competitor": "unknown",
+        "their_position": 22,
+        "our_position": 28,
+        "positions_gained_by_competitor": 6
+      }
+    ],
+    "overtake_opportunities": [
+      {
+        "keyword": "odoo crm customization",
+        "competitor": "cybrosys.com",
+        "their_position": 12,
+        "our_position": 8,
+        "gap": 4
+      },
+      {
+        "keyword": "odoo implementation partner india",
+        "competitor": "ksolves.com",
+        "their_position": 9,
+        "our_position": 14,
+        "gap": 5
+      },
+      {
+        "keyword": "odoo manufacturing module",
+        "competitor": "ksolves.com",
+        "their_position": 5,
+        "our_position": 11,
+        "gap": 6
+      }
+    ]
+  },
+  "vectors": [
+    {
+      "vector_number": 1,
+      "type": "content",
+      "focus_area": "Odoo POS in India and Odoo 17 manufacturing module",
+      "competitor_context": "cybrosys.com is attacking with new high-performing content on manufacturing and POS, gaining positions on key keywords.",
+      "structural_advantage_at_day_15": "We close the urgent content gap, reduce cybrosys.com's uncontested lead, and start gaining impressions for manufacturing and POS keywords.",
+      "pages_or_keywords": ["/odoo-pos-india", "/odoo-17-manufacturing-module", "odoo POS India", "odoo manufacturing module", "odoo implementation partner india"],
+      "rationale": "cybrosys.com created new authoritative pages for two high-value topics, and have gained 5+ positions on 'odoo implementation partner india'."
+    },
+    {
+      "vector_number": 2,
+      "type": "content",
+      "focus_area": "Odoo CRM Customization",
+      "competitor_context": "We are within 3-5 positions of overtaking cybrosys.com for 'odoo crm customization': a winnable on-page cluster.",
+      "structural_advantage_at_day_15": "BiztechCS takes page 1 for 'odoo crm customization', potentially jumping ahead of a top competitor.",
+      "pages_or_keywords": ["odoo crm customization", "/odoo-crm-module", "/odoo-manufacturing"],
+      "rationale": "We are 4 positions from passing cybrosys.com on this keyword, with competitive advantage from targeted on-page work."
+    },
+    {
+      "vector_number": 3,
+      "type": "technical",
+      "focus_area": "Technical recovery for /odoo-manufacturing (priority 1 locked)",
+      "competitor_context": "Defend against all competitors as /odoo-manufacturing lost 34% impressions and shows technical risk (LCP at 2.8s).",
+      "structural_advantage_at_day_15": "Restore lost impressions (&gt;20%), recover lost ground on manufacturing keywords, and improve CWV scores.",
+      "pages_or_keywords": ["/odoo-manufacturing", "odoo manufacturing module"],
+      "rationale": "/odoo-manufacturing is priority 1 locked (impressions -34%); requires focused technical and content fixes within 15 days."
+    }
+  ]
+}

@@ -1,0 +1,148 @@
+{
+  "site": "BiztechCS",
+  "generated_at": "2026-04-17",
+  "quota_check": {
+    "backlink_targets": 8,
+    "backlink_max_free": 100,
+    "backlink_max_paid": 20,
+    "quora_planned": 4,
+    "quora_max": 5,
+    "reddit_planned": 3,
+    "reddit_max": 5,
+    "guest_posts_planned": 2,
+    "digital_pr_planned": 0
+  },
+  "backlink_targets": [
+    {
+      "domain": "odoomates.com",
+      "relevance": "Strong technical blog focused on Odoo — high DA, highly relevant to Odoo implementers and users.",
+      "link_to_our_page": "/odoo-17-manufacturing-module",
+      "outreach_angle": "Offer a comprehensive data comparison of Odoo 16 vs 17 manufacturing features as an educational guest post or resource.",
+      "type": "free"
+    },
+    {
+      "domain": "planet-odoo.com",
+      "relevance": "Popular content aggregator and blog for Odoo-related updates, covers both software updates and user guides.",
+      "link_to_our_page": "/odoo-pos-india",
+      "outreach_angle": "Detailed best practices on customizing Odoo POS for Indian retailers—exclusive technical insight.",
+      "type": "free"
+    },
+    {
+      "domain": "technaureus.com",
+      "relevance": "Odoo customization company and blog with strong community ties, audience overlaps our target buyers.",
+      "link_to_our_page": "/odoo-crm-module",
+      "outreach_angle": "Share real-world case studies on improving customer engagement with Odoo CRM customization.",
+      "type": "free"
+    },
+    {
+      "domain": "odoo-community.org",
+      "relevance": "The Odoo Community Association (OCA) is the key not-for-profit for Odoo open-source users, authoritative and trusted.",
+      "link_to_our_page": "/odoo-manufacturing",
+      "outreach_angle": "Contribute a documentation update or community-backed tips focused on Odoo manufacturing module performance and Core Web Vitals improvements.",
+      "type": "free"
+    },
+    {
+      "domain": "erpnext.com",
+      "relevance": "ERPNext is a prominent open-source ERP system, natural audience overlap for readers comparing with Odoo. Competitor/Salesforce alternative.",
+      "link_to_our_page": "/odoo-17-manufacturing-module",
+      "outreach_angle": "Side-by-side insights comparing Odoo 17 manufacturing with ERPNext—offering unique feature parity analysis.",
+      "type": "free"
+    },
+    {
+      "domain": "manufacturingtodayindia.com",
+      "relevance": "B2B publication targeting Indian manufacturing sector, covers digital transformation and ERP adoption.",
+      "link_to_our_page": "/odoo-pos-india",
+      "outreach_angle": "Provide research and data on how Indian manufacturers are digitizing with Odoo-based POS.",
+      "type": "free"
+    },
+    {
+      "domain": "crmsoftwareblog.com",
+      "relevance": "Well-ranked CRM-focused software blog, covering best practices and comparisons—audience seeking Odoo alternatives.",
+      "link_to_our_page": "/odoo-crm-module",
+      "outreach_angle": "Case-study sharing results from Odoo CRM customization for mid-size businesses.",
+      "type": "free"
+    },
+    {
+      "domain": "solutionsreview.com",
+      "relevance": "Enterprise resource for ERP and CRM buyers, neutral editorial site, high DA.",
+      "link_to_our_page": "/odoo-manufacturing",
+      "outreach_angle": "Feature article highlighting key technical upgrades in Odoo 17 manufacturing for digital transformation decision makers.",
+      "type": "free"
+    }
+  ],
+  "guest_posts": [
+    {
+      "target_website": "planet-odoo.com",
+      "proposed_topic": "How Manufacturing Companies in India Can Fast-Track Digital Transformation with Odoo 17",
+      "site_value": "Planet-Odoo ranks for strong manufacturing and digital ERP keywords, audience includes both Odoo users and digital transformation leads.",
+      "pitch_angle": "Offer fresh original data from recent Odoo 17 implementations in India showing production efficiency wins, exclusive for their readers."
+    },
+    {
+      "target_website": "manufacturingtodayindia.com",
+      "proposed_topic": "Digitizing Retail & Manufacturing: A Practical Guide Using Odoo POS (India)",
+      "site_value": "Recognized B2B industry voice—decision makers in Indian manufacturing, high trust and strong topic relevance.",
+      "pitch_angle": "Pitch exclusive practical insights and field-tested processes from BiztechCS Odoo POS rollouts in Indian factories and retailers."
+    }
+  ],
+  "digital_pr": null,
+  "quora_answers": [
+    {
+      "question": "What are the benefits of implementing Odoo 17 manufacturing module in Indian factories?",
+      "quora_url": "https://www.quora.com/benefits-odoo-17-manufacturing-module-india",
+      "our_angle": "Showcase efficiency and digital transformation from real Indian case studies and new Odoo 17 features.",
+      "link_to": "/odoo-17-manufacturing-module"
+    },
+    {
+      "question": "How can businesses customize Odoo CRM to improve customer experience?",
+      "quora_url": "https://www.quora.com/customize-odoo-crm-improve-customer-experience",
+      "our_angle": "Share specific Odoo CRM customization examples that led to measurable uplifts in engagement for enterprise clients.",
+      "link_to": "/odoo-crm-module"
+    },
+    {
+      "question": "Is Odoo POS a good fit for Indian retailers versus traditional POS systems?",
+      "quora_url": "https://www.quora.com/odoo-pos-vs-traditional-pos-india",
+      "our_angle": "Highlight unique localization and compliance features within Odoo POS tailored for Indian businesses versus generic products.",
+      "link_to": "/odoo-pos-india"
+    },
+    {
+      "question": "What are common technical problems in Odoo manufacturing module and how to solve them?",
+      "quora_url": "https://www.quora.com/odoo-manufacturing-module-issues-solutions",
+      "our_angle": "Deliver insider-backed technical advice on fixing typical production bottlenecks—especially referencing Core Web Vitals improvements.",
+      "link_to": "/odoo-manufacturing"
+    }
+  ],
+  "reddit_posts": [
+    {
+      "subreddit": "r/Odoo",
+      "post_type": "discussion",
+      "post_angle": "Discuss firsthand lessons learned from deploying Odoo 17 manufacturing in complex Indian factory settings (with anonymized results).",
+      "link_placement": "in-comments"
+    },
+    {
+      "subreddit": "r/ERP",
+      "post_type": "case-study",
+      "post_angle": "Share non-promotional case study on digital transformation of a mid-size manufacturer using Odoo POS and CRM, focusing on the process and outcomes rather than product push.",
+      "link_placement": "in-comments"
+    },
+    {
+      "subreddit": "r/smallbusiness",
+      "post_type": "value-answer",
+      "post_angle": "Answer 'how can Indian SMBs choose between legacy POS and Odoo?' covering compliance, scalability, and support with concrete examples.",
+      "link_placement": "in-post"
+    }
+  ],
+  "linkedin_longform": [
+    {
+      "topic": "The Indian Manufacturing Sector’s Digital Leap: Winning with Odoo 17 Manufacturing Module",
+      "hook": "Most Indian factories will face a digital tipping point in 2026. Here’s how Odoo 17 is already rewriting productivity baselines.",
+      "target_audience": "Indian manufacturing decision makers and ERP professionals",
+      "link_back": "/odoo-17-manufacturing-module"
+    },
+    {
+      "topic": "Beyond CRM: Driving Growth with Custom Odoo Solutions",
+      "hook": "Your next sales jump will come from customizing—not just installing—your CRM. See how leading Indian firms reimagined their pipelines with tailored Odoo workflows.",
+      "target_audience": "CEOs and IT heads considering CRM upgrades or digital transformation",
+      "link_back": "/odoo-crm-module"
+    }
+  ]
+}

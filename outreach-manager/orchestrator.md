@@ -10,7 +10,7 @@ claude-haiku-4-5-20251001
 MOCK
 
 ## Input
-- seo-automation/outputs/outreach-package-[sprint_id].json
+- seo-automation/outputs/social-media/outreach-package-[sprint_id].json
 
 ## Task
 
@@ -55,4 +55,4 @@ Paid backlinks: flag in log as `requires_payment`. Do not send until payment is 
 ```
 
 ## Output
-- `seo-automation/outputs/outreach-log-[sprint_id].json`
+- `seo-automation/outputs/social-media/outreach-log-[sprint_id].json`

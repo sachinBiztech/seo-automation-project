@@ -1,51 +1,323 @@
 {
   "site": "BiztechCS",
-  "pulled_at": "2026-04-09",
+  "property": "sc-domain:biztechcs.com",
+  "pulled_at": "2026-04-27",
+  "data_note": "Primary assessment window: 90 days. 15-day delta = supplementary signal only. 180-day = baseline context.",
   "top_keywords": [
     {
-      "query": "odoo implementation partner india",
-      "clicks": 25,
-      "impressions": 4200,
-      "ctr": 0.006,
-      "position": 14.2,
-      "trend": "Climbing"
+      "query": "odoo development company india",
+      "clicks": 94,
+      "impressions": 3800,
+      "ctr": 0.025,
+      "position": 6.1,
+      "pos_90d_ago": 9.4,
+      "pos_180d_ago": 13.2,
+      "trend": "Climbing",
+      "ai_overview_status": "competitor_cited",
+      "ai_overview_cited_source": "cybrosys.com",
+      "note": "Steady 90d climb. CTR healthy at pos 6. Push to top 3 is the sprint goal."
     },
     {
-      "query": "odoo crm customization",
+      "query": "hire odoo developers",
+      "clicks": 61,
+      "impressions": 2200,
+      "ctr": 0.028,
+      "position": 5.3,
+      "pos_90d_ago": 5.8,
+      "pos_180d_ago": 7.1,
+      "trend": "Holding",
+      "ai_overview_status": "none",
+      "ai_overview_cited_source": null,
+      "note": "Stable at pos 5. /hire-odoo-developers/ is the landing page — title tag A/B test opportunity."
+    },
+    {
+      "query": "odoo erp implementation india",
       "clicks": 48,
-      "impressions": 2800,
-      "ctr": 0.017,
-      "position": 7.8,
-      "trend": "Holding"
+      "impressions": 4100,
+      "ctr": 0.012,
+      "position": 11.8,
+      "pos_90d_ago": 8.2,
+      "pos_180d_ago": 9.6,
+      "trend": "Declining",
+      "ai_overview_status": "competitor_cited",
+      "ai_overview_cited_source": "cybrosys.com",
+      "note": "CRITICAL: dropped from pos 8 to 11 over 90d. cybrosys.com gained 4 positions this cycle. GSC Insights flags actively losing momentum.",
+      "priority_1": true
     },
     {
-      "query": "odoo manufacturing module",
-      "clicks": 31,
-      "impressions": 3100,
-      "ctr": 0.010,
-      "position": 11.3,
-      "trend": "Declining"
-    },
-    {
-      "query": "odoo vs sap mid market",
-      "clicks": 8,
+      "query": "odoo crm development",
+      "clicks": 72,
       "impressions": 1900,
-      "ctr": 0.004,
-      "position": 22.1,
-      "trend": "Climbing"
+      "ctr": 0.038,
+      "position": 4.7,
+      "pos_90d_ago": 6.1,
+      "pos_180d_ago": 8.4,
+      "trend": "Climbing",
+      "ai_overview_status": "none",
+      "ai_overview_cited_source": null,
+      "note": "Good CTR and climbing well. Near top-3. Strong commercial intent from /services/crm-development/."
+    },
+    {
+      "query": "odoo implementation partner india",
+      "clicks": 29,
+      "impressions": 5200,
+      "ctr": 0.006,
+      "position": 14.6,
+      "pos_90d_ago": 18.9,
+      "pos_180d_ago": 22.7,
+      "trend": "Climbing",
+      "ai_overview_status": "competitor_cited",
+      "ai_overview_cited_source": "cybrosys.com",
+      "note": "Strong 90d climb but CTR low at pos 14 — title tag and meta description opportunity."
+    },
+    {
+      "query": "odoo 17 new features",
+      "clicks": 118,
+      "impressions": 2600,
+      "ctr": 0.045,
+      "position": 5.9,
+      "pos_90d_ago": 6.3,
+      "pos_180d_ago": 9.1,
+      "trend": "Holding",
+      "ai_overview_status": "we_cited",
+      "ai_overview_cited_source": "biztechcs.com",
+      "note": "Best performing informational keyword. AI Overview cited — amplification candidate."
+    },
+    {
+      "query": "generative ai development company india",
+      "clicks": 38,
+      "impressions": 3400,
+      "ctr": 0.011,
+      "position": 13.2,
+      "pos_90d_ago": 19.4,
+      "pos_180d_ago": 24.1,
+      "trend": "Climbing",
+      "ai_overview_status": "none",
+      "ai_overview_cited_source": null,
+      "note": "Strong 90d climb. Emerging revenue keyword. /services/generative-ai-development-company/ is ranking page."
+    },
+    {
+      "query": "ai ml development company india",
+      "clicks": 44,
+      "impressions": 4800,
+      "ctr": 0.009,
+      "position": 16.4,
+      "pos_90d_ago": 21.8,
+      "pos_180d_ago": 27.3,
+      "trend": "Climbing",
+      "ai_overview_status": "none",
+      "ai_overview_cited_source": null,
+      "note": "Page 2 — commercial intent. /services/ai-ml-development/ needs stronger content and internal links."
+    },
+    {
+      "query": "custom software development company india",
+      "clicks": 31,
+      "impressions": 6800,
+      "ctr": 0.005,
+      "position": 18.7,
+      "pos_90d_ago": 22.1,
+      "pos_180d_ago": 26.8,
+      "trend": "Climbing",
+      "ai_overview_status": "none",
+      "ai_overview_cited_source": null,
+      "note": "High volume, competitive. Better ROI from Odoo cluster this sprint."
+    },
+    {
+      "query": "odoo erp for manufacturing india",
+      "clicks": 52,
+      "impressions": 2100,
+      "ctr": 0.025,
+      "position": 8.4,
+      "pos_90d_ago": 12.6,
+      "pos_180d_ago": 16.3,
+      "trend": "Climbing",
+      "ai_overview_status": "none",
+      "ai_overview_cited_source": null,
+      "note": "Strong climb. /services/odoo-erp-for-electronics/ and /services/odoo-erp-for-food-and-beverage/ are supporting pages."
+    },
+    {
+      "query": "microsoft dynamics 365 partner india",
+      "clicks": 19,
+      "impressions": 1800,
+      "ctr": 0.011,
+      "position": 12.3,
+      "pos_90d_ago": 14.8,
+      "pos_180d_ago": 17.2,
+      "trend": "Climbing",
+      "ai_overview_status": "none",
+      "ai_overview_cited_source": null,
+      "note": "Secondary revenue stream. /solutions/dynamics-365-products/ is the ranking page."
+    },
+    {
+      "query": "hrms software india",
+      "clicks": 27,
+      "impressions": 3200,
+      "ctr": 0.008,
+      "position": 15.9,
+      "pos_90d_ago": 20.4,
+      "pos_180d_ago": 24.6,
+      "trend": "Climbing",
+      "ai_overview_status": "none",
+      "ai_overview_cited_source": null,
+      "note": "/solutions/hrms-solution/ is ranking page. Odoo HRMS case study needed to strengthen."
+    },
+    {
+      "query": "odoo vs sap for manufacturing",
+      "clicks": 14,
+      "impressions": 2400,
+      "ctr": 0.006,
+      "position": 19.2,
+      "pos_90d_ago": 24.6,
+      "pos_180d_ago": 29.8,
+      "trend": "Climbing",
+      "ai_overview_status": "none",
+      "ai_overview_cited_source": null,
+      "note": "Comparison intent — high commercial value. No dedicated page yet. New content opportunity."
+    },
+    {
+      "query": "odoo development companies uk",
+      "clicks": 41,
+      "impressions": 1100,
+      "ctr": 0.037,
+      "position": 3.8,
+      "pos_90d_ago": 4.2,
+      "pos_180d_ago": 6.4,
+      "trend": "Holding",
+      "ai_overview_status": "none",
+      "ai_overview_cited_source": null,
+      "note": "Strong pos 3. Blog /blog/top-10-odoo-development-companies-in-the-uk-for-2026/ is driving. Good CTR."
+    },
+    {
+      "query": "odoo erp for uae businesses",
+      "clicks": 33,
+      "impressions": 1600,
+      "ctr": 0.021,
+      "position": 7.6,
+      "pos_90d_ago": 11.3,
+      "pos_180d_ago": 14.8,
+      "trend": "Climbing",
+      "ai_overview_status": "none",
+      "ai_overview_cited_source": null,
+      "note": "Blog /blog/odoo-erp-for-uae-enterprises-manufacturing-production-operational-efficiency-guide/ driving growth. UAE market has high MQL rate."
+    },
+    {
+      "query": "odoo for healthcare india",
+      "clicks": 26,
+      "impressions": 1400,
+      "ctr": 0.019,
+      "position": 9.1,
+      "pos_90d_ago": 13.7,
+      "pos_180d_ago": 17.9,
+      "trend": "Climbing",
+      "ai_overview_status": "none",
+      "ai_overview_cited_source": null,
+      "note": "/services/odoo-for-healthcare-and-hospitals/ recently published. Early traction."
+    },
+    {
+      "query": "odoo erp for construction india",
+      "clicks": 18,
+      "impressions": 980,
+      "ctr": 0.018,
+      "position": 10.4,
+      "pos_90d_ago": 16.2,
+      "pos_180d_ago": 21.4,
+      "trend": "Climbing",
+      "ai_overview_status": "none",
+      "ai_overview_cited_source": null,
+      "note": "/services/odoo-erp-for-construction-real-estate/ ranking page. Strong vertical-specific climb."
+    },
+    {
+      "query": "cto as a service india",
+      "clicks": 12,
+      "impressions": 760,
+      "ctr": 0.016,
+      "position": 11.8,
+      "pos_90d_ago": 16.4,
+      "pos_180d_ago": 20.1,
+      "trend": "Climbing",
+      "ai_overview_status": "none",
+      "ai_overview_cited_source": null,
+      "note": "Niche but high-value. Low competition. Top 5 achievable this sprint."
+    },
+    {
+      "query": "odoo for distribution and logistics",
+      "clicks": 21,
+      "impressions": 1200,
+      "ctr": 0.018,
+      "position": 8.9,
+      "pos_90d_ago": 12.1,
+      "pos_180d_ago": 15.6,
+      "trend": "Climbing",
+      "ai_overview_status": "none",
+      "ai_overview_cited_source": null,
+      "note": "/services/odoo-for-distribution-and-logistics/ vertical-specific page driving climb."
+    },
+    {
+      "query": "odoo erp for food and beverage india",
+      "clicks": 16,
+      "impressions": 870,
+      "ctr": 0.018,
+      "position": 9.6,
+      "pos_90d_ago": 14.3,
+      "pos_180d_ago": 19.2,
+      "trend": "Climbing",
+      "ai_overview_status": "none",
+      "ai_overview_cited_source": null,
+      "note": "/services/odoo-erp-for-food-and-beverage/ new vertical page showing early traction."
     }
   ],
-  "downtrending_pages": [
+  "priority_1_pages": [
     {
-      "url": "/odoo-manufacturing",
-      "signal": "Impressions dropped 34% in last 30 days",
-      "priority": "HIGH"
+      "url": "/services/odoo-development/",
+      "primary_query": "odoo erp implementation india",
+      "current_position": 11.8,
+      "position_90d_ago": 8.2,
+      "position_drop": -3.6,
+      "impressions_90d": 4100,
+      "clicks_90d": 48,
+      "gsc_insights_flag": "Actively losing momentum — position drop >3 over 90d",
+      "reason": "cybrosys.com surged. Page has thin content and no FAQ schema. LCP 3.2s on mobile."
+    }
+  ],
+  "gsc_insights_flags": [
+    {
+      "type": "declining_impressions",
+      "query": "odoo erp implementation india",
+      "message": "Impressions down 31% vs 90d avg. Position dropped from 8.2 to 11.8 — now on page 2.",
+      "url": "/services/odoo-development/"
+    },
+    {
+      "type": "low_ctr_opportunity",
+      "query": "odoo implementation partner india",
+      "message": "Impressions high (5200) but CTR only 0.6% at pos 14 — title/meta mismatch with search intent.",
+      "url": "/services/odoo-development/"
+    },
+    {
+      "type": "new_opportunity",
+      "query": "generative ai development company india",
+      "message": "Position improved from 19 to 13 in 90d — close to page 1. Optimise /services/generative-ai-development-company/ for a quick win.",
+      "url": "/services/generative-ai-development-company/"
     }
   ],
   "core_web_vitals": {
-    "lcp": "2.8s",
-    "inp": "180ms",
-    "cls": "0.08",
-    "verdict": "Needs improvement"
+    "source": "GSC Core Web Vitals report",
+    "assessed_at": "2026-04-27",
+    "mobile": {
+      "poor_urls": 3,
+      "needs_improvement_urls": 5,
+      "good_urls": 42,
+      "note": "3 mobile URLs failing LCP threshold — /services/odoo-development/, /services/mobile-app-development/, /services/software-development-service/"
+    },
+    "desktop": {
+      "poor_urls": 0,
+      "needs_improvement_urls": 2,
+      "good_urls": 48,
+      "note": "Desktop CWV healthy overall. 2 pages near LCP boundary."
+    },
+    "top_offenders": [
+      { "url": "/services/odoo-development/", "lcp_mobile_sec": 3.2, "issue": "Hero image not compressed, render-blocking JS" },
+      { "url": "/services/mobile-app-development/", "lcp_mobile_sec": 2.8, "issue": "Above-fold CTA image unoptimized" },
+      { "url": "/services/software-development-service/", "lcp_mobile_sec": 2.6, "issue": "LCP element is background CSS image — not preloaded" }
+    ]
   }
 }

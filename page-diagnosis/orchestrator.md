@@ -10,9 +10,9 @@ claude-opus-4-6
 MOCK
 
 ## Input
-- seo-automation/outputs/gsc-findings.json
-- seo-automation/outputs/algorithm-findings.json
-- seo-automation/outputs/sprint-tasks-[previous_sprint_id].json
+- seo-automation/outputs/intelligence-report/gsc-findings.json
+- seo-automation/outputs/intelligence-report/algorithm-findings.json
+- seo-automation/outputs/sprint-pm/sprint-tasks-[previous_sprint_id].json
 
 ## Task
 

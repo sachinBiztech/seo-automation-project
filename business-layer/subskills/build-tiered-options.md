@@ -10,10 +10,10 @@ claude-sonnet-4-6
 MOCK
 
 ## Input
-- seo-automation/outputs/enriched-sprint-plan.json
-- seo-automation/outputs/quota-check.json
-- seo-automation/outputs/topic-territory-check.json
-- seo-automation/outputs/guardrails-check.json
+- seo-automation/outputs/post-approval/enriched-sprint-plan.json
+- seo-automation/outputs/post-approval/quota-check.json
+- seo-automation/outputs/post-approval/topic-territory-check.json
+- seo-automation/outputs/post-approval/guardrails-check.json
 - seo-automation/business-layer/biztechcs-business-config.md
 
 ## Task
@@ -42,7 +42,7 @@ Calculate:
 - Flag if full plan exceeds `per_sprint_budget` from config
 
 ## Output
-- `seo-automation/outputs/tiered-sprint-options.json`
+- `seo-automation/outputs/post-approval/tiered-sprint-options.json`
 
 Schema:
 ```json

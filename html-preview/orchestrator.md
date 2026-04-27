@@ -10,9 +10,9 @@ claude-haiku-4-5-20251001
 MOCK
 
 ## Input
-- seo-automation/outputs/edited-draft-[slug].md
-- seo-automation/outputs/image-prompts-[slug].json
-- seo-automation/outputs/content-brief-[slug].json
+- seo-automation/outputs/content-pipeline/edited-draft-[slug].md
+- seo-automation/outputs/content-pipeline/image-prompts-[slug].json
+- seo-automation/outputs/content-pipeline/content-brief-[slug].json
 
 ## Task
 
@@ -33,7 +33,7 @@ Check JSON-LD for:
 
 ### Step 3 — Render PDF preview (MOCK mode)
 Run: `node seo-automation/generate-pdf.js [html_file] [output_pdf]`
-Save: `seo-automation/outputs/preview-[slug].pdf`
+Save: `seo-automation/outputs/content-pipeline/preview-[slug].pdf`
 
 ### Step 4 — Mobile layout check
 In PRODUCTION: Puppeteer viewport set to 375px. Screenshot saved alongside.
@@ -63,6 +63,6 @@ Include inline buttons: [✅ Approve] [❌ Reject] [🔄 Revise]
 - Reply ONLY with: `✅ preview-[slug].html written`
 
 ## Output
-- `seo-automation/outputs/preview-[slug].html`
-- `seo-automation/outputs/preview-[slug].pdf`
-- Content approval entry in `seo-automation/outputs/content-approval-[sprint_id].json`
+- `seo-automation/outputs/content-pipeline/preview-[slug].html`
+- `seo-automation/outputs/content-pipeline/preview-[slug].pdf`
+- Content approval entry in `seo-automation/outputs/content-pipeline/content-approval-[sprint_id].json`

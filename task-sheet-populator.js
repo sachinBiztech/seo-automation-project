@@ -20,8 +20,10 @@ const path = require('path');
 // ── Config ────────────────────────────────────────────────────────────────────
 
 const OUTPUTS_DIR    = path.join(__dirname, 'outputs');
-const APPROVAL_FILE  = path.join(OUTPUTS_DIR, 'sprint-approval.json');
-const SPRINT_FILE    = path.join(OUTPUTS_DIR, 'sprint-plan.json');
+const STRAT_OUT      = path.join(OUTPUTS_DIR, 'seo-strategist');
+const SPRINT_PM_OUT  = path.join(OUTPUTS_DIR, 'sprint-pm');
+const APPROVAL_FILE  = path.join(STRAT_OUT, 'sprint-approval.json');
+const SPRINT_FILE    = path.join(STRAT_OUT, 'sprint-plan.json');
 
 // ── Helpers ───────────────────────────────────────────────────────────────────
 
@@ -303,7 +305,7 @@ function main() {
   }
 
   const csvContent = lines.join('\n') + '\n';
-  const outFile = path.join(OUTPUTS_DIR, `sprint-tasks-${plan.sprint_id}.csv`);
+  const outFile = path.join(SPRINT_PM_OUT, `sprint-tasks-${plan.sprint_id}.csv`);
   fs.writeFileSync(outFile, csvContent, 'utf8');
 
   // 5. Summary
@@ -315,7 +317,7 @@ function main() {
   console.log(`CSV written → ${outFile}`);
 
   // 6. Write a machine-readable summary JSON for Sprint PM
-  const summaryFile = path.join(OUTPUTS_DIR, `sprint-tasks-${plan.sprint_id}.json`);
+  const summaryFile = path.join(SPRINT_PM_OUT, `sprint-tasks-${plan.sprint_id}.json`);
   fs.writeFileSync(summaryFile, JSON.stringify({
     sprint_id: plan.sprint_id,
     sprint_start: plan.sprint_start,

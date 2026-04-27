@@ -16,12 +16,12 @@ MOCK
 
 Read all of these files:
 
-1. `seo-automation/outputs/gsc-findings.json`
-2. `seo-automation/outputs/ga4-findings.json`
-3. `seo-automation/outputs/ranking-findings.json`
-4. `seo-automation/outputs/odoo-findings.json`
-5. `seo-automation/outputs/competitor-findings.json`
-6. `seo-automation/outputs/algorithm-findings.json`
+1. `seo-automation/outputs/intelligence-report/gsc-findings.json`
+2. `seo-automation/outputs/intelligence-report/ga4-findings.json`
+3. `seo-automation/outputs/intelligence-report/ranking-findings.json`
+4. `seo-automation/outputs/intelligence-report/odoo-findings.json`
+5. `seo-automation/outputs/intelligence-report/competitor-findings.json`
+6. `seo-automation/outputs/intelligence-report/algorithm-findings.json`
 
 ---
 
@@ -72,7 +72,7 @@ Given all the above, what is the highest-leverage action for this sprint?
 
 ## Output
 
-Create the file `seo-automation/outputs/analysis-findings.json` and write
+Create the file `seo-automation/outputs/intelligence-report/analysis-findings.json` and write
 the complete JSON below before finishing.
 
 ```json

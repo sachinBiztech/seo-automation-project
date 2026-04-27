@@ -17,8 +17,10 @@ const fs   = require('fs');
 const path = require('path');
 const { spawnSync } = require('child_process');
 
-const WORKSPACE = '/home/sachin.p/.openclaw/workspace';
-const OUTPUTS   = path.join(WORKSPACE, 'seo-automation', 'outputs');
+const WORKSPACE      = '/home/sachin.p/.openclaw/workspace';
+const OUTPUTS        = path.join(WORKSPACE, 'seo-automation', 'outputs');
+const CONTENT_OUT    = path.join(OUTPUTS, 'content-pipeline');
+const PUBLISH_OUT    = path.join(OUTPUTS, 'publishing-agent');
 
 const args      = process.argv.slice(2);
 const getArg    = (f) => { const i = args.indexOf(f); return i !== -1 ? args[i + 1] : null; };
@@ -54,7 +56,7 @@ function main() {
   console.log('═══════════════════════════════════════════════════════\n');
 
   // Verify approval before calling agent
-  const approvalFile = path.join(OUTPUTS, `content-approval-${SPRINT_ID}.json`);
+  const approvalFile = path.join(CONTENT_OUT, `content-approval-${SPRINT_ID}.json`);
   if (!fs.existsSync(approvalFile)) {
     console.error(`ERROR: content-approval-${SPRINT_ID}.json not found`);
     process.exit(1);
@@ -98,7 +100,7 @@ function main() {
   }
 
   // Verify publish log written
-  const publishLog = path.join(OUTPUTS, `publish-log-${SPRINT_ID}.json`);
+  const publishLog = path.join(PUBLISH_OUT, `publish-log-${SPRINT_ID}.json`);
   if (fs.existsSync(publishLog)) {
     console.log(`\n✅ Publishing complete: ${SLUG}`);
   } else {
@@ -106,7 +108,7 @@ function main() {
   }
 
   // Trigger social media agent via run-social-media.js (non-blocking)
-  const triggerFile = path.join(OUTPUTS, `social-media-trigger-${SPRINT_ID}.json`);
+  const triggerFile = path.join(PUBLISH_OUT, `social-media-trigger-${SPRINT_ID}.json`);
   if (fs.existsSync(triggerFile)) {
     console.log('\n🤖 Triggering social-media agent (background)...');
     const { spawn } = require('child_process');

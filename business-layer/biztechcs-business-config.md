@@ -65,4 +65,4 @@ Out-of-territory topics require explicit written approval from Parth.
 ## Google Sheet Sprint Tracker
 - New sheet per sprint: `Sprint [YYYY-MM-DD] to [YYYY-MM-DD]`
 - Shared with: parth@biztechcs.com, sachin@biztechcs.com, uttam@biztechcs.com
-- CSV fallback path: `seo-automation/outputs/sprint-tasks-[sprint_id].csv`
+- CSV fallback path: `seo-automation/outputs/sprint-pm/sprint-tasks-[sprint_id].csv`

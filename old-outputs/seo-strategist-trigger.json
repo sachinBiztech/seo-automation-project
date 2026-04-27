@@ -1,0 +1,9 @@
+{
+  "source": "telegram_approval",
+  "report_id": "biztechcs_intelligence_2026-04-14",
+  "triggered_at": "2026-04-16T06:58:21.849Z",
+  "trigger": "seo-strategist",
+  "orchestrator": "/home/sachin.p/Documents/seo-automation/seo-strategist/orchestrator.md",
+  "status": "approved",
+  "event_dispatch": "sent"
+}

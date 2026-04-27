@@ -1,7 +1,7 @@
 # SEO Automation Engine — Phase-by-Phase Build Plan
-**Reference:** `Concept from Parth.md` v3.0 + `remaining.md` audit
-**Current state:** Mock pipeline working end-to-end through Sprint PM Day 2. Content pipeline loop not yet closed.
-**Last updated:** 2026-04-17
+**Reference:** `Concept from Parth.md` v3.0 + `GUIDE.md`
+**Current state:** Full mock pipeline built. Output directory reorganized into per-pipeline subdirectories. Phase 0 (content → publish → social end-to-end) is the immediate next step.
+**Last updated:** 2026-04-27
 
 ---
 
@@ -21,17 +21,23 @@ Phases 5+ require **real API credentials** and move toward production.
 ## Current State — What Is Working
 
 ```
-✅ Intelligence Report (mock)     → PDF + Telegram approval gate
-✅ SEO Strategist (mock)          → Sprint plan PDF + Telegram buttons
-✅ Approve / Revise / Reject gate → callback-listener + approval-bridge
-✅ Feedback loop (Revise/Reject)  → review-sprint-feedback (reform + full_rerun)
-✅ Post-Approval                  → Product Owner + Business Layer (13 steps)
-✅ POC Proceed gate               → Task Sheet Populator
-✅ Sprint PM Day 1                → Technical SEO + Off-Page + Outreach (mock)
-✅ Sprint PM Day 2                → Technical + Off-Page (content pipeline NOT run — bug)
-🟡 Content pipeline               → built, not yet run end-to-end
-🟡 Publishing Agent               → built, CMS API not wired
-🟡 Social Media Engine            → built, SocialPilot API not wired
+✅ Intelligence Report (mock)        → 10-step pipeline, PDF + Telegram gate
+✅ SEO Strategist (mock)             → Sprint plan (10 sections), PDF + Telegram buttons
+✅ Approve / Revise / Reject gate    → callback-listener + approval-bridge
+✅ Feedback loop (Revise/Reject)     → review-sprint-feedback (reform + full_rerun paths)
+✅ Post-Approval                     → Product Owner (6 steps) + Business Layer (5 steps)
+✅ Task Sheet Populator              → sprint-tasks-[id].json + .csv (no Sheets API yet)
+✅ Sprint PM                         → Day 1 tested; content pipeline dispatch needs validation
+✅ Content Pipeline                  → 5 steps built (Strategist→Writer→Editor→Graphics→Preview)
+✅ Publishing Agent                  → built, mock only (CMS API not wired)
+✅ Social Media Engine               → 6 steps built, mock auto-approve (SocialPilot not wired)
+✅ Output directory structure        → per-pipeline subdirectories, all agent paths updated
+✅ Mock data                         → upgraded (20 GSC keywords, 90d/180d data, competitor table)
+
+🔴 NOT yet validated end-to-end: content pipeline → Telegram approval → publish → social
+🔴 NOT built: Google Drive API, Google Sheets API, CMS publish API, SocialPilot API
+🔴 NOT built: Page Cooldown Tracker, Previous Sprint Fix Verification
+🔴 NOT built: AppJetty / PrintXpand / CRMJetty configs (BiztechCS only)
 ```
 
 ---
@@ -50,11 +56,11 @@ The Article 1 task is stuck at `In Progress` in the sprint sheet but the content
 
 ```bash
 # In the sprint tasks JSON, change Article 1 status back to "Not Started"
-# File: outputs/sprint-tasks-biztechcs_sprint_2026-04-17.json
+# File: outputs/sprint-pm/sprint-tasks-biztechcs_sprint_2026-04-17.json
 # Find: "Odoo Implementation Partner India..." task → change status to "Not Started"
 ```
 
-**File to edit:** `~/.openclaw/workspace/seo-automation/outputs/sprint-tasks-biztechcs_sprint_2026-04-17.json`
+**File to edit:** `~/.openclaw/workspace/seo-automation/outputs/sprint-pm/sprint-tasks-biztechcs_sprint_2026-04-17.json`
 Change the Day 2 content task `status` field from `"In Progress"` → `"Not Started"`.
 
 ---
@@ -66,12 +72,12 @@ openclaw agent --agent sprint-pm --message "Run the content pipeline for sprint 
 ```
 
 **Expected outputs:**
-- `outputs/content-brief-odoo-implementation-partner-india.json`
-- `outputs/draft-odoo-implementation-partner-india.md`
-- `outputs/edited-draft-odoo-implementation-partner-india.md`
-- `outputs/image-prompts-odoo-implementation-partner-india.json`
-- `outputs/preview-odoo-implementation-partner-india.html`
-- `outputs/pipeline-result-[task_id].json`
+- `outputs/content-pipeline/content-brief-odoo-implementation-partner-india.json`
+- `outputs/content-pipeline/draft-odoo-implementation-partner-india.md`
+- `outputs/content-pipeline/edited-draft-odoo-implementation-partner-india.md`
+- `outputs/content-pipeline/image-prompts-odoo-implementation-partner-india.json`
+- `outputs/content-pipeline/preview-odoo-implementation-partner-india.html`
+- `outputs/content-pipeline/pipeline-result-[task_id].json`
 
 **Expected Telegram message:**
 ```
@@ -88,7 +94,8 @@ Reply `APPROVE` on Telegram.
 `content-approval-bridge.js` receives it → triggers `run-publishing-agent.js`.
 
 **Expected outputs:**
-- `outputs/published-odoo-implementation-partner-india.json` (mock — no real CMS)
+- `outputs/publishing-agent/publish-log-biztechcs_sprint_2026-04-17.json` (mock — no real CMS)
+- `outputs/publishing-agent/social-media-trigger-biztechcs_sprint_2026-04-17.json`
 - Telegram: `✅ Published: [title]`
 
 ---
@@ -130,7 +137,7 @@ Add three new steps after Step 3c (Off-Page Offensive) and before Step 4 (Assemb
 Spawn sub-agent:
   label: "Step 3d — Define Metrics"
   task: "Read seo-automation/seo-strategist/subskills/define-metrics.md and follow ALL instructions. Read attack-vectors.json, content-plan.json, technical-plan.json, offpage-plan.json. Write outputs/metrics-plan.json. Reply ONLY with: ✅ metrics-plan.json written"
-Expected output: seo-automation/outputs/metrics-plan.json
+Expected output: seo-automation/outputs/seo-strategist/metrics-plan.json
 Failure action: WARNING — continue
 ```
 
@@ -139,7 +146,7 @@ Failure action: WARNING — continue
 Spawn sub-agent:
   label: "Step 3e — Expert Intelligence Map"
   task: "Read seo-automation/seo-strategist/subskills/build-expert-intelligence-map.md and follow ALL instructions. Read attack-vectors.json, content-plan.json, offpage-plan.json, report-summary.json. Write outputs/expert-intelligence-map.json. Reply ONLY with: ✅ expert-intelligence-map.json written"
-Expected output: seo-automation/outputs/expert-intelligence-map.json
+Expected output: seo-automation/outputs/seo-strategist/expert-intelligence-map.json
 Failure action: WARNING — continue
 ```
 
@@ -148,7 +155,7 @@ Failure action: WARNING — continue
 Spawn sub-agent:
   label: "Step 3f — History-Backed Rationale"
   task: "Read seo-automation/seo-strategist/subskills/build-history-rationale.md and follow ALL instructions. Read attack-vectors.json, content-plan.json. Write outputs/history-rationale.json. Reply ONLY with: ✅ history-rationale.json written"
-Expected output: seo-automation/outputs/history-rationale.json
+Expected output: seo-automation/outputs/seo-strategist/history-rationale.json
 Failure action: WARNING — continue (first sprint has no history — write baseline)
 ```
 
@@ -246,7 +253,7 @@ Populate with 20–30 mock keywords for BiztechCS target keyword universe.
 
 Add to the `report-summary.json` output schema:
 ```json
-"competitor_position_table_path": "seo-automation/outputs/competitor-position-table.json"
+"competitor_position_table_path": "seo-automation/outputs/intelligence-report/competitor-position-table.json"
 ```
 
 **File to edit:** `intelligence-report/orchestrator.md`
@@ -264,7 +271,7 @@ competitor-position-table.json
 
 Add to the Input section:
 ```
-Read: seo-automation/outputs/competitor-position-table.json
+Read: seo-automation/outputs/intelligence-report/competitor-position-table.json
 ```
 
 Add to the Task instructions:
@@ -302,8 +309,8 @@ Add a new Step 0 before the existing Step 1 (Content Strategist):
 Step 0 — Keyword Research
 Spawn sub-agent:
   label: "Step 0 — Keyword Research"
-  task: "Read seo-automation/keyword-research/orchestrator.md and follow ALL instructions. Sprint ID: [sprint_id]. Article task: [title]. Primary keyword seed: [primary_keyword]. Read seo-automation/outputs/pipeline-context-[task_id].json. Write outputs/keyword-universe-[slug].json. Reply ONLY with: ✅ keyword-universe-[slug].json written"
-Expected output: seo-automation/outputs/keyword-universe-[slug].json
+  task: "Read seo-automation/keyword-research/orchestrator.md and follow ALL instructions. Sprint ID: [sprint_id]. Article task: [title]. Primary keyword seed: [primary_keyword]. Read seo-automation/outputs/content-pipeline/pipeline-context-[task_id].json. Write outputs/keyword-universe-[slug].json. Reply ONLY with: ✅ keyword-universe-[slug].json written"
+Expected output: seo-automation/outputs/content-pipeline/keyword-universe-[slug].json
 Failure action: WARNING — continue with primary keyword only
 ```
 
@@ -315,7 +322,7 @@ Failure action: WARNING — continue with primary keyword only
 
 Add:
 ```
-Also read seo-automation/outputs/keyword-universe-[slug].json if it exists — use the keyword clusters to inform the content brief.
+Also read seo-automation/outputs/content-pipeline/keyword-universe-[slug].json if it exists — use the keyword clusters to inform the content brief.
 ```
 
 ---

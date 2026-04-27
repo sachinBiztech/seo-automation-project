@@ -1,0 +1,86 @@
+{
+  "site": "BiztechCS",
+  "pulled_at": "2026-04-16",
+  "mode": "mock",
+  "rage_click_pages": [
+    {
+      "url": "/solutions/custom-software-development/",
+      "rage_clicks_pct": 8.7,
+      "likely_cause": "CTA button not responding as expected"
+    },
+    {
+      "url": "/contact/",
+      "rage_clicks_pct": 11.4,
+      "likely_cause": "Form submit button unresponsive on first click (JS issue)"
+    },
+    {
+      "url": "/solutions/product-engineering/",
+      "rage_clicks_pct": 5.9,
+      "likely_cause": "Above-fold CTA not prominent enough causing repeated clicks"
+    }
+  ],
+  "dead_click_pages": [
+    {
+      "url": "/solutions/custom-software-development/",
+      "dead_clicks_pct": 14.2,
+      "likely_cause": "Hero section elements look clickable but are static"
+    },
+    {
+      "url": "/case-studies/",
+      "dead_clicks_pct": 18.5,
+      "likely_cause": "Case study thumbnail images not linked"
+    },
+    {
+      "url": "/solutions/product-engineering/",
+      "dead_clicks_pct": 12.7,
+      "likely_cause": "Service icons look interactive but are decorative"
+    }
+  ],
+  "low_scroll_pages": [
+    {
+      "url": "/solutions/custom-software-development/",
+      "avg_scroll_depth_pct": 31,
+      "interpretation": "Content does not engage users sufficiently, causing early exit"
+    },
+    {
+      "url": "/case-studies/",
+      "avg_scroll_depth_pct": 28,
+      "interpretation": "Users not finding relevant case studies quickly, leading to low scroll depth"
+    },
+    {
+      "url": "/solutions/product-engineering/",
+      "avg_scroll_depth_pct": 22,
+      "interpretation": "Key information buried below the fold, deterring further scroll"
+    },
+    {
+      "url": "/blog/",
+      "avg_scroll_depth_pct": 38,
+      "interpretation": "Mobile usability issues limiting deeper content exploration"
+    }
+  ],
+  "high_engagement_pages": [
+    {
+      "url": "/solutions/odoo-implementation/",
+      "avg_scroll_depth_pct": 72,
+      "avg_session_duration_sec": 148
+    },
+    {
+      "url": "/blog/odoo-erp-manufacturing/",
+      "avg_scroll_depth_pct": 81,
+      "avg_session_duration_sec": 234
+    },
+    {
+      "url": "/solutions/ai-development/",
+      "avg_scroll_depth_pct": 78,
+      "avg_session_duration_sec": 178
+    }
+  ],
+  "summary": {
+    "total_sessions": 10880,
+    "avg_rage_clicks_pct": 4.6,
+    "avg_dead_clicks_pct": 9.2,
+    "avg_scroll_depth_pct": 52,
+    "top_friction_page": "/contact/",
+    "top_engagement_page": "/blog/odoo-erp-manufacturing/"
+  }
+}
