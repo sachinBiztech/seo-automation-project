@@ -335,7 +335,6 @@ function main() {
   const revBriefPath     = path.join(CONTENT_OUT, `revision-brief-${slug}.md`);
   const imagePromptsPath = path.join(CONTENT_OUT, `image-prompts-${slug}.json`);
   const htmlPath         = path.join(CONTENT_OUT, `preview-${slug}.html`);
-  const pdfPath          = path.join(CONTENT_OUT, `preview-${slug}.pdf`);
   const resultPath       = path.join(CONTENT_OUT, `pipeline-result-${TASK_ID || slug}.json`);
   const dashboardPath    = path.join(CONTENT_OUT, `dashboard-${slug}.html`);
 
@@ -823,30 +822,12 @@ After writing, reply ONLY with: ✅ preview-${slug}.html written`,
     openInChrome(htmlPath);
   }
 
-  // ── Generate PDF ─────────────────────────────────────────────────────────────
-
-  let pdfExists = false;
-  if (!DRY_RUN && fs.existsSync(htmlPath)) {
-    console.log('\n── Generating PDF preview ──────────────────────────────');
-    const pdfResult = spawnSync(
-      'node',
-      [path.join(SEO_DIR, 'generate-pdf.js'), htmlPath, pdfPath],
-      { encoding: 'utf8', timeout: 60000, cwd: SEO_DIR }
-    );
-    if (pdfResult.status !== 0) {
-      console.warn('  ⚠️  PDF generation failed — will send HTML path instead.');
-    } else {
-      pdfExists = fs.existsSync(pdfPath) && fs.statSync(pdfPath).size > 0;
-      if (pdfExists) console.log(`  ✅ PDF → preview-${slug}.pdf`);
-    }
-  }
-
   // ── Telegram approval request ───────────────────────────────────────────────
 
   const result = readJson(resultPath) || {};
   console.log('\n── Sending Telegram approval request ───────────────────');
 
-  const mediaPath = pdfExists ? pdfPath : (fs.existsSync(htmlPath) ? htmlPath : null);
+  const mediaPath = fs.existsSync(htmlPath) ? htmlPath : null;
 
   telegramSend(
     `📄 Content Ready for Review\n\n` +
@@ -878,7 +859,6 @@ After writing, reply ONLY with: ✅ preview-${slug}.html written`,
     status:         'pending_review',
     sent_at:        new Date().toISOString(),
     html_path:      htmlPath,
-    pdf_path:       pdfExists ? pdfPath : null,
     approved_at:    null,
     approved_by:    null,
     revision_notes: null,

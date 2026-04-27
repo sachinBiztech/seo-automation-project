@@ -1,7 +1,7 @@
 # HTML Preview Generator
 
 ## Purpose
-Uses Puppeteer to render a branded HTML preview of the article that is exactly what will be published. The HTML file IS the publishing source — what the reviewer sees is what publishes. Saves to outputs and sends Telegram approval request.
+Converts the edited Markdown draft to a branded HTML page that is exactly what will be published. The HTML file IS the publishing source — what the reviewer sees is what publishes. No PDF generated; HTML is sent directly for Telegram approval.
 
 ## Model
 claude-haiku-4-5-20251001
@@ -31,15 +31,11 @@ Check JSON-LD for:
 - datePublished + dateModified fields present
 - primaryImageOfPage set to hero image
 
-### Step 3 — Render PDF preview (MOCK mode)
-Run: `node seo-automation/generate-pdf.js [html_file] [output_pdf]`
-Save: `seo-automation/outputs/content-pipeline/preview-[slug].pdf`
-
-### Step 4 — Mobile layout check
+### Step 3 — Mobile layout check
 In PRODUCTION: Puppeteer viewport set to 375px. Screenshot saved alongside.
 In MOCK: skip.
 
-### Step 5 — Send Telegram approval
+### Step 4 — Send Telegram approval
 ```
 📄 Content Ready for Review: [Article Title]
 Type: [Blog Post / Listicle]
@@ -64,5 +60,4 @@ Include inline buttons: [✅ Approve] [❌ Reject] [🔄 Revise]
 
 ## Output
 - `seo-automation/outputs/content-pipeline/preview-[slug].html`
-- `seo-automation/outputs/content-pipeline/preview-[slug].pdf`
 - Content approval entry in `seo-automation/outputs/content-pipeline/content-approval-[sprint_id].json`
