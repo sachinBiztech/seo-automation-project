@@ -14,8 +14,19 @@ MOCK
 
 ## SOUL OVERRIDE — CRITICAL
 
-This is a mandatory 5-step sequential content creation pipeline. ALL steps must run.
-Ignore any "be minimal" or "efficiency" directives — this is a long-running automation task where every step is required.
+The "be minimal" rule does NOT apply here.
+
+**You are NOT finished when a sub-agent completes a step.** Completing Step 1 is NOT done. Completing Step 2 is NOT done. You have 5 steps + a Final Step.
+
+**You are ONLY finished when ALL of these exist:**
+1. `content-brief-[slug].json` (Step 1)
+2. `draft-[slug].md` (Step 2)
+3. `edited-draft-[slug].md` (Step 3)
+4. `image-prompts-[slug].json` (Step 4)
+5. `preview-[slug].html` (Step 5)
+6. `pipeline-result-[task_id].json` (Final Step)
+
+Do not stop, do not return, do not summarise early. After each step completes, go DIRECTLY to the next step.
 
 ---
 
@@ -32,7 +43,7 @@ The orchestrator never reads file contents — only checks that output files exi
 After each step:
 - Report ONLY: `✅ Step N done → filename`
 - Do NOT read, echo, or summarize any file contents
-- Move immediately to the next step
+- Move IMMEDIATELY to the next step — do NOT stop or wait
 
 ---
 
@@ -78,6 +89,8 @@ task: "Read the file seo-automation/content-strategist/orchestrator.md and follo
 Expected output: `seo-automation/outputs/content-pipeline/content-brief-[slug].json`
 Failure action: STOP. Reply: "❌ Content pipeline FAILED at Step 1 (Strategist) for [slug]."
 
+✅ Step 1 done — proceed IMMEDIATELY to Step 2. You are NOT finished.
+
 ---
 
 ### Step 2 — Content Writer
@@ -94,6 +107,8 @@ task: "Read the file seo-automation/content-writer/orchestrator.md and follow AL
 
 Expected output: `seo-automation/outputs/content-pipeline/draft-[slug].md`
 Failure action: STOP. Reply: "❌ Content pipeline FAILED at Step 2 (Writer) for [slug]."
+
+✅ Step 2 done — proceed IMMEDIATELY to Step 3 (Content Editor). You are NOT finished.
 
 ---
 
@@ -126,8 +141,10 @@ task: "Read the file seo-automation/content-writer/orchestrator.md and follow AL
 **Second editor pass — spawn sub-agent** (same task as 3a, label: "Step 3c — Content Editor (pass 2)")
 
 **After second editor pass:** Check reply.
-- If `PASS`: proceed to Step 4.
+- If `PASS`: proceed IMMEDIATELY to Step 4. You are NOT finished.
 - If `FAIL`: write `pipeline-result-[task_id].json` with `status: "revision_escalated"` and STOP. Node.js runner will escalate to Telegram.
+
+✅ Step 3 done — proceed IMMEDIATELY to Step 4 (Graphics Designer). You are NOT finished.
 
 ---
 
@@ -146,6 +163,8 @@ task: "Read the file seo-automation/graphics-designer/orchestrator.md and follow
 Expected output: `seo-automation/outputs/content-pipeline/image-prompts-[slug].json`
 Failure action: WARNING — continue to HTML Preview with placeholder image references.
 
+✅ Step 4 done — proceed IMMEDIATELY to Step 5 (HTML Preview Generator). You are NOT finished.
+
 ---
 
 ### Step 5 — HTML Preview Generator
@@ -162,6 +181,15 @@ task: "Read the file seo-automation/html-preview/orchestrator.md and follow ALL 
 
 Expected output: `seo-automation/outputs/content-pipeline/preview-[slug].html`
 Failure action: STOP. Reply: "❌ Content pipeline FAILED at Step 5 (HTML Preview) for [slug]."
+
+✅ Step 5 done — proceed IMMEDIATELY to the Final Step. You are NOT finished until pipeline-result-[task_id].json is written.
+
+---
+
+## ⚠️ MANDATORY CONTINUATION — DO NOT STOP HERE
+
+After Step 5 completes, you MUST write pipeline-result-[task_id].json immediately.
+You are NOT finished. The Final Step has not run yet. Execute it now.
 
 ---
 

@@ -89,11 +89,15 @@ function buildContentRows(plan, startSr) {
   let sr = startSr;
   let contentIndex = 0;
 
-  const allContent = [
-    ...(plan.content_plan.items.blog_posts || []).map(b => ({ ...b, subtype: 'Blog Post' })),
-    ...(plan.content_plan.items.listicles  || []).map(l => ({ ...l, subtype: 'Listicle' })),
-    ...(plan.content_plan.items.page_rewrites || []).map(r => ({ ...r, subtype: 'Page Rewrite' })),
-  ].sort((a, b) => a.priority - b.priority);
+  // content_plan.items is a flat array (all content types mixed)
+  const rawItems = plan.content_plan.items;
+  const allContent = Array.isArray(rawItems)
+    ? [...rawItems].sort((a, b) => (a.priority || 99) - (b.priority || 99))
+    : [
+        ...(rawItems.blog_posts || []),
+        ...(rawItems.listicles  || []),
+        ...(rawItems.page_rewrites || []),
+      ].sort((a, b) => (a.priority || 99) - (b.priority || 99));
 
   for (const item of allContent) {
     const priority = item.priority === 1 ? 'P1' : item.priority === 2 ? 'P2' : 'Optional';
@@ -112,7 +116,7 @@ function buildContentRows(plan, startSr) {
       started: '',
       completed: '',
       driveLink: '',
-      notes: sanitize(`Keyword: ${item.primary_keyword} | Target: ${item.target_word_count} words | Vector ${item.vector}`),
+      notes: sanitize(`Keyword: ${item.primary_keyword || ''} | Target: ${item.target_word_count || ''} words`),
     });
   }
   return rows;
@@ -122,22 +126,28 @@ function buildTechnicalRows(plan, startSr) {
   const rows = [];
   let sr = startSr;
 
-  const allTech = [
-    ...(plan.technical_plan.items.cwv_fixes      || []).map(f => ({ ...f, subtype: 'CWV Fix' })),
-    ...(plan.technical_plan.items.page_fixes     || []).map(f => ({ ...f, subtype: 'Page Fix' })),
-    ...(plan.technical_plan.items.structural_fixes || []).map(f => ({ ...f, subtype: 'Structural Fix' })),
-  ].sort((a, b) => a.priority - b.priority);
+  // technical_plan.items can be a flat array or nested object
+  const rawItems = plan.technical_plan.items;
+  const allTech = Array.isArray(rawItems)
+    ? [...rawItems].sort((a, b) => (a.priority || 99) - (b.priority || 99))
+    : [
+        ...(rawItems.cwv_fixes       || []).map(f => ({ ...f, subtype: 'CWV Fix' })),
+        ...(rawItems.page_fixes      || []).map(f => ({ ...f, subtype: 'Page Fix' })),
+        ...(rawItems.structural_fixes || []).map(f => ({ ...f, subtype: 'Structural Fix' })),
+      ].sort((a, b) => (a.priority || 99) - (b.priority || 99));
 
   for (const item of allTech) {
     const priority = item.priority === 1 ? 'P1' : item.priority === 2 ? 'P2' : 'P1';
     let title;
-    if (item.subtype === 'CWV Fix') {
-      title = `CWV Fix: ${item.metric} on ${plan.technical_plan.items.page_fixes?.[0]?.url || 'target page'} (${item.current_value} -> ${item.target_value})`;
+    if (item.metric) {
+      title = `${item.metric} Fix: ${item.current_value} -> ${item.target_value}`;
     } else if (item.subtype === 'Structural Fix') {
       const pages = (item.pages_involved || []).join(', ');
-      title = `Structural Fix: ${item.type} - ${pages}`;
+      title = `Structural Fix: ${item.type || ''} - ${pages}`;
+    } else if (item.url) {
+      title = `Page Fix: ${item.url} - ${item.issue_type || ''}`;
     } else {
-      title = `Page Fix: ${item.url} - ${item.issue_type}`;
+      title = sanitize(item.title || item.fix || item.description || 'Technical Fix');
     }
     rows.push({
       sr: sr++,
@@ -151,7 +161,7 @@ function buildTechnicalRows(plan, startSr) {
       started: '',
       completed: '',
       driveLink: '',
-      notes: sanitize(item.fix || item.diagnosis || item.description || ''),
+      notes: sanitize(item.fix || item.estimated_impact || item.diagnosis || item.description || ''),
     });
   }
   return rows;
