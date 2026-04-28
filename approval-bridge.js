@@ -204,6 +204,7 @@ if (action === 'approve' && entityId.startsWith('biztechcs_sprint_')) {
 // ─────────────────────────────────────────────────────────────
 // Sprint plan: revise OR reject — both collect feedback first
 // The agent decides what to do with the feedback (reform vs full re-run)
+// Cap: max 3 revision cycles — 4th tap escalates to human SME
 // ─────────────────────────────────────────────────────────────
 if ((action === 'revise' || action === 'reject') && entityId.startsWith('biztechcs_sprint_')) {
   if (!fs.existsSync(sprintApprovalPath)) {
@@ -215,14 +216,45 @@ if ((action === 'revise' || action === 'reject') && entityId.startsWith('biztech
     process.exit(0);
   }
 
+  const MAX_REVISIONS = 3;
+  const revisionCount = (sprintApproval.revision_count || 0) + 1;
+  sprintApproval.revision_count = revisionCount;
+
+  // ── Escalate after 3 cycles ────────────────────────────────
+  if (revisionCount > MAX_REVISIONS) {
+    sprintApproval.status = 'escalated';
+    sprintApproval.escalated_at = nowIso();
+    writeJson(sprintApprovalPath, sprintApproval);
+
+    const history = sprintApproval.revision_history || [];
+    const historyText = history.length > 0
+      ? history.map(r => `Round ${r.round} [${r.source_action}]: ${r.feedback}`).join('\n\n')
+      : '(no feedback history recorded)';
+
+    sendTelegram(
+      `⚠️ Sprint Plan — 3 Revisions Reached\n\n` +
+      `Sprint: ${entityId}\n` +
+      `The plan has gone through ${MAX_REVISIONS} revision cycles without approval.\n\n` +
+      `Revision history:\n${historyText}\n\n` +
+      `Human SME action required. Reply with one of:\n` +
+      `• APPROVE — accept current plan as-is\n` +
+      `• OVERRIDE [your direct instructions] — agent will apply immediately\n` +
+      `• RESTART — discard plan, run seo-strategist from scratch`
+    );
+
+    console.log(JSON.stringify({ ok: true, kind: 'sprint', action: 'escalated', sprint_id: entityId, revision_count: revisionCount }));
+    process.exit(0);
+  }
+
+  // ── Normal revision cycle — collect feedback via force_reply ─
   sprintApproval.status = 'pending_feedback';
   sprintApproval.feedback_requested_at = nowIso();
   sprintApproval.feedback_source_action = action;
   writeJson(sprintApprovalPath, sprintApproval);
 
   const promptText = action === 'revise'
-    ? `✏️ What needs to change in the sprint plan?\n\nDescribe clearly — the AI will decide whether to fix specific sections or rebuild the full plan from scratch.`
-    : `❌ Sprint plan rejected. What's wrong with it?\n\nDescribe the issues — the AI will decide whether to fix specific sections or rebuild the full plan from scratch.`;
+    ? `✏️ What needs to change? (Revision ${revisionCount}/${MAX_REVISIONS})\n\nDescribe clearly — the AI will decide whether to fix specific sections or rebuild the full plan from scratch.`
+    : `❌ Sprint plan rejected. What's wrong with it? (Revision ${revisionCount}/${MAX_REVISIONS})\n\nDescribe the issues — the AI will decide whether to fix specific sections or rebuild the full plan from scratch.`;
 
   const messageId = sendTelegramForceReply(promptText);
 
@@ -230,11 +262,12 @@ if ((action === 'revise' || action === 'reject') && entityId.startsWith('biztech
     action: 'sprint-feedback',
     sprint_id: entityId,
     source_action: action,
+    revision_count: revisionCount,
     force_reply_message_id: messageId,
     created_at: nowIso()
   });
 
-  console.log(JSON.stringify({ ok: true, kind: 'sprint', action, sprint_id: entityId, awaiting_feedback: true }));
+  console.log(JSON.stringify({ ok: true, kind: 'sprint', action, sprint_id: entityId, awaiting_feedback: true, revision_count: revisionCount }));
   process.exit(0);
 }
 
@@ -260,9 +293,16 @@ if (action === 'sprint-feedback' && entityId.startsWith('biztechcs_sprint_')) {
     received_at: nowIso()
   });
 
-  // Mark sprint-approval.json as feedback received
+  // Accumulate revision history + mark feedback received
   if (fs.existsSync(sprintApprovalPath)) {
     const sprintApproval = readJson(sprintApprovalPath);
+    if (!Array.isArray(sprintApproval.revision_history)) sprintApproval.revision_history = [];
+    sprintApproval.revision_history.push({
+      round:        sprintApproval.revision_count || 1,
+      source_action: sourceAction,
+      feedback:     textArg,
+      received_at:  nowIso()
+    });
     sprintApproval.status = 'feedback_received';
     sprintApproval.feedback_received_at = nowIso();
     writeJson(sprintApprovalPath, sprintApproval);

@@ -11,6 +11,31 @@ MOCK
 
 ---
 
+## IST Time Formatting Rule
+
+When scheduling posts, ALL times must use IST (Indian Standard Time, UTC+05:30).
+
+Format times as: `YYYY-MM-DDTHH:MM:SS+05:30`
+
+Example: `2026-04-29T09:00:00+05:30`
+
+**NEVER use `setHours()` or subtract hours/minutes from UTC.** Instead, directly construct the ISO string:
+- Get the date (YYYY-MM-DD)
+- Append the hour and minute directly as local IST values
+- Always suffix with `+05:30`
+
+**Platform time slots (IST):**
+| Platform | Optimal Days | Time (IST) |
+|----------|-------------|------------|
+| LinkedIn | Tue, Wed, Thu | 08:00–10:00 |
+| Twitter/X | Mon–Fri | 12:00–13:00 |
+| Facebook | Mon–Fri | 18:00–20:00 |
+| Instagram | Mon–Fri | 19:00–21:00 |
+
+Space posts across the 14-day window. Do not schedule two posts for the same platform on the same day.
+
+---
+
 ## SOUL OVERRIDE — CRITICAL
 
 There are NO shell scripts. Do NOT look for `social-media-gen.sh`, `social-media-schedule.sh`, or any `.sh` file.
@@ -88,13 +113,21 @@ the output JSON.
 Step 4 for that post. On REVISE [instructions]: apply targeted edits, re-send for
 approval. On APPROVE: pass to Step 6 for scheduling.
 
-### Step 6 — Post scheduling
-- Approved posts for LinkedIn/Facebook/Instagram/Twitter: schedule via SocialPilot API
-- Reddit/Quora: save to manual queue, Telegram alert: `📋 [N] Reddit/Quora posts ready. Queue: [file path]`
-- Optimal times: LinkedIn (Tue–Thu 8–10 AM IST), Instagram (evenings 7–9 PM IST)
+### Step 6 — Scheduling
 
-### Cap enforcement
-Max 12 posts/month per website. Count current month's scheduled posts before scheduling.
+For each approved post, assign a scheduled_time in IST format: `YYYY-MM-DDTHH:MM:SS+05:30`
+
+Use platform time slots from the IST Time Formatting Rule above.
+Space posts across the 14-day window — no two posts for the same platform on the same day.
+Use next-business-day dates starting from today.
+
+- LinkedIn / Facebook / Instagram / Twitter-X posts: include `"scheduled_time": "[IST datetime]"` in the output JSON. In MOCK: SocialPilot API not called — mark `"scheduling": "mock_queued"`.
+- Reddit/Quora posts: save to `seo-automation/outputs/social-media/social-manual-queue-[sprint_id].md`. Send Telegram:
+  ```
+  openclaw message send --channel telegram --target -1003829892114 --message "📋 [N] Reddit/Quora posts ready for manual posting. File: seo-automation/outputs/social-media/social-manual-queue-[sprint_id].md"
+  ```
+
+Cap: max 12 posts total this sprint. If current month's scheduled posts + new posts > 12, drop lowest-priority posts until under cap.
 
 ## OUTPUT DISCIPLINE — CRITICAL
 
@@ -104,5 +137,13 @@ Max 12 posts/month per website. Count current month's scheduled posts before sch
 - Reply ONLY with: `✅ social-posts-[sprint_id].json + social-manual-queue-[sprint_id].md written`
 
 ## Output
+
+When writing `seo-automation/outputs/social-media/social-posts-[sprint_id].json`:
+- Read the file if it exists.
+- If it has an `articles` array: find the entry for `[slug]` and replace it (or append if not found).
+- If it exists but has no `articles` array (old single-article format): wrap it as the first entry.
+- If it does not exist: create fresh.
+- Write structure: `{ "sprint_id": "[sprint_id]", "articles": [ { "slug": "[slug]", "title": "[title]", "published_url": "...", "generated_at": "...", "news_items": [...], "idea_bank": [...], "posts": [...] } ] }`
+
 - `seo-automation/outputs/social-media/social-posts-[sprint_id].json`
 - `seo-automation/outputs/social-media/social-manual-queue-[sprint_id].md`

@@ -12,7 +12,8 @@ MOCK
 
 Each execution agent is spawned via `sessions_spawn` with `runtime="subagent"` and `agentId="sprint-pm"`.
 The subagent reads the target orchestrator .md file and executes it in an isolated context.
-This is the same pattern as post-approval.
+
+**sessions_spawn is SYNCHRONOUS.** When sessions_spawn returns, the subagent has ALREADY completed. Do NOT wait, do NOT check for completion events. Proceed IMMEDIATELY to the next step after each sessions_spawn returns.
 
 **DO NOT skip steps. DO NOT call openclaw CLI. Use sessions_spawn for all subagent calls.**
 

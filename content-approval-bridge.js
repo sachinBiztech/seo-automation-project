@@ -156,7 +156,12 @@ function updateTaskStatus(sprintId, taskId, status) {
   if (!taskId) return;
   const tasksFile = path.join(SPRINT_PM_OUT, `sprint-tasks-${sprintId}.json`);
   if (!fs.existsSync(tasksFile)) return;
-  const data = JSON.parse(fs.readFileSync(tasksFile, 'utf8'));
+  let data;
+  try { data = JSON.parse(fs.readFileSync(tasksFile, 'utf8')); } catch (_) { return; }
+  if (!Array.isArray(data.tasks)) {
+    log('ERROR', `sprint-tasks-${sprintId}.json has wrong format (missing tasks array) — skipping status update`);
+    return;
+  }
   const task = data.tasks.find(t => t.sr === taskId);
   if (!task) return;
   task.status = status;

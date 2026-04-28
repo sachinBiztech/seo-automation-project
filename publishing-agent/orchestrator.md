@@ -16,47 +16,103 @@ MOCK
 
 ## Task
 
-1. **Verify approval**
-   - Read `content-approval-[sprint_id].json`
-   - Find entry for `[slug]` with `status: "approved"`
-   - If not approved: STOP. Do not publish.
+### Step 1 — Verify approval
 
-2. **Publish to CMS** (PRODUCTION only)
-   - BiztechCS runs on [CMS type from product owner config]
-   - Send HTML content via CMS REST API
-   - Set: title, slug, author, categories, tags, publish date
-   - In MOCK mode: write a publish record to `outputs/publishing-agent/publish-log-[sprint_id].json`
+Read `seo-automation/outputs/content-pipeline/content-approval-[sprint_id].json`.
 
-3. **Verify publication**
-   - In PRODUCTION: HTTP GET the published URL, check HTTP 200 + title match
-   - In MOCK: mark as `published_mock: true`
+Find the entry where `slug == "[slug]"`. If not found: STOP. Send Telegram error.
+If `status` is not `"approved"`: STOP. Do not publish. Send Telegram:
+```
+openclaw message send --channel telegram --target -1003829892114 --message "❌ Publishing blocked: [slug] status is [status] — not approved. Sprint: [sprint_id]"
+```
 
-4. **Archive HTML**
-   - Move `preview-[slug].html` to `outputs/publishing-agent/approved/preview-[slug].html`
+Extract: `title`, `author`, `word_count`, `approved_at`, `task_id`.
 
-5. **Update sprint sheet**
-   - Update task row in `sprint-tasks-[sprint_id].json`:
-     - Status: `Published → Done`
-     - Completed: [today's date]
-     - Drive Link: published URL
+### Step 2 — Load metadata
 
-6. **Trigger Social Media Engine**
-   - Write `seo-automation/outputs/publishing-agent/social-media-trigger-[sprint_id].json`:
-   ```json
-   {
-     "sprint_id": "[sprint_id]",
-     "slug": "[slug]",
-     "title": "[title from content-brief]",
-     "primary_keyword": "[keyword from content-brief]",
-     "author": "[author from content-brief]",
-     "published_url": "[published URL]",
-     "content_type": "blog",
-     "published_at": "[ISO timestamp]"
-   }
-   ```
+Read `seo-automation/outputs/content-pipeline/content-brief-[slug].json` if it exists.
+Extract: `primary_keyword`, `eeaat_signals.author` (use as author if available).
 
-7. **Telegram confirmation**
-   - `✅ Published: "[Article Title]" → [URL]`
+Verify `seo-automation/outputs/content-pipeline/preview-[slug].html` exists.
+If it does not exist: STOP. Send Telegram error.
+
+Published URL: `https://www.biztechcs.com/blog/[slug]/`
+
+### Step 3 — Publish to CMS (MOCK)
+
+Read `seo-automation/outputs/publishing-agent/publish-log-[sprint_id].json` if it exists.
+- If it exists and has a `published_articles` array: append this entry to the existing array.
+- If it exists but is a plain object (old format): convert to `{ "sprint_id": "[sprint_id]", "published_articles": [existing_object, new_entry] }`.
+- If it does not exist: create fresh with `{ "sprint_id": "[sprint_id]", "published_articles": [new_entry] }`.
+
+The new entry to append:
+```json
+{
+  "slug": "[slug]",
+  "title": "[title]",
+  "keyword": "[primary_keyword]",
+  "author": "[author]",
+  "word_count": [word_count],
+  "published_url": "https://www.biztechcs.com/blog/[slug]/",
+  "published_at": "[ISO8601 timestamp]",
+  "published_mock": true,
+  "cms": "BiztechCS WordPress (MOCK)",
+  "status": "published",
+  "html_source": "seo-automation/outputs/content-pipeline/preview-[slug].html"
+}
+```
+
+Write the complete updated file back using the write tool.
+
+### Step 4 — Archive HTML
+
+Copy `seo-automation/outputs/content-pipeline/preview-[slug].html` content and write it to:
+`seo-automation/outputs/publishing-agent/approved/preview-[slug].html`
+
+### Step 5 — Update sprint task status
+
+Read `seo-automation/outputs/sprint-pm/sprint-tasks-[sprint_id].json`.
+
+CRITICAL — SURGICAL UPDATE ONLY:
+1. The top-level array key may be `tasks` OR `items` — check which key exists and use it.
+2. Find the ONE task where `title` contains "[slug]" OR `slug == "[slug]"` OR `sr == [task_id]`.
+3. Update ONLY these three fields on that task object:
+   - `status` → `"Done"`
+   - `completed` → today's date (YYYY-MM-DD)
+   - `driveLink` → `"https://www.biztechcs.com/blog/[slug]/"`
+4. Do NOT change any other field. Do NOT restructure the JSON. Do NOT replace the array with content from any other file.
+5. Write the COMPLETE original JSON back with ALL tasks preserved — only the one matching task's three fields are changed.
+
+If the task is not found: log a warning but do not modify the file.
+
+### Step 6 — Write social media trigger
+
+Write `seo-automation/outputs/publishing-agent/social-media-trigger-[sprint_id].json`:
+```json
+{
+  "sprint_id": "[sprint_id]",
+  "slug": "[slug]",
+  "title": "[title]",
+  "primary_keyword": "[primary_keyword]",
+  "author": "[author]",
+  "published_url": "https://www.biztechcs.com/blog/[slug]/",
+  "content_type": "blog",
+  "published_at": "[ISO8601 timestamp]"
+}
+```
+
+### Step 7 — Telegram confirmation
+
+Send:
+```
+openclaw message send --channel telegram --target -1003829892114 --message "✅ Published: \"[title]\"
+
+URL: https://www.biztechcs.com/blog/[slug]/
+Author: [author] | Words: [word_count]
+Sprint: [sprint_id]
+
+Social media content generation starting now..."
+```
 
 ## OUTPUT DISCIPLINE — CRITICAL
 

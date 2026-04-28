@@ -59,16 +59,23 @@ For each task, create a row with these columns:
 
 **GSC downtrending pages** (from `sprint-plan.json.priority_1_pages`): create as first rows, `priority: "HIGH"`.
 
-**Scheduling logic:**
-- Day 1: All Technical fixes + all Off-Page outreach dispatched
-- Days 2–5: P1 Content writing (distribute evenly)
-- Days 5–7: P2 Content writing
-- Days 8–10: Optional items
-- Editing tasks: one day after paired writing task (dependency: writer must be Completed first)
+**Scheduling logic (per Parth's concept — Priority overlay: P1 → Days 1–5 | P2 → Days 5–9 | Optional → Days 8–10):**
+
+- Day 1: ALL Technical fixes + ALL Off-Page outreach dispatched (regardless of priority)
+- Content tasks — use SEPARATE counters per priority level (NOT a shared counter):
+  - P1 content: counter starts at 0 → Day = min(2 + counter×2, 5). Cap at Day 5.
+    - P1 task 0 → Day 2 | P1 task 1 → Day 4 | P1 task 2+ → Day 5
+  - P2 content: counter starts at 0 → Day = min(5 + counter×2, 9). Cap at Day 9.
+    - P2 task 0 → Day 5 | P2 task 1 → Day 7 | P2 task 2 → Day 9
+  - Optional content: counter starts at 0 → Day = min(8 + counter×2, 10). Cap at Day 10.
+    - Optional task 0 → Day 8 | Optional task 1 → Day 10
+- NO task ever assigned beyond Day 10. If a cap is hit, all overflow tasks get the cap day.
+- Process content tasks in priority order (P1 first, then P2, then Optional) when building rows.
 
 ### Step 4 — Write output files
 
-Write `seo-automation/outputs/sprint-pm/sprint-tasks-[sprint_id].json`:
+Write `seo-automation/outputs/sprint-pm/sprint-tasks-[sprint_id].json`.
+CRITICAL: The top-level array key MUST be `"tasks"` — never `"items"`.
 ```json
 {
   "sprint_id": "string",
